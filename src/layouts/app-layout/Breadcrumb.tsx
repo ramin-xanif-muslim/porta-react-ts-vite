@@ -23,7 +23,7 @@ const BreadcrumbItem = ({ item, items }: Props) => {
         <Link
             to={item.path}
             className={classNames({
-                "flex items-center font-bold flex-nowrap": true,
+                "flex items-center font-semibold flex-nowrap": true,
                 "opacity-50": !isLast,
             })}
         >
