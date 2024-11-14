@@ -7,7 +7,6 @@ import { Link, useLocation } from "react-router-dom";
 interface FolderItemI {
     id: string;
     name: string;
-    path: string;
     children: FolderItemI[];
 }
 
