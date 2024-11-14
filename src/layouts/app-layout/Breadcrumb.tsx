@@ -6,7 +6,7 @@ import { menuLists } from "./sidebar/data-menu";
 import { folders } from "../../types/data";
 import useBreadcrumbs from "../../hooks/useBreadcrumbs";
 
-const firstBreadcrumb = ["My portal", "ADMIN"];
+const firstBreadcrumb = ["MY PORTA", "ADMIN"];
 interface BreadcrumbItemI {
     name: string;
     path: string;

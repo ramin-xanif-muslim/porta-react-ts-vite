@@ -1,13 +1,17 @@
 import { MenuItemI } from "../data-menu";
 import MenuItem from "./MenuItem";
-import useStore from "../../../../store/useStore";
+import { useLocation } from "react-router-dom";
 
 const SidebarMenu = ({ list }: { list: MenuItemI[] }) => {
-    const activeMenu = useStore((state) => state.activeMenu);
+    const { pathname } = useLocation();
     return (
         <div>
             {list.map((item) => (
-                <MenuItem key={item.name} item={item} active={activeMenu === item.path} />
+                <MenuItem
+                    key={item.name}
+                    item={item}
+                    active={pathname === item.path}
+                />
             ))}
         </div>
     );

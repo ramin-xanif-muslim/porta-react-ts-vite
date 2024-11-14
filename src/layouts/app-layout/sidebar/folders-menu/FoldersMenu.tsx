@@ -5,8 +5,7 @@ import { FolderDTO } from "../../../../types";
 import FolderItem from "./FolderItem";
 import { useState } from "react";
 import classNames from "classnames";
-import { Link } from "react-router-dom";
-import useStore from "../../../../store/useStore";
+import { Link, useLocation } from "react-router-dom";
 
 interface Props {
     folders: FolderDTO[];
@@ -16,15 +15,14 @@ const path = "/folders";
 
 export default function FoldersMenu({ folders }: Props) {
     const [open, setOpen] = useState(false);
-
-    const activeMenu = useStore((state) => state.activeMenu);
+    const { pathname } = useLocation();
 
     return (
         <Link to={path} className="flex flex-col">
             <div
                 className={classNames({
                     "menu-item": true,
-                    "active-menu": !!activeMenu?.includes(path),
+                    "active-menu": !!pathname?.includes(path),
                 })}
                 onClick={() => setOpen(!open)}
             >
@@ -45,10 +43,7 @@ export default function FoldersMenu({ folders }: Props) {
             <div className="flex flex-col pl-4">
                 {open &&
                     buildHierarchy(folders).map((item) => (
-                        <FolderItem
-                            key={item.id}
-                            item={item}
-                        />
+                        <FolderItem key={item.id} item={item} />
                     ))}
             </div>
         </Link>
