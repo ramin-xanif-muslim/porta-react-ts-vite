@@ -1,55 +1,62 @@
-import {
-    MdOutlineKeyboardArrowDown,
-    MdOutlineKeyboardArrowUp,
-} from "react-icons/md";
-import { FaBuffer, FaRegFolder } from "react-icons/fa";
-import { IoIosArrowForward } from "react-icons/io";
-import { buildHierarchy } from "../../../lib/utils";
+import { TbArrowsMoveVertical } from "react-icons/tb";
 
-// Sample data
-const data = [
-    { id: "1", name: "Work Documents", parentId: null },
-    { id: "2", name: "Personal Files", parentId: null },
-    { id: "3", name: "Projects", parentId: "1" },
-    { id: "4", name: "Reports", parentId: "1" },
-    { id: "5", name: "Photos", parentId: "2" },
-    { id: "6", name: "Vacation", parentId: "5" },
-    { id: "7", name: "Invoices", parentId: "3" },
-    { id: "8", name: "2024", parentId: "4" },
-    { id: "9", name: "2023", parentId: "4" },
-    { id: "10", name: "Trip to Paris", parentId: "6" },
-];
+import { FaBuffer } from "react-icons/fa";
+import FoldersMenu from "./folders-menu/FoldersMenu";
+import { folders } from "../../../types/data";
+import SidebarMenu from "./sidebar-menu/SidebarMenu";
+import { menuList, menuList2, menuList3 } from "./data-menu";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import useStore from "../../../store/useStore";
+import classNames from "classnames";
 
 const Sidebar = () => {
-    console.log(JSON.stringify(buildHierarchy(data), null, 2));
+    const location = useLocation();
+    const handleSelectMenu = useStore((state) => state.handleSelectMenu);
+
+   
+useEffect(() => {
+    handleSelectMenu(location.pathname || "");
+}, [location.pathname]);
+
     return (
-        <>
-            <div className="border border-brand mx-2 md:mx-8 ">
-                {/* item */}
-                <div className="flex items-center gap-2 px-4 h-11 cursor-pointer">
+        <div className="text-gray-500 overflow-y-auto h-screen md:h-[calc(100vh-100px)] no-scrollbar  py-8">
+            <div className="mx-0 md:mx-8">
+                <div
+                    className={classNames({
+                        "menu-item": true,
+                    })}
+                >
                     <div>
                         <FaBuffer className="text-brand size-5" />
                     </div>
-                    <span>MY PORTA</span>
+                    <span className="text-black">MY PORTA</span>
                     <span className="flex flex-col ml-auto">
-                        <MdOutlineKeyboardArrowUp />{" "}
-                        <MdOutlineKeyboardArrowDown />
+                        <TbArrowsMoveVertical />
                     </span>
                 </div>
 
-                <div className="flex items-center gap-2 px-4 h-11 cursor-pointer bg-brand-200  text-[#6d31edff] font-[700]">
-                    <div>
-                        <FaRegFolder className="text-brand size-6" />
-                    </div>
-                    <span>All files</span>
-                    <span className="flex flex-col ml-auto">
-                        <IoIosArrowForward className="hover:rotate-90 transition-all" />
-                    </span>
-                </div>
+                <FoldersMenu folders={folders} />
+
+                <SidebarMenu list={menuList} />
             </div>
 
-            <hr className="border border-[#F3F4F6FF] mt-5" />
-        </>
+            <hr className="border border-[#F3F4F6FF] my-5" />
+
+            <div className="mx-2 md:mx-8 ">
+                <h2 className="pl-4">ADMIN</h2>
+
+                <SidebarMenu list={menuList2} />
+            </div>
+
+            <hr className="border border-[#F3F4F6FF] my-5" />
+
+            <div className="mx-2 md:mx-8 ">
+
+                <SidebarMenu list={menuList3} />
+
+            </div>
+        </div>
     );
 };
 

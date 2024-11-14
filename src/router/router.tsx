@@ -20,6 +20,16 @@ const routers: Router[] = [
         ),
         layout: "app",
     },
+    {
+        path: "*",
+        name: "not-found",
+        element: (
+            <React.Suspense fallback={<div>Loading...</div>}>
+                <Home />
+            </React.Suspense>
+        ),
+        layout: "app",
+    },
 ];
 
 
@@ -34,3 +44,4 @@ const routerMap = (routers: Router[]) => routers.map(router => {
 })
 
 export default routerMap(routers) as Router[]
+

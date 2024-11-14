@@ -1,7 +1,10 @@
-
 import React from "react";
+import { CiCircleList } from "react-icons/ci";
+import { IoIosInformationCircleOutline } from "react-icons/io";
+
 import Header from "./header/Header";
-import Sidebar from "./sidebar/Sidebar.js";
+import Sidebar from "./sidebar/Sidebar";
+import Breadcrumb from "./Breadcrumb";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -12,17 +15,37 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
             <div className="flex">
                 {/* sidebar */}
-                <aside className="w-[308px] hidden md:block mt-8 ">
+                <aside className="w-[308px] shrink-0 hidden md:block">
                     <Sidebar />
                 </aside>
 
                 {/* content */}
                 <div className="flex-1 h-[calc(100vh-70px)] md:h-[calc(100vh-100px)] bg-[#F3F4F6FF]  p-4">
+                    {/* content header */}
+                    <div className="flex justify-between items-center">
+                        <div className="">
+                            {/* <div 
+                            className="hidden md:block"
+                            > */}
+                                <Breadcrumb />
+                            {/* </div> */}
+                        </div>
+
+                        <div className="flex items-center">
+                            <span className="p-2 cursor-pointer">
+                                <CiCircleList className="size-[22px]" />
+                            </span>
+                            <span className="p-2 cursor-pointer bg-gray-200 rounded-full">
+                                <IoIosInformationCircleOutline className="size-[22px]" />
+                            </span>
+                        </div>
+                    </div>
+
                     {children}
                 </div>
 
                 {/* right */}
-                <div className="w-[320px] hidden xl:block"></div>
+                <div className="w-[320px] shrink-0 hidden xl:block"></div>
             </div>
         </div>
     );

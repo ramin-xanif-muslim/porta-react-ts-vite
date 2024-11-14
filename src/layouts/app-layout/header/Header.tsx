@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
 import SearchInput from "./search-input/SearchInput";
 import Profile from "./profile/Profile";
+import MobileSidebar from "../sidebar/mobile-sidebar/MobileSidebar";
 
 const Header = () => {
     return (
         <div className="flex items-center gap-2 md:gap-0  w-full bg-[#FFF]">
             {/* left */}
             <div className="flex items-center gap-8 md:min-w-[308px]">
-                <div className="cursor-pointer">
-                    <i className="fa-solid fa-bars"></i>
+                <div className="md:hidden">
+                    <MobileSidebar />
                 </div>
 
                 {/* logo */}
