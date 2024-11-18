@@ -5,11 +5,12 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import Header from "./header/Header";
 import Sidebar from "./sidebar/Sidebar";
 import Breadcrumb from "./Breadcrumb";
+import { Outlet } from "react-router-dom";
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
+const AppLayout = () => {
     return (
         <div className="max-w-[1600px] mx-auto relative">
-            <div className="h-[70px] md:h-[100px] flex items-center sticky top-0 left-0 right-0 bg-white px-2 md:px-8 ">
+            <div className="h-[70px] md:h-[100px] z-10 flex items-center sticky top-0 left-0 right-0 bg-white px-2 md:px-8 ">
                 <Header />
             </div>
 
@@ -24,11 +25,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
                     {/* content header */}
                     <div className="flex justify-between items-center">
                         <div className="">
-                            {/* <div 
-                            className="hidden md:block"
-                            > */}
                                 <Breadcrumb />
-                            {/* </div> */}
                         </div>
 
                         <div className="flex items-center">
@@ -41,7 +38,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
                         </div>
                     </div>
 
-                    {children}
+                    <Outlet />
                 </div>
 
                 {/* right */}

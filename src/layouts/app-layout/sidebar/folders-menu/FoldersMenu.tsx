@@ -13,16 +13,35 @@ interface Props {
 
 const path = "/folders";
 
+function getParentFoldersId(
+    folders: FolderDTO[],
+    pathname: string
+): string[] {
+    const openIds: string[] = [];
+    const folderId = pathname.split("/").pop() || null;
+    let currentId = folderId
+
+    while (currentId) {
+        openIds.push(currentId);
+        const currentFolder = folders.find(folder => folder.id === currentId);
+        currentId = currentFolder?.parentId || null;
+    }
+
+    return openIds.filter(id => id !== folderId); 
+}
+
+
 export default function FoldersMenu({ folders }: Props) {
-    const [open, setOpen] = useState(false);
     const { pathname } = useLocation();
+    const [open, setOpen] = useState(pathname.includes(path));
+
 
     return (
         <Link to={path} className="flex flex-col">
             <div
                 className={classNames({
                     "menu-item": true,
-                    "active-menu": !!pathname?.includes(path),
+                    "active-menu": pathname === path,
                 })}
                 onClick={() => setOpen(!open)}
             >
@@ -43,7 +62,7 @@ export default function FoldersMenu({ folders }: Props) {
             <div className="flex flex-col pl-4">
                 {open &&
                     buildHierarchy(folders).map((item) => (
-                        <FolderItem key={item.id} item={item} />
+                        <FolderItem key={item.id} item={item} openParents={getParentFoldersId(folders, pathname)} />
                     ))}
             </div>
         </Link>

@@ -3,3 +3,14 @@ export type FolderDTO = {
     name: string;
     parentId?: string | null;
 };
+
+
+interface FolderDataDTO {
+    key: string;
+    name: string;
+    size: string;
+    lastModified: string;
+    isSelected: boolean;
+    sharedTo: string;
+    folderId: string;
+}

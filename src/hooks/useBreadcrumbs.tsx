@@ -33,10 +33,6 @@ const useBreadcrumbs = (
                 name: firstBreadcrumb[0],
                 path: "/"
             });
-            breadcrumbs.push({
-                name: "All files",
-                path: "/"
-            });
 
             const folderId = currentPath.split("/")[2];
             if (!folderId) return breadcrumbs;

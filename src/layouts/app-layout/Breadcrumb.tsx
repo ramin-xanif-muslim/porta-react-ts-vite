@@ -41,7 +41,6 @@ const Breadcrumb = () => {
         folders,
         firstBreadcrumb
     );
-
     return (
         <>
             <div className="hidden sm:flex items-center  flex-nowrap overflow-x-auto no-scrollbar">

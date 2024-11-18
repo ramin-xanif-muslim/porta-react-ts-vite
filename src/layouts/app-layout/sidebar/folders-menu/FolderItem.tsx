@@ -12,9 +12,11 @@ interface FolderItemI {
 
 interface Props {
     item: FolderItemI;
+    openParents: string[];
 }
-export default function FolderItem({ item }: Props) {
-    const [open, setOpen] = useState(false);
+
+export default function FolderItem({ item, openParents }: Props) {
+    const [open, setOpen] = useState(openParents.includes(item.id));
     const location = useLocation();
 
     const isActiveFolder = () => {
@@ -28,7 +30,7 @@ export default function FolderItem({ item }: Props) {
             <div
                 className={classNames({
                     "menu-item": true,
-                    "!text-black font-semibold": isActiveFolder(),
+                    "active-menu": isActiveFolder(),
                 })}
             >
                 <span className="flex flex-col w-4">
@@ -57,7 +59,7 @@ export default function FolderItem({ item }: Props) {
                     <>
                         {item.children.length &&
                             item.children.map((child) => (
-                                <FolderItem key={child.id} item={child} />
+                                <FolderItem key={child.id} item={child} openParents={openParents} />
                             ))}
                     </>
                 )}
