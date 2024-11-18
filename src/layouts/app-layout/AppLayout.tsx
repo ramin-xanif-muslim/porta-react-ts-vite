@@ -1,4 +1,3 @@
-import React from "react";
 import { CiCircleList } from "react-icons/ci";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
