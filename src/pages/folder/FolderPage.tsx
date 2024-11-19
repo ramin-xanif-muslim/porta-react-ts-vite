@@ -44,7 +44,6 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
         title: "Name",
         dataIndex: "name",
         key: "name",
-        // sorter: (a, b) => a.name.localeCompare(b.name),
         sorter: () => 0,
         render: (value) => (
             <div className="flex">
@@ -88,16 +87,6 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     },
 ];
 
-// const getFilters = (searchParams: URLSearchParams) => {
-//     const sortBy = searchParams.get("sortBy");
-//     const filters: Record<string, string> = {};
-//     if (sortBy) {
-//         const [field, order] = sortBy.split(".");
-//         filters[field] = order;
-//     }
-//     return filters;
-// };
-
 const getFilters = (searchParams: URLSearchParams) => {
     const filters: Record<string, string> = {};
     searchParams.forEach((value, key) => {
@@ -110,7 +99,6 @@ const fetchFolder = (
     filters: Record<string, string>,
     id: string | undefined
 ) => {
-    console.log(filters)
     const requestedData = foldersData.filter((folder) => folder.folderId === id);
 
     if (filters.sortBy) {
@@ -127,8 +115,6 @@ const fetchFolder = (
                 result = aValue > bValue ? -1 : 1;
             }
 
-            console.log("result", result);
-
             return result;
         });
     }
@@ -144,7 +130,6 @@ const FolderPage = () => {
     const { id } = useParams();
 
     const [searchParams, setSearchParams] = useSearchParams();
-    console.log("searchParams", searchParams.toString());
 
     const { data, isFetching } = useQuery({
         queryKey: ["folder", id, searchParams.toString()],
@@ -176,7 +161,6 @@ const FolderPage = () => {
                 columns={columns}
                 dataSource={data}
                 loading={isFetching}
-                // dataSource={foldersData.filter((item) => item.folderId === id)}
             />
         </div>
     );
