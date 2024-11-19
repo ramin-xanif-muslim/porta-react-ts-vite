@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .loading {
+        @apply h-screen w-full flex items-center justify-center;
+    }
 
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-y: scroll;
-    scrollbar-width: none;
-  }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-y: scroll;
+        scrollbar-width: none;
+    }
+}

@@ -1,7 +1,13 @@
-import React from "react";
-import AppLayout from "../layouts/app-layout/AppLayout";
-import FoldersLayout from "../layouts/folders-layout/FoldersLayout";
-import FolderPage from "../pages/folder/FolderPage";
+import React, { Suspense } from "react";
+
+const AppLayout = React.lazy(() => import("../layouts/app-layout/AppLayout"));
+const FoldersLayout = React.lazy(
+    () => import("../layouts/folders-layout/FoldersLayout")
+);
+
+const NotFount = React.lazy(() => import("../pages/not-found/NotFount"));
+
+const FolderPage = React.lazy(() => import("../pages/folder/FolderPage"));
 const Home = React.lazy(() => import("../pages/home/Home"));
 
 type Router = {
@@ -20,12 +26,20 @@ const routers: Router[] = [
             {
                 path: "*",
                 name: "not-found",
-                element: <h1>Not Found</h1>,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <NotFount />
+                    </Suspense>
+                ),
             },
             {
                 path: "/home",
                 name: "home",
-                element: <Home />,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Home />
+                    </Suspense>
+                ),
             },
             {
                 path: "/folders",
@@ -35,7 +49,11 @@ const routers: Router[] = [
                     {
                         path: ":id",
                         name: "folder",
-                        element: <FolderPage />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <FolderPage />
+                            </Suspense>
+                        ),
                     },
                 ],
             },
@@ -43,5 +61,4 @@ const routers: Router[] = [
     },
 ];
 
-export default routers as Router[]
-
+export default routers as Router[];

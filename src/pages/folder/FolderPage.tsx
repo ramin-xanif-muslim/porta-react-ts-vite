@@ -81,7 +81,12 @@ const FolderPage = () => {
   const {id} = useParams()
     return (
         <div className="mt-2">
-            <Table<FolderDataDTO> pagination={false} columns={columns} dataSource={foldersData.filter(item => item.folderId === id)} />
+            <Table<FolderDataDTO> pagination={false} columns={columns} 
+            // sticky={{
+            //     offsetHeader: -20,
+            //   }}
+            dataSource={foldersData.filter(item => item.folderId === id)}
+             />
         </div>
     );
 };

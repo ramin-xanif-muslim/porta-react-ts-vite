@@ -20,10 +20,10 @@ const AppLayout = () => {
                 </aside>
 
                 {/* content */}
-                <div className="flex-1 h-[calc(100vh-70px)] md:h-[calc(100vh-100px)] bg-[#F3F4F6FF]  p-4">
+                <div className="flex-1 h-[calc(100vh-70px)] md:h-[calc(100vh-100px)] bg-[#F3F4F6FF]  p-4  overflow-y-auto no-scrollbar">
                     {/* content header */}
                     <div className="flex justify-between items-center">
-                        <div className="">
+                        <div>
                                 <Breadcrumb />
                         </div>
 
