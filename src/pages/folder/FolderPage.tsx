@@ -95,6 +95,7 @@ const FolderPage = () => {
         <div className="mt-2">
             <Table<FolderDataDTO>
                 onChange={(pagination, filters, sorter) => {
+                    console.log({pagination, filters, sorter});
                     if (!Array.isArray(sorter)) {
                         if (searchParams) {
                             setSearchParams((prev) => {
