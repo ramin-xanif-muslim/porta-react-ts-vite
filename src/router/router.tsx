@@ -1,3 +1,4 @@
+import { Skeleton } from "antd";
 import React, { Suspense } from "react";
 
 const AppLayout = React.lazy(() => import("../layouts/app-layout/AppLayout"));
@@ -50,7 +51,13 @@ const routers: Router[] = [
                         path: ":id",
                         name: "folder",
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense
+                                fallback={
+                                    <div className="p-4">
+                                        <Skeleton active />
+                                    </div>
+                                }
+                            >
                                 <FolderPage />
                             </Suspense>
                         ),
