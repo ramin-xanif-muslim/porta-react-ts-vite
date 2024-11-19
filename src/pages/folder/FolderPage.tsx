@@ -1,5 +1,8 @@
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Table } from "antd";
 import type { TableProps } from "antd";
+import { useParams, useSearchParams } from "react-router-dom";
+
 import { FaRegFolder } from "react-icons/fa6";
 import { GrDocumentPdf } from "react-icons/gr";
 import { CiImageOn } from "react-icons/ci";
@@ -7,12 +10,9 @@ import { BsFiletypePptx } from "react-icons/bs";
 import { BsFiletypeXlsx } from "react-icons/bs";
 import { CgFileDocument } from "react-icons/cg";
 import { FaRegStar } from "react-icons/fa";
+
 import { FolderDataDTO } from "../../types";
 import { foldersData } from "../../types/data";
-import {
-    useParams,
-    useSearchParams,
-} from "react-router-dom";
 import DotsTableCell from "./DotsTableCell";
 
 const getIcon = (name: string) => {
@@ -57,11 +57,13 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
         title: "Size",
         dataIndex: "size",
         key: "size",
+        sorter: () => 0,
     },
     {
         title: "Last modified",
         dataIndex: "lastModified",
         key: "lastModified",
+        sorter: () => 0,
     },
     {
         title: "Shared to",
@@ -86,16 +88,75 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     },
 ];
 
+// const getFilters = (searchParams: URLSearchParams) => {
+//     const sortBy = searchParams.get("sortBy");
+//     const filters: Record<string, string> = {};
+//     if (sortBy) {
+//         const [field, order] = sortBy.split(".");
+//         filters[field] = order;
+//     }
+//     return filters;
+// };
+
+const getFilters = (searchParams: URLSearchParams) => {
+    const filters: Record<string, string> = {};
+    searchParams.forEach((value, key) => {
+        filters[key] = value;
+    });
+    return filters;
+};
+
+const fetchFolder = (
+    filters: Record<string, string>,
+    id: string | undefined
+) => {
+    console.log(filters)
+    const requestedData = foldersData.filter((folder) => folder.folderId === id);
+
+    if (filters.sortBy) {
+        const [field, order] = filters.sortBy.split(".");
+        requestedData.sort((a, b) => {
+            const aValue = a[field as keyof FolderDataDTO];
+            const bValue = b[field as keyof FolderDataDTO];
+
+            let result = 0;
+            if (aValue === bValue) return 0;
+            if (order === "ascend") {
+                result = aValue < bValue ? -1 : 1;
+            } else {
+                result = aValue > bValue ? -1 : 1;
+            }
+
+            console.log("result", result);
+
+            return result;
+        });
+    }
+
+    return new Promise<FolderDataDTO[]>((resolve) => {
+        setTimeout(() => {
+            resolve(requestedData);
+        }, 300);
+    });
+};
+
 const FolderPage = () => {
     const { id } = useParams();
 
     const [searchParams, setSearchParams] = useSearchParams();
+    console.log("searchParams", searchParams.toString());
+
+    const { data, isFetching } = useQuery({
+        queryKey: ["folder", id, searchParams.toString()],
+        queryFn: () => fetchFolder(getFilters(searchParams), id),
+        placeholderData: keepPreviousData,
+    });
 
     return (
-        <div className="mt-2">
+        <div className="mt-2" key={id}>
             <Table<FolderDataDTO>
                 onChange={(pagination, filters, sorter) => {
-                    console.log({pagination, filters, sorter});
+                    console.log({ pagination, filters, sorter });
                     if (!Array.isArray(sorter)) {
                         if (searchParams) {
                             setSearchParams((prev) => {
@@ -113,7 +174,9 @@ const FolderPage = () => {
                 pagination={false}
                 scroll={{ x: window.innerHeight }}
                 columns={columns}
-                dataSource={foldersData.filter((item) => item.folderId === id)}
+                dataSource={data}
+                loading={isFetching}
+                // dataSource={foldersData.filter((item) => item.folderId === id)}
             />
         </div>
     );
