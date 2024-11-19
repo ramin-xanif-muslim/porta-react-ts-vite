@@ -16,7 +16,7 @@ const FoldersLayout = () => {
                         <span>
                             <RiUploadLine />
                         </span>
-                        <span className="ml-2">Upload</span>
+                        <span className="ml-2 hidden sm:block">Upload</span>
                         <span className="ml-6">
                             <IoIosArrowDown />
                         </span>
@@ -26,7 +26,7 @@ const FoldersLayout = () => {
                         <span>
                             <FiPlus />
                         </span>
-                        <span className="ml-2">Create Folder</span>
+                        <span className="ml-2 hidden sm:flex line-clamp-1 truncate">Create Folder</span>
                         <span className="ml-6">
                             <IoIosArrowDown />
                         </span>
@@ -38,7 +38,7 @@ const FoldersLayout = () => {
                         <span>
                             <IoFilter />
                         </span>
-                        <span className="ml-2">Create Folder</span>
+                        <span className="ml-2 hidden lg:block">Sort: Last Modified</span>
                         <span className="ml-6">
                             <HiOutlineArrowSmDown />
                         </span>

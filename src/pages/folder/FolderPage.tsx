@@ -9,7 +9,10 @@ import { CgFileDocument } from "react-icons/cg";
 import { FaRegStar } from "react-icons/fa";
 import { FolderDataDTO } from "../../types";
 import { foldersData } from "../../types/data";
-import { useParams } from "react-router-dom";
+import {
+    useParams,
+    useSearchParams,
+} from "react-router-dom";
 import DotsTableCell from "./DotsTableCell";
 
 const getIcon = (name: string) => {
@@ -41,6 +44,8 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
         title: "Name",
         dataIndex: "name",
         key: "name",
+        // sorter: (a, b) => a.name.localeCompare(b.name),
+        sorter: () => 0,
         render: (value) => (
             <div className="flex">
                 <span className="line-clamp-1">{value.split(".")[0]}.</span>
@@ -67,7 +72,11 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
         title: "",
         key: "isSelected",
         dataIndex: "isSelected",
-        render: (val) => <div className="cursor-pointer"><FaRegStar className={val ? "text-[#EFB034FF]" : ""} /></div>,
+        render: (val) => (
+            <div className="cursor-pointer">
+                <FaRegStar className={val ? "text-[#EFB034FF]" : ""} />
+            </div>
+        ),
     },
     {
         title: "",
@@ -78,15 +87,33 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
 ];
 
 const FolderPage = () => {
-  const {id} = useParams()
+    const { id } = useParams();
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
     return (
         <div className="mt-2">
-            <Table<FolderDataDTO> pagination={false} columns={columns} 
-            // sticky={{
-            //     offsetHeader: -20,
-            //   }}
-            dataSource={foldersData.filter(item => item.folderId === id)}
-             />
+            <Table<FolderDataDTO>
+                onChange={(pagination, filters, sorter) => {
+                    if (!Array.isArray(sorter)) {
+                        if (searchParams) {
+                            setSearchParams((prev) => {
+                                if (sorter.field)
+                                    prev.set(
+                                        "sortBy",
+                                        `${sorter.field}.${sorter.order}`
+                                    );
+                                else prev.delete("sortBy");
+                                return prev;
+                            });
+                        }
+                    }
+                }}
+                pagination={false}
+                scroll={{ x: window.innerHeight }}
+                columns={columns}
+                dataSource={foldersData.filter((item) => item.folderId === id)}
+            />
         </div>
     );
 };
