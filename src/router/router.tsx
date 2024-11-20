@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import { Skeleton } from "antd";
 import SuspenseFallback from "../components/suspense-fallback";
 
 const AppLayout = React.lazy(() => import("../layouts/app-layout/AppLayout"));
@@ -9,7 +10,6 @@ const FoldersLayout = React.lazy(
 const NotFount = React.lazy(() => import("../pages/not-found/NotFount"));
 
 const FolderPage = React.lazy(() => import("../pages/folder/FolderPage"));
-const Home = React.lazy(() => import("../pages/home/Home"));
 
 type Router = {
     path: string;
@@ -34,15 +34,16 @@ const routers: Router[] = [
                 ),
             },
             {
-                path: "/home",
-                name: "home",
-                element: <Home />,
-            },
-            {
                 path: "/folders",
                 name: "folders",
                 element: (
-                    <Suspense fallback={<SuspenseFallback />}>
+                    <Suspense
+                        fallback={
+                            <div className="p-4 w-full">
+                                <Skeleton.Input block size="large" active />
+                            </div>
+                        }
+                    >
                         <FoldersLayout />
                     </Suspense>
                 ),
