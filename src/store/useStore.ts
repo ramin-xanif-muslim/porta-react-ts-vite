@@ -1,13 +1,14 @@
 import { create } from "zustand";
 
 export interface StoreState {
-    activeMenu: string | null;
-    handleSelectMenu: (item: string) => void;
+    isOpenSidebar: boolean;
+    toggleSidebar: () => void;
 }
 
 const useStore = create<StoreState>((set) => ({
-    activeMenu: null,
-    handleSelectMenu: (item) => set({ activeMenu: item }),
+    isOpenSidebar: true,
+    toggleSidebar: () => set((state) => ({ isOpenSidebar: !state.isOpenSidebar })),
 }));
 
 export default useStore;
+

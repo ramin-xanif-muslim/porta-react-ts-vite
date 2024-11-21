@@ -16,9 +16,13 @@ const CreateFolderBnt = () => {
         setIsModalOpen(false);
     };
 
-    const handleCreate = ({ name }: { name: string }) => {
-        foldersApi.createFolder({ name, parentId: id });
-        setIsModalOpen(false);
+    const handleCreate = async ({ name }: { name: string }) => {
+        try {
+            foldersApi.createFolder({ name, parentId: id });
+            setIsModalOpen(false);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -54,7 +58,7 @@ const CreateFolderBnt = () => {
                 onOk={() => {
                     form.validateFields()
                         .then((values) => {
-                            handleCreate(values)
+                            handleCreate(values);
                         })
                         .catch((error) => {
                             console.log(error);

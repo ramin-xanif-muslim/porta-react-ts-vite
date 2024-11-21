@@ -1,16 +1,22 @@
 import { Link } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
-import SearchInput from "./search-input/SearchInput";
+import { FaBars } from "react-icons/fa6";
+// import SearchInput from "./search-input/SearchInput";
 import Profile from "./profile/Profile";
 import MobileSidebar from "../sidebar/mobile-sidebar/MobileSidebar";
+import useStore from "../../../store/useStore";
 
 const Header = () => {
+    const toggleSidebar = useStore((state) => state.toggleSidebar);
     return (
         <div className="flex items-center gap-2 md:gap-0  w-full bg-[#FFF]">
             {/* left */}
             <div className="flex items-center gap-8 md:min-w-[308px]">
                 <div className="md:hidden">
                     <MobileSidebar />
+                </div>
+                <div onClick={toggleSidebar} className="cursor-pointer hidden md:block">
+                    <FaBars />
                 </div>
 
                 {/* logo */}
@@ -24,9 +30,9 @@ const Header = () => {
             </div>
 
             {/* search */}
-            <div className="ml-4 w-full">
+            {/* <div className="ml-4 w-full">
                 <SearchInput />
-            </div>
+            </div> */}
 
             {/* right */}
             <div className="ml-auto flex items-center shrink-0">

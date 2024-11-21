@@ -27,7 +27,7 @@ const BreadcrumbItem = ({ item, items }: Props) => {
                 "opacity-50": !isLast,
             })}
         >
-            <span className="text-[18px] line-clamp-1">{item.name}</span>
+            <span className="text-[14px] line-clamp-1">{item.name}</span>
             <span className="size-8 flex items-center p-2">
                 {isLast ? <IoIosArrowDown /> : <IoIosArrowForward />}
             </span>
@@ -49,7 +49,7 @@ const Breadcrumb = () => {
                 ))}
             </div>
             <div className="sm:hidden">
-            <BreadcrumbItem item={items[items.length - 1]} items={items} />
+                <BreadcrumbItem item={items[items.length - 1]} items={items} />
             </div>
         </>
     );

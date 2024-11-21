@@ -86,7 +86,7 @@
 }
 
 .menu-item {
-    @apply flex items-center gap-2 px-4 h-11 cursor-pointer;
+    @apply flex items-center gap-2 px-4 h-11 cursor-pointer text-[14px];
 }
 
 .active-menu {

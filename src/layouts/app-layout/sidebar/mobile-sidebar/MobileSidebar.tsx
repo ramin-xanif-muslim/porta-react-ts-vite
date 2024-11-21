@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
+
+import { FaBars } from "react-icons/fa6";
 import {
     Sheet,
     SheetContent,
     SheetTrigger,
 } from "../../../../components/ui/sheet";
-import Sidebar from "../Sidebar";
+import AppSidebar from "../Sidebar";
 
 const MobileSidebar = () => {
     return (
         <Sheet>
             <SheetTrigger>
                 <div className="cursor-pointer">
-                    <i className="fa-solid fa-bars"></i>
+                    <FaBars />
                 </div>
             </SheetTrigger>
             <SheetContent side="left">
@@ -24,7 +26,7 @@ const MobileSidebar = () => {
                     />
                 </Link>
 
-                <Sidebar />
+                <AppSidebar />
             </SheetContent>
         </Sheet>
     );

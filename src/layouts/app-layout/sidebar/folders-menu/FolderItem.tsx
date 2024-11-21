@@ -52,7 +52,7 @@ export default function FolderItem({ item, openParents }: Props) {
                 <div>
                     <FaRegFolder className="size-6" />
                 </div>
-                <span>{item.name}</span>
+                <span className='line-clamp-1' title={item.name}>{item.name}</span>
             </div>
             <div className="flex flex-col pl-4">
                 {item.children.length > 0 && open && (

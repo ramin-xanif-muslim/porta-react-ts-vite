@@ -23,13 +23,13 @@ function App() {
                 </div>
             }
         >
-            <AntdConfigProvider>
-                <QueryClientProvider client={queryClient}>
-                    <RouterProvider router={createBrowserRouter(router)} />
+                <AntdConfigProvider>
+                    <QueryClientProvider client={queryClient}>
+                        <RouterProvider router={createBrowserRouter(router)} />
 
-                    <ReactQueryDevtools initialIsOpen={false} />
-                </QueryClientProvider>
-            </AntdConfigProvider>
+                        <ReactQueryDevtools initialIsOpen={false} />
+                    </QueryClientProvider>
+                </AntdConfigProvider>
         </Suspense>
     );
 }
