@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { RiUploadLine } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
-import { FiPlus } from "react-icons/fi";
 import { IoFilter } from "react-icons/io5";
 import { HiOutlineArrowSmDown } from "react-icons/hi";
+import CreateFolderBnt from "./create-folder/CreateFolderBnt";
 
 
 
@@ -22,15 +22,7 @@ const FoldersLayout = () => {
                         </span>
                     </button>
 
-                    <button className="bg-grayColor-50 flex items-center p-2 rounded-full px-4 py-2">
-                        <span>
-                            <FiPlus />
-                        </span>
-                        <span className="ml-2 hidden sm:flex line-clamp-1 truncate">Create Folder</span>
-                        <span className="ml-6">
-                            <IoIosArrowDown />
-                        </span>
-                    </button>
+                    <CreateFolderBnt />
                 </div>
 
                 <div>

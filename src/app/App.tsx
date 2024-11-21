@@ -6,6 +6,7 @@ import { Spin } from "antd";
 
 import router from "../router/router.js";
 import { queryClient } from "../api/query-client.js";
+import { AntdConfigProvider } from "../providers/antd-config-provider.js";
 
 function App() {
     return (
@@ -22,12 +23,13 @@ function App() {
                 </div>
             }
         >
-            <QueryClientProvider client={queryClient}>
-                
-                <RouterProvider router={createBrowserRouter(router)} />
+            <AntdConfigProvider>
+                <QueryClientProvider client={queryClient}>
+                    <RouterProvider router={createBrowserRouter(router)} />
 
-                <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
+                    <ReactQueryDevtools initialIsOpen={false} />
+                </QueryClientProvider>
+            </AntdConfigProvider>
         </Suspense>
     );
 }
