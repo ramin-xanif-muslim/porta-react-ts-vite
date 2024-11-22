@@ -12,7 +12,6 @@ import { CgFileDocument } from "react-icons/cg";
 import { FaRegStar } from "react-icons/fa";
 
 import { FolderDataDTO } from "../../types";
-import { foldersData } from "../../types/data";
 import DotsTableCell from "./DotsTableCell";
 import { foldersApi } from "./api";
 
@@ -88,14 +87,6 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     },
 ];
 
-const getFilters = (searchParams: URLSearchParams) => {
-    const filters: Record<string, string> = {};
-    searchParams.forEach((value, key) => {
-        filters[key] = value;
-    });
-    return filters;
-};
-
 // const fetchFolder = (
 //     filters: Record<string, string>,
 //     id: string | undefined
@@ -132,7 +123,7 @@ const FolderPage = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const { data, isPlaceholderData } = useQuery({
+    const {  isPlaceholderData } = useQuery({
         ...foldersApi.getFoldersListQueryOptions({ folderId: id}),
         placeholderData: keepPreviousData,
     });
@@ -164,7 +155,7 @@ const FolderPage = () => {
                 pagination={false}
                 scroll={{ x: window.innerHeight }}
                 columns={columns}
-                dataSource={data}
+                dataSource={[]}
                 loading={isPlaceholderData}
             />
         </div>
