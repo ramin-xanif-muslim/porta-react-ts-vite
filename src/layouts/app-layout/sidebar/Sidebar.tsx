@@ -7,10 +7,9 @@ import SidebarMenu from "./sidebar-menu/SidebarMenu";
 import { menuList, menuList2, menuList3 } from "./data-menu";
 
 const Sidebar = () => {
-
     return (
         <div className="text-gray-500 overflow-y-auto h-screen md:h-[calc(100vh-100px)] no-scrollbar  py-8">
-            <div className="mx-0 md:mx-8">
+            <div className="mx-8">
                 <div
                     className={classNames({
                         "menu-item": true,
@@ -30,9 +29,9 @@ const Sidebar = () => {
                 <SidebarMenu list={menuList} />
             </div>
 
-            <hr className="border border-[#F3F4F6FF] my-5"/>
+            <hr className="border border-[#F3F4F6FF] my-5" />
 
-            <div className="mx-2 md:mx-8 ">
+            <div className="mx-8">
                 <h2 className="pl-4">ADMIN</h2>
 
                 <SidebarMenu list={menuList2} />
@@ -40,10 +39,8 @@ const Sidebar = () => {
 
             <hr className="border border-[#F3F4F6FF] my-5" />
 
-            <div className="mx-2 md:mx-8 ">
-
+            <div className="mx-8">
                 <SidebarMenu list={menuList3} />
-
             </div>
         </div>
     );

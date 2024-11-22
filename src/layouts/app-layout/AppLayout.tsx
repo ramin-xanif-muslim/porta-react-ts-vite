@@ -20,21 +20,16 @@ const AppLayout = () => {
             <div className="flex">
                 {/* sidebar */}
                 <AnimatePresence>
-                    {isOpenSidebar && (
-                        <motion.aside
-                            initial={{ width: 0 }}
-                            animate={{
-                                width: 300,
-                            }}
-                            exit={{
-                                width: 0,
-                                transition: { duration: 0.3 },
-                            }}
-                            className="shrink-0 hidden md:block"
-                        >
-                            <Sidebar />
-                        </motion.aside>
-                    )}
+                    <motion.aside
+                        initial={{ width: isOpenSidebar ? 0 : 300 }}
+                        animate={{
+                            width: isOpenSidebar ? 300 : 0,
+                            transition: { duration: 0.3 },
+                        }}
+                        className="shrink-0 hidden md:block"
+                    >
+                        <Sidebar />
+                    </motion.aside>
                 </AnimatePresence>
 
                 {/* content */}

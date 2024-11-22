@@ -6,6 +6,7 @@ import Profile from "./profile/Profile";
 import MobileSidebar from "../sidebar/mobile-sidebar/MobileSidebar";
 import useStore from "../../../store/useStore";
 
+
 const Header = () => {
     const toggleSidebar = useStore((state) => state.toggleSidebar);
     return (

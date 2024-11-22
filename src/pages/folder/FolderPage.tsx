@@ -122,7 +122,7 @@ const fetchFolder = (
     return new Promise<FolderDataDTO[]>((resolve) => {
         setTimeout(() => {
             resolve(requestedData);
-        }, 300);
+        }, 0);
     });
 };
 
