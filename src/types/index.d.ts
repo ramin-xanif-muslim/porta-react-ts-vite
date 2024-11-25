@@ -3,6 +3,11 @@ export type FolderDTO = {
     name: string;
     parentId?: string | null;
 };
+export type FolderListItemDTO = {
+    id: string;
+    name: string;
+    parentId?: string | null;
+};
 
 
 interface FolderDataDTO {

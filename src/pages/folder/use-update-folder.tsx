@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { foldersApi } from "./api";
 
-export function useCreateFolder() {
+export function useUpdateFolder() {
     const queryClient = useQueryClient();
 
-    const createFolderMutation = useMutation({
-        mutationFn: foldersApi.createFolder,
+    const updateFolderMutation = useMutation({
+        mutationFn: foldersApi.updateFolder,
         async onSettled() {
             await queryClient.invalidateQueries(
                 foldersApi.getFoldersListQueryOptions()
@@ -13,18 +13,20 @@ export function useCreateFolder() {
         },
     });
 
-    const handleCreate = ({
+    const handleUpdate = ({
+        id,
         name,
         parentId,
     }: {
+        id: string;
         name: string;
-        parentId?: string;
+        parentId?: string | null | undefined;
     }) => {
-        createFolderMutation.mutate({ name, parentId });
+        updateFolderMutation.mutate({ id, name, parentId });
     };
 
     return {
-        handleCreate,
-        isPending: createFolderMutation.isPending,
+        handleUpdate,
+        isPending: updateFolderMutation.isPending,
     };
 }

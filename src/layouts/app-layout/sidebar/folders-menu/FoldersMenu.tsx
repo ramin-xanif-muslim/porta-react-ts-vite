@@ -31,56 +31,51 @@ export default function FoldersMenu() {
     const { pathname } = useLocation();
     const [open, setOpen] = useState(pathname.includes(path));
 
-    
-    const {
-        data: folders,
-        isLoading
-    } = useQuery({
+    const { data: folders, isLoading } = useQuery({
         ...foldersApi.getFoldersListQueryOptions(),
         placeholderData: keepPreviousData,
         enabled: open,
-        select: (data) => data.data,
-        retry: false
+        select: (data) => data.data.list,
+        retry: false,
     });
 
     return (
-        <Link to={path} className="flex flex-col">
-            <Spin spinning={isLoading} size="small">
-                <div
-                    className={classNames({
-                        "menu-item": true,
-                        "active-menu": pathname === path,
-                    })}
-                    onClick={() => setOpen(!open)}
-                >
-                    <div>
-                        <FaRegFolder className="size-6" />
-                    </div>
-                    <span className="">All files</span>
-                    <span className="flex flex-col ml-auto">
-                        <IoIosArrowForward
-                            className={classNames({
-                                "transition-all": true,
-                                "rotate-90": open,
-                            })}
-                        />
-                    </span>
-                </div>
-                <div className="flex flex-col pl-4">
-                    {open &&
-                        folders &&
-                        buildHierarchy(folders).map((item) => (
-                            <FolderItem
-                                key={item.id}
-                                item={item}
-                                openParents={getParentFoldersId(
-                                    folders,
-                                    pathname
-                                )}
+        <div className="flex flex-col">
+            <Link to={path}>
+                <Spin spinning={isLoading}>
+                    <div
+                        className={classNames({
+                            "menu-item": true,
+                            "active-menu": pathname === path,
+                        })}
+                        onClick={() => setOpen(!open)}
+                    >
+                        <div>
+                            <FaRegFolder className="size-6" />
+                        </div>
+                        <span className="">All files</span>
+                        <span className="flex flex-col ml-auto">
+                            <IoIosArrowForward
+                                className={classNames({
+                                    "transition-all": true,
+                                    "rotate-90": open,
+                                })}
                             />
-                        ))}
-                </div>
-            </Spin>
-        </Link>
+                        </span>
+                    </div>
+                </Spin>
+            </Link>
+            <div className="flex flex-col pl-4">
+                {open &&
+                    folders &&
+                    buildHierarchy(folders).map((item) => (
+                        <FolderItem
+                            key={item.id}
+                            item={item}
+                            openParents={getParentFoldersId(folders, pathname)}
+                        />
+                    ))}
+            </div>
+        </div>
     );
 }

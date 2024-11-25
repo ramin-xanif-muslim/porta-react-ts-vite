@@ -14,7 +14,7 @@ const CreateFolderBnt = () => {
 
     const { id } = useParams();
 
-    const createFolder = useCreateFolder({ id });
+    const createFolder = useCreateFolder();
 
     useEffect(() => {
         if (isModalOpen) {

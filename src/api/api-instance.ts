@@ -1,55 +1,72 @@
-import axios, { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from "axios";
+import { notification } from "antd";
+import axios, {
+    AxiosResponse,
+    AxiosError,
+    InternalAxiosRequestConfig,
+} from "axios";
 
 export type ResponseType<T> = {
-  isSuccess: boolean;
-  error: string | null;
-  data: T;
-}
+    isSuccess: boolean;
+    error: { type: string; message: string } | null;
+    data: T | null;
+};
 
 export const BASE_URL =
-  "https://vms-core-gdh7ekf4cffjb7bq.westeurope-01.azurewebsites.net";
+    "https://app-vms-core-test-gzc2fcffh8hnhpdw.germanywestcentral-01.azurewebsites.net";
 
 const service = () => {
-  const headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Access-Control-Max-Age': 86400,
-    'Access-Control-Allow-Origin': '*',
-  };
+    const headers = {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Max-Age": 86400,
+        "Access-Control-Allow-Origin": "*",
+    };
 
-  const requestResolve = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    return config;
-  };
+    const requestResolve = (
+        config: InternalAxiosRequestConfig
+    ): InternalAxiosRequestConfig => {
+        // console.log("requestResolve", config);
+        return config;
+    };
 
-  const responseResolve = (res: AxiosResponse) => {
-    return res.data;
-  };
+    const responseResolve = (res: AxiosResponse) => {
+        // console.log("responseResolve", res.data);
 
-  const responseReject = (err: AxiosError) => {
-    const error = err.response;
+        if (!res.data.isSuccess) {
+            notification.error({
+                message: "Error",
+                description: res.data.error.message,
+            });
+            return Promise.reject(res.data);
+        }
+        return res.data;
+    };
 
-    if (error?.status === 422) {
-      console.log(error.data);
-    } else if (error?.status === 404) {
-      console.log(error.data);
-    }
+    const responseReject = (err: AxiosError) => {
+        // console.log("responseReject", err);
+        const error = err.response;
 
-    return Promise.reject(err);
-  };
+        if (error?.status === 422) {
+            console.log(error.data);
+        } else if (error?.status === 404) {
+            console.log(error.data);
+        }
 
-  const instance = axios.create({
-    baseURL: BASE_URL,
-    timeout: 0,
-    withCredentials: true,
-    headers
-  });
+        return Promise.reject(err);
+    };
 
-  instance.interceptors.request.use(requestResolve);
+    const instance = axios.create({
+        baseURL: BASE_URL,
+        timeout: 0,
+        withCredentials: true,
+        headers,
+    });
 
-  instance.interceptors.response.use(responseResolve, responseReject);
+    instance.interceptors.request.use(requestResolve);
 
-  return instance;
+    instance.interceptors.response.use(responseResolve, responseReject);
+
+    return instance;
 };
 
 export const API = service();
-

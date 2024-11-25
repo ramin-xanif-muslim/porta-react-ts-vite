@@ -3,10 +3,13 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
 import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
+import EditFolderName from "./EditFolderName";
+import DeleteFolder from "./DeleteFolder";
 
 interface FolderItemI {
     id: string;
     name: string;
+    parentId?: string | null | undefined;
     children: FolderItemI[];
 }
 
@@ -26,14 +29,14 @@ export default function FolderItem({ item, openParents }: Props) {
     };
 
     return (
-        <Link to={`/folders/${item.id}`}>
+        <Link className="group" to={`/folders/${item.id}`}>
             <div
                 className={classNames({
                     "menu-item": true,
                     "active-menu": isActiveFolder(),
                 })}
             >
-                <span className="flex flex-col w-4">
+                <span className="w-4">
                     {item.children.length > 0 && (
                         <div onClick={(e) => {
                             e.stopPropagation()
@@ -52,7 +55,12 @@ export default function FolderItem({ item, openParents }: Props) {
                 <div>
                     <FaRegFolder className="size-6" />
                 </div>
-                <span className='line-clamp-1' title={item.name}>{item.name}</span>
+                <span className='line-clamp-1' title={item.name}><EditFolderName folderName={item.name} id={item.id} parentId={item.parentId} /></span>
+
+                <div className="ml-auto">
+                    <DeleteFolder id={item.id} />
+                </div>
+
             </div>
             <div className="flex flex-col pl-4">
                 {item.children.length > 0 && open && (

@@ -6,54 +6,70 @@ import { FolderDataDTO } from "../../types";
 // url: /api/v0.01/vms/dms/folders/{folderId}
 
 export enum FoldersApi {
-    list = "/api/v0.01/vms/dms/folders",
+    baseUrl = "/api/v0.01/vms/dms/folders",
+    list = "/api/v0.01/vms/dms/folders/list",
 }
 
 export const foldersApi = {
     baseKey: "folders",
     getFoldersListQueryOptions: () => {
         return queryOptions({
-            queryKey: [foldersApi.baseKey, "list"],
+            queryKey: [foldersApi.baseKey],
             queryFn: (meta) =>
-                API.get<FolderDataDTO[]>(FoldersApi.list, {
+                API.post(FoldersApi.list, {
                     signal: meta?.signal,
                 }),
         });
     },
     getFolderListByIdQueryOptions: ({ folderId }: { folderId?: string }) => {
+        const url = `${FoldersApi.list}/${folderId}`;
         return queryOptions({
-            queryKey: [foldersApi.baseKey, "list", folderId],
+            queryKey: [foldersApi.baseKey, folderId],
             queryFn: (meta) =>
-                API.get<FolderDataDTO[]>(FoldersApi.list + "/" + folderId, {
+                API.post<FolderDataDTO[]>(url, {
                     signal: meta?.signal,
                 }),
         });
     },
-    getFolderListByFiltersQueryOptions: ({ folderId, searchParams }: { folderId?: string, searchParams?: string }) => {
-
-        const url = `${FoldersApi.list}/${folderId}?${searchParams}`
+    getFolderListByFiltersQueryOptions: ({
+        folderId,
+        searchParams,
+    }: {
+        folderId?: string;
+        searchParams?: string;
+    }) => {
+        const url = `${FoldersApi.baseUrl}/${folderId}`;
+        // const url = `${FoldersApi.list}/${folderId}?${searchParams}`
         return queryOptions({
-            queryKey: [foldersApi.baseKey, "list", folderId, searchParams],
+            queryKey: [foldersApi.baseKey, folderId, searchParams],
             queryFn: (meta) =>
-                API.get<FolderDataDTO[]>(FoldersApi.list + "/" + url, {
+                API.post<FolderDataDTO[]>(url, {
                     signal: meta?.signal,
                 }),
         });
     },
 
     createFolder: (data: { name: string; parentId?: string }) => {
-        return API.post(FoldersApi.list, data);
+        return API.post(FoldersApi.baseUrl, data);
     },
 
-    //   updateTodo: (data: Partial<TodoDto> & { id: string }) => {
-    //     return API<TodoDto>(`/tasks/${data.id}`, {
-    //       method: "PATCH",
-    //       json: data
-    //     });
-    //   },
-    //   deleteTodo: (id: string) => {
-    //     return API(`/tasks/${id}`, {
-    //       method: "DELETE"
-    //     });
-    //   }
+    deleteFolder: (id: string) => {
+        return API.delete(`${FoldersApi.baseUrl}/${id}`);
+    },
+
+    updateFolder: ({
+        id,
+        name,
+        parentId,
+    }: {
+        id: string;
+        name: string;
+        parentId?: string | null | undefined;
+    }) => {
+        console.log({ id, name, parentId });
+        return API.put(`${FoldersApi.baseUrl}/${id}`, {
+            name,
+            parentId,
+        });
+    },
 };
