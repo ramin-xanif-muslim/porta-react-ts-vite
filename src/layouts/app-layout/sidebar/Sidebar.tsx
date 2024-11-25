@@ -9,7 +9,7 @@ const Sidebar = () => {
     
     
     return (
-        <div className="text-gray-500 overflow-y-auto h-screen md:h-[calc(100vh-100px)] no-scrollbar  py-8">
+        <div className="text-gray-500 overflow-y-auto h-screen md:h-[calc(100vh-100px)] no-scrollbar min-w-[250px]  py-8">
             <div className="mx-8">
                 <div
                     className={classNames({
