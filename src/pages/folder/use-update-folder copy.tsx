@@ -35,7 +35,7 @@ export function useUpdateFolder() {
 
             return { previousData };
         },
-        onError: (err, _, context) => {
+        onError: (_, __, context) => {
             // Rollback to previous data on error
             if (context?.previousData) {
                 queryClient.setQueryData<FolderDTO[]>(
