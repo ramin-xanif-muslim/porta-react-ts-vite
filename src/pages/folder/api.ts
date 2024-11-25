@@ -5,7 +5,7 @@ import { FolderDataDTO } from "../../types";
 // url: /api/v0.01/vms/dms/folders/list
 // url: /api/v0.01/vms/dms/folders/{folderId}
 
-enum FoldersApi {
+export enum FoldersApi {
     list = "/api/v0.01/vms/dms/folders",
 }
 
@@ -25,6 +25,17 @@ export const foldersApi = {
             queryKey: [foldersApi.baseKey, "list", folderId],
             queryFn: (meta) =>
                 API.get<FolderDataDTO[]>(FoldersApi.list + "/" + folderId, {
+                    signal: meta?.signal,
+                }),
+        });
+    },
+    getFolderListByFiltersQueryOptions: ({ folderId, searchParams }: { folderId?: string, searchParams?: string }) => {
+
+        const url = `${FoldersApi.list}/${folderId}?${searchParams}`
+        return queryOptions({
+            queryKey: [foldersApi.baseKey, "list", folderId, searchParams],
+            queryFn: (meta) =>
+                API.get<FolderDataDTO[]>(FoldersApi.list + "/" + url, {
                     signal: meta?.signal,
                 }),
         });

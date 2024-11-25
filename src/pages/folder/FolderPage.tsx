@@ -12,8 +12,8 @@ import { CgFileDocument } from "react-icons/cg";
 import { FaRegStar } from "react-icons/fa";
 
 import { FolderDataDTO } from "../../types";
-import { foldersData } from "../../types/data";
 import DotsTableCell from "./DotsTableCell";
+import { foldersApi } from "./api";
 
 const getIcon = (name: string) => {
     const type = name.split(".")[1];
@@ -87,58 +87,62 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     },
 ];
 
-const getFilters = (searchParams: URLSearchParams) => {
-    const filters: Record<string, string> = {};
-    searchParams.forEach((value, key) => {
-        filters[key] = value;
-    });
-    return filters;
-};
+// const getFiltersFromURLSearchParams = (searchParams: URLSearchParams) => {
+//     const filters: Record<string, string> = {};
+//     searchParams.forEach((value, key) => {
+//         filters[key] = value;
+//     });
+//     return filters;
+// };
 
-const fetchFolder = (
-    filters: Record<string, string>,
-    id: string | undefined
-) => {
-    const requestedData = foldersData.filter((folder) => folder.folderId === id);
+// const fetchFolder = (
+//     filters: Record<string, string>,
+//     id: string | undefined
+// ) => {
+//     const requestedData = foldersData.filter((folder) => folder.folderId === id);
 
-    if (filters.sortBy) {
-        const [field, order] = filters.sortBy.split(".");
-        requestedData.sort((a, b) => {
-            const aValue = a[field as keyof FolderDataDTO];
-            const bValue = b[field as keyof FolderDataDTO];
+//     if (filters.sortBy) {
+//         const [field, order] = filters.sortBy.split(".");
+//         requestedData.sort((a, b) => {
+//             const aValue = a[field as keyof FolderDataDTO];
+//             const bValue = b[field as keyof FolderDataDTO];
 
-            let result = 0;
-            if (aValue === bValue) return 0;
-            if (order === "ascend") {
-                result = aValue < bValue ? -1 : 1;
-            } else {
-                result = aValue > bValue ? -1 : 1;
-            }
+//             let result = 0;
+//             if (aValue === bValue) return 0;
+//             if (order === "ascend") {
+//                 result = aValue < bValue ? -1 : 1;
+//             } else {
+//                 result = aValue > bValue ? -1 : 1;
+//             }
 
-            return result;
-        });
-    }
+//             return result;
+//         });
+//     }
 
-    return new Promise<FolderDataDTO[]>((resolve) => {
-        setTimeout(() => {
-            resolve(requestedData);
-        }, 0);
-    });
-};
+//     return new Promise<FolderDataDTO[]>((resolve) => {
+//         setTimeout(() => {
+//             resolve(requestedData);
+//         }, 0);
+//     });
+// };
 
 const FolderPage = () => {
     const { id } = useParams();
 
     const [searchParams, setSearchParams] = useSearchParams();
 
+    // const { data, isPlaceholderData } = useQuery({
+    //     queryKey: ["folder", id, searchParams.toString()],
+    //     queryFn: () => fetchFolder(getFiltersFromURLSearchParams(searchParams), id),
+    //     placeholderData: keepPreviousData,
+    // });
+
     const { data, isPlaceholderData } = useQuery({
-        queryKey: ["folder", id, searchParams.toString()],
-        queryFn: () => fetchFolder(getFilters(searchParams), id),
+        ...foldersApi.getFolderListByFiltersQueryOptions({ folderId: id, searchParams: searchParams.toString() }),
         placeholderData: keepPreviousData,
     });
     
 
-    // const { folders, isPlaceholderData } = useGetFolders()
 
     return (
         <div className="mt-2" key={id}>
@@ -162,7 +166,7 @@ const FolderPage = () => {
                 pagination={false}
                 scroll={{ x: window.innerHeight }}
                 columns={columns}
-                dataSource={data}
+                dataSource={data?.data}
                 loading={isPlaceholderData}
             />
         </div>
