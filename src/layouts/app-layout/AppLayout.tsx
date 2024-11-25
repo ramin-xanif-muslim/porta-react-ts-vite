@@ -5,7 +5,6 @@ import {
     ResizablePanel,
     ResizablePanelGroup,
 } from "../../components/ui/resizable";
-// } from "@/components/ui/resizable";
 
 import Header from "./header/Header";
 import Sidebar from "./sidebar/Sidebar";
@@ -13,12 +12,17 @@ import Breadcrumb from "./Breadcrumb";
 import { Outlet } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import useStore from "../../store/useStore";
+import classNames from "classnames";
 
 const AppLayout = () => {
     const isOpenSidebar = useStore((state) => state.isOpenSidebar);
 
+    const defaultSize = localStorage.getItem("sidebar-width")
+        ? Number(localStorage.getItem("sidebar-width"))
+        : 20;
+
     const handleResize = (resize: number) => {
-        console.log(resize);
+        localStorage.setItem("sidebar-width", resize.toString());
     };
 
     return (
@@ -30,9 +34,13 @@ const AppLayout = () => {
             <div className="flex">
                 <ResizablePanelGroup direction="horizontal">
                     <ResizablePanel
-                        defaultSize={20}
+                        defaultSize={defaultSize}
                         // minSize={15}
                         onResize={handleResize}
+                        className={classNames({
+                            "hidden md:block": true,
+                            "!hidden": !isOpenSidebar,
+                        })}
                     >
                         {/* sidebar */}
                         <AnimatePresence>
@@ -48,7 +56,7 @@ const AppLayout = () => {
                             </motion.aside>
                         </AnimatePresence>
                     </ResizablePanel>
-                    <ResizableHandle />
+                    <ResizableHandle withHandle />
                     <ResizablePanel>
                         {/* content */}
                         <div className="flex-1 h-[calc(100vh-70px)] md:h-[calc(100vh-100px)] bg-[#F3F4F6FF]  p-4  overflow-y-auto no-scrollbar">
@@ -81,4 +89,3 @@ const AppLayout = () => {
 };
 
 export default AppLayout;
-
