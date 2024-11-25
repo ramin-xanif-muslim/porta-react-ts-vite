@@ -2,11 +2,12 @@ import { TbArrowsMoveVertical } from "react-icons/tb";
 import { FaBuffer } from "react-icons/fa";
 import classNames from "classnames";
 import FoldersMenu from "./folders-menu/FoldersMenu";
-import { folders } from "../../../types/data";
 import SidebarMenu from "./sidebar-menu/SidebarMenu";
 import { menuList, menuList2, menuList3 } from "./data-menu";
 
 const Sidebar = () => {
+    
+    
     return (
         <div className="text-gray-500 overflow-y-auto h-screen md:h-[calc(100vh-100px)] no-scrollbar  py-8">
             <div className="mx-8">
@@ -24,7 +25,7 @@ const Sidebar = () => {
                     </span>
                 </div>
 
-                <FoldersMenu folders={folders} />
+                <FoldersMenu />
 
                 <SidebarMenu list={menuList} />
             </div>

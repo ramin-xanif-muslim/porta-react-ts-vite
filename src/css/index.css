@@ -5,7 +5,18 @@
 @layer base {
     :root {
         --brand-color: #6d31edff;
-        --brand-color-light: #d3c1faff;
+
+        --brand-color-50: color-mix(in srgb, var(--brand-color) 5%, white);
+        --brand-color-100: color-mix(in srgb, var(--brand-color) 10%, white);
+        --brand-color-200: color-mix(in srgb, var(--brand-color) 20%, white);
+        --brand-color-300: color-mix(in srgb, var(--brand-color) 30%, white);
+        --brand-color-400: color-mix(in srgb, var(--brand-color) 40%, white);
+        --brand-color-500: color-mix(in srgb, var(--brand-color) 90%, black);
+        --brand-color-600: color-mix(in srgb, var(--brand-color) 80%, black);
+        --brand-color-700: color-mix(in srgb, var(--brand-color) 70%, black);
+        --brand-color-800: color-mix(in srgb, var(--brand-color) 60%, black);
+        --brand-color-900: color-mix(in srgb, var(--brand-color) 50%, black);
+        
 
         --background: 0 0% 100%;
         --foreground: 0 0% 3.9%;
@@ -90,5 +101,8 @@
 }
 
 .active-menu {
-    @apply bg-brand-200 text-brand font-[700];
+    @apply bg-brand-300 text-brand font-[700];
+}
+.menu-item:not(.active-menu):hover {
+    @apply bg-brand-50;
 }

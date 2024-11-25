@@ -5,7 +5,7 @@ export default {
     theme: {
     	extend: {
     		fontFamily: {
-    			sans: ["Manrope", "sans-serif"]
+    			manrope: ["Manrope", "sans-serif"]
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
@@ -14,7 +14,16 @@ export default {
     		},
     		colors: {
     			brand: {
-    				'200': 'var(--brand-color-light)',
+					'50': 'var(--brand-color-50)',
+					'100': 'var(--brand-color-100)',
+					'200': 'var(--brand-color-200)',
+					'300': 'var(--brand-color-300)',
+    				'400': 'var(--brand-color-400)',
+    				'500': 'var(--brand-color-500)',
+    				'600': 'var(--brand-color-600)',
+    				'700': 'var(--brand-color-700)',
+    				'800': 'var(--brand-color-800)',
+    				'900': 'var(--brand-color-900)',
     				DEFAULT: 'var(--brand-color)'
     			},
     			grayColor: {

@@ -1,25 +1,40 @@
+import { useRef, useEffect } from "react";
 import { useState } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Button, InputRef } from "antd";
 import { FiPlus } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaRegFolder } from "react-icons/fa6";
-import { foldersApi } from "../../../pages/folder/api";
 import { useParams } from "react-router-dom";
+import { useCreateFolder } from "../../../pages/folder/use-create-folder";
 
 const CreateFolderBnt = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form] = Form.useForm();
+    const inputRef = useRef<InputRef>(null);
 
     const { id } = useParams();
 
+    const createFolder = useCreateFolder({ id });
+
+    useEffect(() => {
+        if (isModalOpen) {
+            const timer = setTimeout(() => {
+                inputRef.current?.input?.focus();
+            }, 100);
+
+            return () => clearTimeout(timer);
+        }
+    }, [isModalOpen]);
+
     const handleCancel = () => {
         setIsModalOpen(false);
+        form.resetFields();
     };
 
     const handleCreate = async ({ name }: { name: string }) => {
         try {
-            foldersApi.createFolder({ name, parentId: id });
-            setIsModalOpen(false);
+           createFolder.handleCreate({ name, parentId: id });
+           handleCancel()
         } catch (error) {
             console.log(error);
         }
@@ -30,7 +45,6 @@ const CreateFolderBnt = () => {
             <button
                 className="bg-grayColor-50 flex items-center p-2 rounded-full px-4 py-2"
                 onClick={() => {
-                    console.log("click");
                     setIsModalOpen(true);
                 }}
             >
@@ -55,17 +69,20 @@ const CreateFolderBnt = () => {
                     </div>
                 }
                 open={isModalOpen}
-                onOk={() => {
-                    form.validateFields()
-                        .then((values) => {
-                            handleCreate(values);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
-                }}
                 onCancel={handleCancel}
-                okText="Create"
+                footer={[
+                    <Button key="back" onClick={handleCancel}>
+                        Cancel
+                    </Button>,
+                    <Button
+                        key="submit"
+                        type="primary"
+                        loading={createFolder.isPending}
+                        onClick={() => form.submit()}
+                    >
+                        Create
+                    </Button>,
+                ]}
             >
                 <Form
                     form={form}
@@ -84,7 +101,10 @@ const CreateFolderBnt = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="Enter folder name" />
+                        <Input
+                            ref={inputRef}
+                            placeholder="Enter folder name"
+                        />
                     </Form.Item>
                 </Form>
             </Modal>

@@ -7,6 +7,7 @@ export type FolderDTO = {
 
 interface FolderDataDTO {
     key: string;
+    id: string;
     name: string;
     size: string;
     lastModified: string;

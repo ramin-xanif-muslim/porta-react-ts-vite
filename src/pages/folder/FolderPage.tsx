@@ -136,6 +136,9 @@ const FolderPage = () => {
         queryFn: () => fetchFolder(getFilters(searchParams), id),
         placeholderData: keepPreviousData,
     });
+    
+
+    // const { folders, isPlaceholderData } = useGetFolders()
 
     return (
         <div className="mt-2" key={id}>

@@ -6,25 +6,34 @@ import { FolderDataDTO } from "../../types";
 // url: /api/v0.01/vms/dms/folders/{folderId}
 
 enum FoldersApi {
-    list = "/api/v0.01/vms/dms/folders/",
-    byId = "/api/v0.01/vms/dms/folders/{folderId}",
+    list = "/api/v0.01/vms/dms/folders",
 }
 
 export const foldersApi = {
     baseKey: "folders",
-    getFoldersListQueryOptions: ({ folderId }: { folderId?: string }) => {
+    getFoldersListQueryOptions: () => {
+        return queryOptions({
+            queryKey: [foldersApi.baseKey, "list"],
+            queryFn: (meta) =>
+                API.get<FolderDataDTO[]>(FoldersApi.list, {
+                    signal: meta?.signal,
+                }),
+        });
+    },
+    getFolderListByIdQueryOptions: ({ folderId }: { folderId?: string }) => {
         return queryOptions({
             queryKey: [foldersApi.baseKey, "list", folderId],
             queryFn: (meta) =>
-                API.get<FolderDataDTO[]>(FoldersApi.list + folderId, {
+                API.get<FolderDataDTO[]>(FoldersApi.list + "/" + folderId, {
                     signal: meta?.signal,
                 }),
         });
     },
 
-      createFolder: (data: {name: string, parentId?: string}) => {
-        return API.post(`/api/v0.01/vms/dms/folders/`, data);
-      },
+    createFolder: (data: { name: string; parentId?: string }) => {
+        return API.post(FoldersApi.list, data);
+    },
+
     //   updateTodo: (data: Partial<TodoDto> & { id: string }) => {
     //     return API<TodoDto>(`/tasks/${data.id}`, {
     //       method: "PATCH",

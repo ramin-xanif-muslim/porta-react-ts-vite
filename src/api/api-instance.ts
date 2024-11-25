@@ -1,5 +1,11 @@
 import axios, { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from "axios";
 
+export type ResponseType<T> = {
+  isSuccess: boolean;
+  error: string | null;
+  data: T;
+}
+
 export const BASE_URL =
   "https://vms-core-gdh7ekf4cffjb7bq.westeurope-01.azurewebsites.net";
 
