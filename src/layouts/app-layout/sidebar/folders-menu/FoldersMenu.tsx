@@ -9,7 +9,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Spin } from "antd";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { foldersApi } from "../../../../pages/folder/api";
-// import { folders } from "../../../../types/data";
+import ErrorBoundary from "../../../../components/ErrorBoundary";
 
 const path = "/folders";
 
@@ -39,43 +39,50 @@ export default function FoldersMenu() {
         retry: false,
     });
 
+    
+
     return (
-        <div className="flex flex-col">
-            <Link to={path}>
-                <Spin spinning={isLoading}>
-                    <div
-                        className={classNames({
-                            "menu-item": true,
-                            "active-menu": pathname === path,
-                        })}
-                        onClick={() => setOpen(!open)}
-                    >
-                        <div>
-                            <FaRegFolder className="size-6" />
+        <ErrorBoundary>
+            <div className="flex flex-col">
+                <Link to={path}>
+                    <Spin spinning={isLoading}>
+                        <div
+                            className={classNames({
+                                "menu-item": true,
+                                "active-menu": pathname === path,
+                            })}
+                            onClick={() => setOpen(!open)}
+                        >
+                            <div>
+                                <FaRegFolder className="size-6" />
+                            </div>
+                            <span className="">All files</span>
+                            <span className="flex flex-col ml-auto">
+                                <IoIosArrowForward
+                                    className={classNames({
+                                        "transition-all": true,
+                                        "rotate-90": open,
+                                    })}
+                                />
+                            </span>
                         </div>
-                        <span className="">All files</span>
-                        <span className="flex flex-col ml-auto">
-                            <IoIosArrowForward
-                                className={classNames({
-                                    "transition-all": true,
-                                    "rotate-90": open,
-                                })}
+                    </Spin>
+                </Link>
+                <div className="flex flex-col pl-4">
+                    {open &&
+                        !!folders?.[0] &&
+                        buildHierarchy(folders).map((item) => (
+                            <FolderItem
+                                key={item.id}
+                                item={item}
+                                openParents={getParentFoldersId(
+                                    folders,
+                                    pathname
+                                )}
                             />
-                        </span>
-                    </div>
-                </Spin>
-            </Link>
-            <div className="flex flex-col pl-4">
-                {open &&
-                    folders &&
-                    buildHierarchy(folders).map((item) => (
-                        <FolderItem
-                            key={item.id}
-                            item={item}
-                            openParents={getParentFoldersId(folders, pathname)}
-                        />
-                    ))}
+                        ))}
+                </div>
             </div>
-        </div>
+        </ErrorBoundary>
     );
 }

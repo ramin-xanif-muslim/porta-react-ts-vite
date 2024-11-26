@@ -1,4 +1,4 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+// import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Table } from "antd";
 import type { TableProps } from "antd";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -13,7 +13,7 @@ import { FaRegStar } from "react-icons/fa";
 
 import { FolderDataDTO } from "../../types";
 import DotsTableCell from "./DotsTableCell";
-import { foldersApi } from "./api";
+// import { foldersApi } from "./api";
 
 const getIcon = (name: string) => {
     const type = name.split(".")[1];
@@ -137,10 +137,10 @@ const FolderPage = () => {
     //     placeholderData: keepPreviousData,
     // });
 
-    const { data, isPlaceholderData } = useQuery({
-        ...foldersApi.getFolderListByFiltersQueryOptions({ folderId: id, searchParams: searchParams.toString() }),
-        placeholderData: keepPreviousData,
-    });
+    // const { data, isPlaceholderData } = useQuery({
+    //     ...foldersApi.getFolderListByFiltersQueryOptions({ folderId: id, searchParams: searchParams.toString() }),
+    //     placeholderData: keepPreviousData,
+    // });
     
 
 
@@ -166,8 +166,9 @@ const FolderPage = () => {
                 pagination={false}
                 scroll={{ x: window.innerHeight }}
                 columns={columns}
-                dataSource={data?.data}
-                loading={isPlaceholderData}
+                dataSource={[]}
+                // dataSource={data?.data}
+                // loading={isPlaceholderData}
             />
         </div>
     );

@@ -7,6 +7,7 @@ import { Spin } from "antd";
 import router from "../router/router.js";
 import { queryClient } from "../api/query-client.js";
 import { AntdConfigProvider } from "../providers/antd-config-provider.js";
+import ErrorBoundary from "../components/ErrorBoundary.js";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                 </div>
             }
         >
+            <ErrorBoundary>
                 <AntdConfigProvider>
                     <QueryClientProvider client={queryClient}>
                         <RouterProvider router={createBrowserRouter(router)} />
@@ -30,6 +32,7 @@ function App() {
                         <ReactQueryDevtools initialIsOpen={false} />
                     </QueryClientProvider>
                 </AntdConfigProvider>
+            </ErrorBoundary>
         </Suspense>
     );
 }

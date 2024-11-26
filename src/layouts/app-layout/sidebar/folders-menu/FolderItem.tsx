@@ -3,10 +3,10 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
 import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
-import EditFolderName from "./EditFolderName";
-import DeleteFolder from "./DeleteFolder";
+import RenameFolder from "./RenameFolder";
+import EllipsisMenu from "./EllipsisMenu";
 
-interface FolderItemI {
+export interface FolderItemI {
     id: string;
     name: string;
     parentId?: string | null | undefined;
@@ -55,10 +55,11 @@ export default function FolderItem({ item, openParents }: Props) {
                 <div>
                     <FaRegFolder className="size-6" />
                 </div>
-                <span className='line-clamp-1' title={item.name}><EditFolderName folderName={item.name} id={item.id} parentId={item.parentId} /></span>
+                <span className='line-clamp-1' title={item.name}><RenameFolder folderName={item.name} id={item.id} parentId={item.parentId} /></span>
 
                 <div className="ml-auto">
-                    <DeleteFolder id={item.id} />
+                    {/* <DeleteFolder id={item.id} /> */}
+                    <EllipsisMenu folder={item} />
                 </div>
 
             </div>

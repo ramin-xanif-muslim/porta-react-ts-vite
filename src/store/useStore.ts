@@ -5,6 +5,8 @@ export interface StoreState {
     toggleSidebar: () => void;
     brandColor: string;
     setBrandColor: (color: string) => void;
+    renamedFolder: string | null;
+    setRenamedFolder: (folderName: string | null) => void;
 }
 
 const useStore = create<StoreState>((set) => ({
@@ -15,6 +17,8 @@ const useStore = create<StoreState>((set) => ({
         .getPropertyValue("--brand-color")
         .trim(),
     setBrandColor: (color) => set({ brandColor: color }),
+    renamedFolder: null,
+    setRenamedFolder: (folderId) => set({ renamedFolder: folderId }),
 }));
 
 export default useStore;

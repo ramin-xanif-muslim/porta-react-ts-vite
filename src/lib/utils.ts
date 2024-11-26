@@ -14,11 +14,11 @@ export function buildHierarchy(data: FolderDTO[]): HierarchyItem[] {
   const map: Record<string, HierarchyItem> = {};
   const result: HierarchyItem[] = [];
 
-  data.forEach((item) => (map[item.id] = { ...item, children: [] }));
+  data?.forEach((item) => (map[item.id] = { ...item, children: [] }));
 
-  data.forEach((item) => {
+  data?.forEach((item) => {
       if (item.parentId) {
-          map[item.parentId].children.push(map[item.id]);
+          map[item.parentId]?.children.push(map[item.id]);
       } else {
           result.push(map[item.id]);
       }

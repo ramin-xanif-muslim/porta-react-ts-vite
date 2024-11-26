@@ -1,8 +1,9 @@
 import { Input, Spin } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUpdateFolder } from "../../../../pages/folder/use-update-folder";
+import useStore from "../../../../store/useStore";
 
-const EditFolderName = ({
+const RenameFolder = ({
     folderName,
     id,
     parentId,
@@ -14,10 +15,22 @@ const EditFolderName = ({
     const [edit, setEdit] = useState(false);
     const [name, setName] = useState<string>(folderName);
 
+    const renamedFolder = useStore((state) => state.renamedFolder);
+    const setRenamedFolder = useStore((state) => state.setRenamedFolder);
+
+    useEffect(() => {
+        if (renamedFolder === id) {
+            onDoubleClick();
+        }
+
+        return () => {};
+    }, [renamedFolder]);
+
     const updateFolder = useUpdateFolder();
+
     const onBlur = () => {
-        console.log(id);
         setEdit(false);
+        setRenamedFolder(null);
     };
 
     const onDoubleClick = () => {
@@ -28,6 +41,7 @@ const EditFolderName = ({
     const handleCancel = () => {
         setName(folderName);
         setEdit(false);
+        setRenamedFolder(null);
     };
 
     const handleUpdate = () => {
@@ -35,14 +49,15 @@ const EditFolderName = ({
             updateFolder.handleUpdate({ id, name: name.trim(), parentId });
         }
         setEdit(false);
+        setRenamedFolder(null);
     };
 
     return (
         <Spin spinning={false}>
-        {/* <Spin spinning={updateFolder.isPending}> */}
             <div onDoubleClick={onDoubleClick}>
                 {edit ? (
                     <Input
+                        autoFocus
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -62,4 +77,4 @@ const EditFolderName = ({
     );
 };
 
-export default EditFolderName;
+export default RenameFolder;
