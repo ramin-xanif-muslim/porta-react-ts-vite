@@ -3,7 +3,7 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 
 import type { MenuProps } from "antd";
-import { Dropdown } from "antd";
+import { Dropdown, Popconfirm } from "antd";
 import { FolderItemI } from "./FolderItem";
 import { useState } from "react";
 import classNames from "classnames";
@@ -23,14 +23,21 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
         {
             key: "delete",
             label: (
-                <div
-                    onClick={() => {
+                <Popconfirm
+                    title="Delete the folder"
+                    description="Are you sure to delete this folder?"
+                    onConfirm={() => {
                         handleDelete(folder.id);
                         navigate(-1);
                     }}
+                    okText="Yes"
+                    cancelText="No"
                 >
-                    Delete
-                </div>
+                    <div
+                    >
+                        Delete
+                    </div>
+                </Popconfirm>
             ),
             disabled: isPending,
             icon: <MdOutlineDeleteForever className="size-5" />,
