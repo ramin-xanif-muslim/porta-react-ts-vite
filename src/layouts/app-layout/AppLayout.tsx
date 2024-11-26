@@ -1,5 +1,10 @@
 import { CiCircleList } from "react-icons/ci";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import {
+    ResizableHandle,
+    ResizablePanel,
+    ResizablePanelGroup,
+} from "../../components/ui/resizable";
 
 import Header from "./header/Header";
 import Sidebar from "./sidebar/Sidebar";
@@ -7,9 +12,18 @@ import Breadcrumb from "./Breadcrumb";
 import { Outlet } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import useStore from "../../store/useStore";
+import classNames from "classnames";
 
 const AppLayout = () => {
     const isOpenSidebar = useStore((state) => state.isOpenSidebar);
+
+    const defaultSize = localStorage.getItem("sidebar-width")
+        ? Number(localStorage.getItem("sidebar-width"))
+        : 20;
+
+    const handleResize = (resize: number) => {
+        localStorage.setItem("sidebar-width", resize.toString());
+    };
 
     return (
         <div className="max-w-[1600px] mx-auto relative">
@@ -18,43 +32,57 @@ const AppLayout = () => {
             </div>
 
             <div className="flex">
-                {/* sidebar */}
-                <AnimatePresence>
-                    <motion.aside
-                        initial={{ width: isOpenSidebar ? 0 : 300 }}
-                        animate={{
-                            width: isOpenSidebar ? 300 : 0,
-                            transition: { duration: 0.3 },
-                        }}
-                        className="shrink-0 hidden md:block"
+                <ResizablePanelGroup direction="horizontal">
+                    <ResizablePanel
+                        defaultSize={defaultSize}
+                        // minSize={15}
+                        onResize={handleResize}
+                        className={classNames({
+                            "hidden md:block": true,
+                            "!hidden": !isOpenSidebar,
+                        })}
                     >
-                        <Sidebar />
-                    </motion.aside>
-                </AnimatePresence>
+                        {/* sidebar */}
+                        <AnimatePresence>
+                            <motion.aside
+                                initial={{ minWidth: isOpenSidebar ? 0 : 300 }}
+                                animate={{
+                                    minWidth: isOpenSidebar ? 300 : 0,
+                                    transition: { duration: 0.3 },
+                                }}
+                                className="shrink-0 hidden md:block"
+                            >
+                                <Sidebar />
+                            </motion.aside>
+                        </AnimatePresence>
+                    </ResizablePanel>
+                    <ResizableHandle withHandle />
+                    <ResizablePanel>
+                        {/* content */}
+                        <div className="flex-1 h-[calc(100vh-70px)] md:h-[calc(100vh-100px)] bg-[#F3F4F6FF]  p-4  overflow-y-auto no-scrollbar">
+                            {/* content header */}
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <Breadcrumb />
+                                </div>
 
-                {/* content */}
-                <div className="flex-1 h-[calc(100vh-70px)] md:h-[calc(100vh-100px)] bg-[#F3F4F6FF]  p-4  overflow-y-auto no-scrollbar">
-                    {/* content header */}
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <Breadcrumb />
+                                <div className="flex items-center">
+                                    <span className="p-2 cursor-pointer">
+                                        <CiCircleList className="size-[22px]" />
+                                    </span>
+                                    <span className="p-2 cursor-pointer bg-gray-200 rounded-full">
+                                        <IoIosInformationCircleOutline className="size-[22px]" />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <Outlet />
                         </div>
+                    </ResizablePanel>
 
-                        <div className="flex items-center">
-                            <span className="p-2 cursor-pointer">
-                                <CiCircleList className="size-[22px]" />
-                            </span>
-                            <span className="p-2 cursor-pointer bg-gray-200 rounded-full">
-                                <IoIosInformationCircleOutline className="size-[22px]" />
-                            </span>
-                        </div>
-                    </div>
-
-                    <Outlet />
-                </div>
-
-                {/* right */}
-                {/* <div className="w-[320px] shrink-0 hidden xl:block"></div> */}
+                    {/* right */}
+                    {/* <div className="w-[320px] shrink-0 hidden xl:block"></div> */}
+                </ResizablePanelGroup>
             </div>
         </div>
     );
