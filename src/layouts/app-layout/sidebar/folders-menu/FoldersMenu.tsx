@@ -68,7 +68,7 @@ export default function FoldersMenu() {
                         </div>
                     </Spin>
                 </Link>
-                <div className="flex flex-col pl-4">
+                <div className="flex flex-col">
                     {open &&
                         !!folders?.[0] &&
                         buildHierarchy(folders).map((item) => (

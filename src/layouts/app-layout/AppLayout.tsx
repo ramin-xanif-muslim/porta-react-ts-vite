@@ -16,6 +16,7 @@ import classNames from "classnames";
 
 const AppLayout = () => {
     const isOpenSidebar = useStore((state) => state.isOpenSidebar);
+    const openSidebar = useStore((state) => state.openSidebar);
 
     const defaultSize = localStorage.getItem("sidebar-width")
         ? Number(localStorage.getItem("sidebar-width"))
@@ -23,6 +24,7 @@ const AppLayout = () => {
 
     const handleResize = (resize: number) => {
         localStorage.setItem("sidebar-width", resize.toString());
+        if(!isOpenSidebar) openSidebar();
     };
 
     return (
@@ -35,7 +37,7 @@ const AppLayout = () => {
                 <ResizablePanelGroup direction="horizontal">
                     <ResizablePanel
                         defaultSize={defaultSize}
-                        // minSize={15}
+                        minSize={!isOpenSidebar ? 15 : 0}
                         onResize={handleResize}
                         className={classNames({
                             "hidden md:block": true,
