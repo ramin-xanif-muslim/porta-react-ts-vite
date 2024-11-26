@@ -56,7 +56,7 @@ const AppLayout = () => {
                             </motion.aside>
                         </AnimatePresence>
                     </ResizablePanel>
-                    <ResizableHandle withHandle />
+                    <ResizableHandle withHandle={isOpenSidebar} />
                     <ResizablePanel>
                         {/* content */}
                         <div className="flex-1 h-[calc(100vh-70px)] md:h-[calc(100vh-100px)] bg-[#F3F4F6FF]  p-4  overflow-y-auto no-scrollbar">
