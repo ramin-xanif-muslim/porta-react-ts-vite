@@ -1,4 +1,4 @@
-import { FolderDTO } from ".";
+// import { FolderDTO } from ".";
 
 // export const folders: FolderDTO[] = [
 //     { id: "1", name: "Work Documents", parentId: null },
