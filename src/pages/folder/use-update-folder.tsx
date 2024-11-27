@@ -7,7 +7,9 @@ export function useUpdateFolder() {
 
     const updateFolderMutation = useMutation({
         mutationFn: foldersApi.updateFolder,
+
         onSuccess: () => notification.success({ message: "Folder updated" }),
+        
         async onSettled() {
             await queryClient.invalidateQueries(
                 foldersApi.getFoldersListQueryOptions()

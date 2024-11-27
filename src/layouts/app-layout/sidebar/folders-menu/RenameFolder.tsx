@@ -53,8 +53,8 @@ const RenameFolder = ({
     };
 
     return (
-        <Spin spinning={false}>
-            <div onDoubleClick={onDoubleClick}>
+        <Spin spinning={updateFolder.isPending}>
+            <div className="w-full" onDoubleClick={onDoubleClick}>
                 {edit ? (
                     <Input
                         autoFocus

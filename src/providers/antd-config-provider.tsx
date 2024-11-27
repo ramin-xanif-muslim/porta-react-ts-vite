@@ -1,4 +1,4 @@
-import { ConfigProvider } from "antd";
+import { ConfigProvider, App } from "antd";
 import { ReactNode } from "react";
 import useStore from "../store/useStore";
 
@@ -8,8 +8,7 @@ export function AntdConfigProvider({ children }: { children?: ReactNode }) {
     return (
         <ConfigProvider
             theme={{
-                components: {
-                },
+                components: {},
                 token: {
                     // colorPrimary: "#6d31edff",
                     colorPrimary: brandColor,
@@ -17,7 +16,8 @@ export function AntdConfigProvider({ children }: { children?: ReactNode }) {
                 },
             }}
         >
-            {children}
+            <App>{children}</App>
         </ConfigProvider>
     );
 }
+

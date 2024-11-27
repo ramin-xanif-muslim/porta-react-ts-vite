@@ -8,6 +8,7 @@ export function useDeleteFolder() {
     const deleteFolderMutation = useMutation({
         mutationFn: foldersApi.deleteFolder,
         onSuccess: () => notification.success({ message: "Folder deleted" }),
+        onError: () => notification.error({ message: "Error deleting folder" }),
         async onSettled() {
             await queryClient.invalidateQueries(
                 foldersApi.getFoldersListQueryOptions()

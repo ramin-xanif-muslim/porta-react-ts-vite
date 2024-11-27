@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { API } from "../../api/api-instance";
-import { FolderDataDTO } from "../../types";
+import { FolderDataDTO, FolderDTO } from "../../types";
 
 // url: /api/v0.01/vms/dms/folders/list
 // url: /api/v0.01/vms/dms/folders/{folderId}
@@ -57,16 +57,7 @@ export const foldersApi = {
         return API.delete(`${FoldersApi.baseUrl}/${id}`);
     },
 
-    updateFolder: ({
-        id,
-        name,
-        parentId,
-    }: {
-        id: string;
-        name: string;
-        parentId?: string | null | undefined;
-    }) => {
-        console.log({ id, name, parentId });
+    updateFolder: ({ id, name, parentId }: FolderDTO) => {
         return API.put(`${FoldersApi.baseUrl}/${id}`, {
             name,
             parentId,

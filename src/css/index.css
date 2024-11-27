@@ -103,6 +103,6 @@
 .active-menu {
     @apply bg-brand-300 text-brand font-[700];
 }
-/* .menu-item:not(.active-menu):hover {
-    @apply bg-brand-50;
-} */
+.menu-item:hover {
+    @apply text-black;
+}

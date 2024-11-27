@@ -8,6 +8,7 @@ export function useCreateFolder() {
     const createFolderMutation = useMutation({
         mutationFn: foldersApi.createFolder,
         onSuccess: () => notification.success({ message: "Folder created" }),
+        onError: () => notification.error({ message: "Error creating folder" }),
         async onSettled() {
             await queryClient.invalidateQueries(
                 foldersApi.getFoldersListQueryOptions()
@@ -22,9 +23,7 @@ export function useCreateFolder() {
         name: string;
         parentId?: string;
     }) => {
-       const resp = await createFolderMutation.mutate({ name, parentId });
-
-       console.log(resp)
+        createFolderMutation.mutate({ name, parentId });
     };
 
     return {
