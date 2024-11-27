@@ -57,6 +57,7 @@ const RenameFolder = ({
             <div className="w-full" onDoubleClick={onDoubleClick}>
                 {edit ? (
                     <Input
+                    size="small"
                         autoFocus
                         type="text"
                         value={name}

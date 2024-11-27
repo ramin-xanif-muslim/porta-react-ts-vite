@@ -3,8 +3,9 @@ import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
 import { Link } from "react-router-dom";
 import { menuLists } from "./sidebar/data-menu";
-import { folders } from "../../types/data";
 import useBreadcrumbs from "../../hooks/useBreadcrumbs";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { foldersApi } from "../../pages/folder/api";
 
 const firstBreadcrumb = ["MY PORTA", "ADMIN"];
 interface BreadcrumbItemI {
@@ -36,13 +37,22 @@ const BreadcrumbItem = ({ item, items }: Props) => {
 };
 
 const Breadcrumb = () => {
+    
+    const { data: folders } = useQuery({
+        ...foldersApi.getFoldersListQueryOptions(),
+        placeholderData: keepPreviousData,
+        select: (data) => data.data.list,
+        retry: false,
+    });
+
     const items: BreadcrumbItemI[] = useBreadcrumbs(
         menuLists,
-        folders,
+        folders || [],
         firstBreadcrumb
     );
+    
     return (
-        <>
+        <div>
             <div className="hidden sm:flex items-center  flex-nowrap overflow-x-auto no-scrollbar">
                 {items?.map((item, index) => (
                     <BreadcrumbItem key={index} item={item} items={items} />
@@ -51,7 +61,7 @@ const Breadcrumb = () => {
             <div className="sm:hidden">
                 <BreadcrumbItem item={items[items.length - 1]} items={items} />
             </div>
-        </>
+        </div>
     );
 };
 
