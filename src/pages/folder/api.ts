@@ -19,7 +19,7 @@ export const foldersApi = {
         API.post(FoldersApi.list, {
           signal: meta?.signal,
         }),
-    }); ``          
+    });      
   },
   getFolderListByIdQueryOptions: ({ folderId }: { folderId?: string }) => {
     const url = `${FoldersApi.list}/${folderId}`;
