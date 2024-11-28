@@ -7,9 +7,8 @@ import { useState } from "react";
 import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 import { Spin } from "antd";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { foldersApi } from "../../../../pages/folder/api";
 import ErrorBoundary from "../../../../components/ErrorBoundary";
+import { useGetFolders } from "../../../../pages/folder/use-get-folders";
 
 const path = "/folders";
 
@@ -31,13 +30,7 @@ export default function FoldersMenu() {
     const { pathname } = useLocation();
     const [open, setOpen] = useState(pathname.includes(path));
 
-    const { data: folders, isLoading } = useQuery({
-        ...foldersApi.getFoldersListQueryOptions(),
-        placeholderData: keepPreviousData,
-        enabled: open,
-        select: (data) => data.data.list,
-        retry: false,
-    });
+    const { data: folders, isLoading } = useGetFolders();
 
     
 
