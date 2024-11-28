@@ -3,13 +3,13 @@ import { Skeleton } from "antd";
 import SuspenseFallback from "../components/suspense-fallback";
 
 const AppLayout = React.lazy(() => import("../layouts/app-layout/AppLayout"));
-const FoldersLayout = React.lazy(
-    () => import("../layouts/folders-layout/FoldersLayout")
+const DocumentLayout = React.lazy(
+    () => import("../layouts/document-layout/DocumentLayout")
 );
 
 const NotFount = React.lazy(() => import("../pages/not-found/NotFount"));
 
-const FolderPage = React.lazy(() => import("../pages/folder/FolderPage"));
+const DocumentPage = React.lazy(() => import("../pages/document/DocumentPage"));
 
 type Router = {
     path: string;
@@ -44,7 +44,7 @@ const routers: Router[] = [
                             </div>
                         }
                     >
-                        <FoldersLayout />
+                        <DocumentLayout />
                     </Suspense>
                 ),
                 children: [
@@ -53,7 +53,7 @@ const routers: Router[] = [
                         name: "folder",
                         element: (
                             <Suspense fallback={<SuspenseFallback />}>
-                                <FolderPage />
+                                <DocumentPage />
                             </Suspense>
                         ),
                     },
