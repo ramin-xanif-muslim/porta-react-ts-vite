@@ -28,12 +28,12 @@ export const documentsApi = {
   uploadDocument: ({ folderId, file }: { folderId: string; file: File }) => {
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("name", file.name);
     return API.post(DocumentsApi.documents.replace("{folderId}", folderId), formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
   },
-
 
 };

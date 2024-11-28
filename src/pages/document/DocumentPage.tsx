@@ -15,10 +15,14 @@ import { FolderDataDTO } from "../../types";
 import DotsTableCell from "../folder/DotsTableCell";
 import { useGetDocuments } from "./use-get-documents";
 import FileUploader from "../../layouts/document-layout/upload-document/FileUploader";
+import dayjs from "dayjs";
+import { convertFileSize } from "../../lib/utils";
 
-const getIcon = (name: string) => {
-  const type = name.split(".")[1];
-  switch (type) {
+const getIcon = (data: FolderDataDTO) => {
+  const { fileExtension, isFolder } = data;
+  if(isFolder) return <FaRegFolder className="text-[#15ABFFFF] size-5" />
+
+  switch (fileExtension) {
     case "zip":
       return <FaRegFolder className="text-[#15ABFFFF] size-5" />;
     case "pdf":
@@ -39,31 +43,33 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     title: "",
     dataIndex: "icon",
     key: "icon",
-    render: (_, record) => getIcon(record.name),
+    render: (_, record) => getIcon(record),
   },
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
     sorter: () => 0,
-    render: (value) => (
-      <div className="flex">
-        <span className="line-clamp-1">{value.split(".")[0]}.</span>
-        <span>{value.split(".")[1]}</span>
+    render: (value,record) => (
+      <div className="flex w-full">
+        <span className="line-clamp-1">{value}</span>
+        {!record.isFolder && <span>.{record.fileExtension}</span>}
       </div>
     ),
   },
   {
     title: "Size",
-    dataIndex: "size",
-    key: "size",
+    dataIndex: "fileSize",
+    key: "fileSize",
     sorter: () => 0,
+    render: (value, record) => <div>{record.isFolder ? "-" : convertFileSize(value)}</div>,
   },
   {
     title: "Last modified",
-    dataIndex: "lastModified",
-    key: "lastModified",
+    dataIndex: "updatedOn",
+    key: "updatedOn",
     sorter: () => 0,
+    render: (value) => <div className="line-clamp-1">{dayjs(value).format("DD/MM/YYYY")}</div>,
   },
   {
     title: "Shared to",
