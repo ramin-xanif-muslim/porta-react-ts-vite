@@ -12,7 +12,7 @@ const FoldersLayout = () => {
         <div className="flex flex-col mt-2 bg-white p-2">
             <div className="flex items-center justify-between p-4">
                 <div className="flex gap-3 ">
-                    <button className="bg-brand flex items-center p-2 rounded-full text-white px-4 py-2">
+                    <button className="bg-brand hover:bg-brand-500 flex items-center p-2 rounded-full text-white px-4 py-2">
                         <span>
                             <RiUploadLine />
                         </span>
