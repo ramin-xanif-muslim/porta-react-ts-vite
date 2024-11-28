@@ -9,7 +9,9 @@ export function useUploadDocument() {
 
     const uploadDocumentMutation = useMutation({
         mutationFn: documentsApi.uploadDocument,
-        onSuccess: () => notification.success({ message: "Document created" }),
+        onSuccess: () => {
+            notification.success({ message: "Document created" })
+        },
         onError: () => notification.error({ message: "Error creating document" }),
         async onSettled() {
             await queryClient.invalidateQueries(
@@ -23,7 +25,8 @@ export function useUploadDocument() {
     }: {
         file: File;
     }) => {
-        uploadDocumentMutation.mutate({ file, folderId: id || "1" });
+        if (!id) return;
+        uploadDocumentMutation.mutate({ file, folderId: id });
     };
 
     return {
