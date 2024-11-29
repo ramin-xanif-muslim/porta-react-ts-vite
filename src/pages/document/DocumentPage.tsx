@@ -102,9 +102,11 @@ const DocumentPage = () => {
 
   const { data, isPlaceholderData } = useGetDocuments();
 
+  if(!id) return null
+
   return (
     <div className="mt-2" key={id}>
-      <FileUploader>
+      <FileUploader folderId={id}>
         <Table<FolderDataDTO>
           onChange={(pagination, filters, sorter) => {
             console.log({ pagination, filters, sorter });

@@ -8,11 +8,13 @@ import { useUploadDocument } from "../../../pages/document/use-upload-document";
 const FileUploader = ({
   children,
   input,
+  folderId,
 }: {
   children?: React.ReactNode;
   input?: boolean;
+  folderId: string;
 }) => {
-  const uploadDocument = useUploadDocument();
+  const uploadDocument = useUploadDocument({ folderId });
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (acceptedFiles.length > MAX_FILE_COUNT) {
