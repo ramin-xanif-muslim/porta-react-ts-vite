@@ -24,7 +24,8 @@ export function useUploadDocument({folderId}: {folderId: string}) {
         file: File;
     }) => {
         if(!folderId) {
-            return notification.error({ message: "Folder not found" });
+            console.log("folderId not found");
+            return 
         }
         uploadDocumentMutation.mutate({ file, folderId });
     };

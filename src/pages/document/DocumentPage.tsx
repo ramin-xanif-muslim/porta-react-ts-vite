@@ -23,7 +23,7 @@ import dayjs from "dayjs";
 import { convertFileSize } from "../../lib/utils";
 import classNames from "classnames";
 
-export const getFileIcon = (data: FolderDataDTO) => {
+const getFileIcon = (data: FolderDataDTO) => {
   const { fileExtension, isFolder } = data;
 
   if (isFolder) return <FaRegFolder className="text-[#15ABFFFF] size-5" />;
@@ -62,7 +62,7 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    sorgit ter: () => 0,
+    sorter: () => 0,
     render: (value, record) => (
       <div className="flex w-full">
         <span className="line-clamp-1">{value}</span>
