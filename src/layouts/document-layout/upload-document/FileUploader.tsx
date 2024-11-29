@@ -39,7 +39,6 @@ const FileUploader = ({
           message: `${file.name} is not a supported file type. Supported file types are docx, doc, pdf, text, and txt.`,
         });
       }
-
       return uploadDocument.handleCreate({ file })
     });
 

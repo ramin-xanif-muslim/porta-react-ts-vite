@@ -8,7 +8,6 @@ export function useUploadDocument({folderId}: {folderId: string}) {
     const uploadDocumentMutation = useMutation({
         mutationFn: documentsApi.uploadDocument,
         onSuccess: () => {
-            notification.success({ message: "Document created" })
         },
         onError: () => notification.error({ message: "Error creating document" }),
         async onSettled() {

@@ -16,6 +16,7 @@ export interface FolderItemI {
 interface Props {
     item: FolderItemI;
     openParents: string[];
+    callback?: (bool: boolean) => void;
 }
 
 export default function FolderItem({ item, openParents }: Props) {
@@ -67,7 +68,6 @@ export default function FolderItem({ item, openParents }: Props) {
                 </span>
 
                 <div className="ml-auto">
-                    {/* <DeleteFolder id={item.id} /> */}
                     <EllipsisMenu folder={item} />
                 </div>
             </Link>

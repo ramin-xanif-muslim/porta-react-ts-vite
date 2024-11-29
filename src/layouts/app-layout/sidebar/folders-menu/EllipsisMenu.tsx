@@ -17,7 +17,7 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
 
   const navigate = useNavigate();
 
-  const { handleDelete, isPending } = useDeleteFolder(() => navigate(-1));
+  const { handleDelete, isPending } = useDeleteFolder(() => navigate("/folders"));
 
   const items: MenuProps["items"] = [
     {

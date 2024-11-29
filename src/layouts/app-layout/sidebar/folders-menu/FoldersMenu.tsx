@@ -38,7 +38,7 @@ export default function FoldersMenu() {
     };
   }, [pathname]);
 
-  const { data: folders, isLoading } = useGetFolders();
+  const { data: folders, isLoading, isFetching } = useGetFolders();
 
   return (
     <ErrorBoundary>
@@ -72,7 +72,7 @@ export default function FoldersMenu() {
             !!folders?.[0] &&
             buildHierarchy(folders).map((item) => (
               <FolderItem
-                key={item.id}
+                key={isFetching ? item.id + Math.random() : item.id}
                 item={item}
                 openParents={getParentFoldersId(folders, pathname)}
               />

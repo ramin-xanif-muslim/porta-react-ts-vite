@@ -10,7 +10,7 @@ export const useGetFolders = () => {
     placeholderData: keepPreviousData,
     select: (data) => data.data.list,
     enabled: pathname.includes("folders"),
-    staleTime: 1 * 10 * 1000,
+    // staleTime: 1 * 10 * 1000,
     retry: false,
   });
 };

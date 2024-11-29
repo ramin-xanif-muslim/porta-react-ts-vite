@@ -7,13 +7,15 @@ import FileUploader from "./upload-document/FileUploader";
 
 const DocumentLayout = () => {
   const { id } = useParams<{ id?: string }>();
+
+  console.log({ id });
   
   return (
     <div className="flex flex-col mt-2 bg-white p-2">
       <div className="flex items-center justify-between p-4">
         <div className="flex gap-3 ">
           {id && (
-            <FileUploader input folderId={id}>
+            <FileUploader key={id} input folderId={id}>
               <UploadDocumentBtn />
             </FileUploader>
           )}

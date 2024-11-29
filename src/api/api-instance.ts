@@ -25,13 +25,10 @@ const service = () => {
     const requestResolve = (
         config: InternalAxiosRequestConfig
     ): InternalAxiosRequestConfig => {
-        // console.log("requestResolve", config);
         return config;
     };
 
     const responseResolve = (res: AxiosResponse) => {
-        // console.log("responseResolve", res.data);
-
         if (!res.data.isSuccess) {
             notification.error({
                 message: "Error",
@@ -43,13 +40,48 @@ const service = () => {
     };
 
     const responseReject = (err: AxiosError) => {
-        // console.log("responseReject", err);
-        const error = err.response;
+        // Handle network errors
+        if (err.message === 'Network Error') {
+            notification.error({
+                message: "Network Error",
+                description: "No internet connection. Please check your network and try again.",
+            });
+            return Promise.reject(err);
+        }
 
+        // Handle specific HTTP error status codes
+        const error = err.response;
         if (error?.status === 422) {
-            console.log(error.data);
+            notification.error({
+                message: "Validation Error",
+                description: "The request could not be processed due to validation issues.",
+            });
         } else if (error?.status === 404) {
-            console.log(error.data);
+            notification.error({
+                message: "Not Found",
+                description: "The requested resource could not be found.",
+            });
+        } else if (error?.status === 500) {
+            notification.error({
+                message: "Server Error",
+                description: "An internal server error occurred. Please try again later.",
+            });
+        }
+
+        // Generic error handling for other cases
+        if (err.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            notification.error({
+                message: "Request Error",
+                description: "An unexpected error occurred.",
+            });
+        } else if (err.request) {
+            // The request was made but no response was received
+            notification.error({
+                message: "No Response",
+                description: "The server did not respond to the request.",
+            });
         }
 
         return Promise.reject(err);
@@ -63,7 +95,6 @@ const service = () => {
     });
 
     instance.interceptors.request.use(requestResolve);
-
     instance.interceptors.response.use(responseResolve, responseReject);
 
     return instance;
