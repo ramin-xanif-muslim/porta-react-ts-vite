@@ -10,6 +10,10 @@ import { BsFiletypePptx } from "react-icons/bs";
 import { BsFiletypeXlsx } from "react-icons/bs";
 import { CgFileDocument } from "react-icons/cg";
 import { FaRegStar } from "react-icons/fa";
+import { GrDocumentTxt } from "react-icons/gr";
+import { FaRegFileExcel } from "react-icons/fa";
+
+
 
 import { FolderDataDTO } from "../../types";
 import DotsTableCell from "../folder/DotsTableCell";
@@ -17,10 +21,12 @@ import { useGetDocuments } from "./use-get-documents";
 import FileUploader from "../../layouts/document-layout/upload-document/FileUploader";
 import dayjs from "dayjs";
 import { convertFileSize } from "../../lib/utils";
+import classNames from "classnames";
 
-const getIcon = (data: FolderDataDTO) => {
+export const getFileIcon = (data: FolderDataDTO) => {
   const { fileExtension, isFolder } = data;
-  if(isFolder) return <FaRegFolder className="text-[#15ABFFFF] size-5" />
+
+  if (isFolder) return <FaRegFolder className="text-[#15ABFFFF] size-5" />;
 
   switch (fileExtension) {
     case "zip":
@@ -33,8 +39,15 @@ const getIcon = (data: FolderDataDTO) => {
       return <BsFiletypePptx className="text-[#D29211FF] size-5" />;
     case "xlsx":
       return <BsFiletypeXlsx className="text-[#117B34FF] size-5" />;
+    case "doc":
     case "docx":
       return <CgFileDocument className="text-[#197DCAFF] size-5" />;
+    case "text":
+    case "txt":
+      return <GrDocumentTxt className="text-[#D29211FF] size-5" />;
+
+    default:
+      return <FaRegFileExcel className="text-red-500 size-5" />;
   }
 };
 
@@ -43,14 +56,14 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     title: "",
     dataIndex: "icon",
     key: "icon",
-    render: (_, record) => getIcon(record),
+    render: (_, record) => getFileIcon(record),
   },
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
-    sorter: () => 0,
-    render: (value,record) => (
+    sorgit ter: () => 0,
+    render: (value, record) => (
       <div className="flex w-full">
         <span className="line-clamp-1">{value}</span>
         {!record.isFolder && <span>.{record.fileExtension}</span>}
@@ -62,14 +75,20 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     dataIndex: "fileSize",
     key: "fileSize",
     sorter: () => 0,
-    render: (value, record) => <div>{record.isFolder ? "-" : convertFileSize(value)}</div>,
+    render: (value, record) => (
+      <div>{record.isFolder ? "-" : convertFileSize(value)}</div>
+    ),
   },
   {
     title: "Last modified",
     dataIndex: "updatedOn",
     key: "updatedOn",
     sorter: () => 0,
-    render: (value) => <div className="line-clamp-1">{dayjs(value).format("DD/MM/YYYY")}</div>,
+    render: (value) => (
+      <div className="line-clamp-1">
+        {dayjs(value).format("DD/MM/YYYY HH:mm")}
+      </div>
+    ),
   },
   {
     title: "Shared to",
@@ -83,7 +102,7 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     dataIndex: "isSelected",
     render: (val) => (
       <div className="cursor-pointer">
-        <FaRegStar className={val ? "text-[#EFB034FF]" : ""} />
+        <FaRegStar className={classNames({ "text-[#F2C94CFF]": val })} />
       </div>
     ),
   },
@@ -102,7 +121,7 @@ const DocumentPage = () => {
 
   const { data, isPlaceholderData } = useGetDocuments();
 
-  if(!id) return null
+  if (!id) return null;
 
   return (
     <div className="mt-2" key={id}>
