@@ -3,7 +3,7 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 
 import type { MenuProps } from "antd";
-import { Dropdown, Popconfirm } from "antd";
+import { Dropdown, Popconfirm, Spin } from "antd";
 import { FolderItemI } from "./FolderItem";
 import { useState } from "react";
 import classNames from "classnames";
@@ -12,73 +12,74 @@ import { useDeleteFolder } from "../../../../pages/folder/use-delete-folder";
 import { useNavigate } from "react-router-dom";
 
 const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
-    const [open, setOpen] = useState(false);
-    const setRenamedFolder = useStore((state) => state.setRenamedFolder);
+  const [open, setOpen] = useState(false);
+  const setRenamedFolder = useStore((state) => state.setRenamedFolder);
 
-    const { handleDelete, isPending } = useDeleteFolder();
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const { handleDelete, isPending } = useDeleteFolder(() => navigate(-1));
 
-    const items: MenuProps["items"] = [
-        {
-            key: "delete",
-            label: (
-                <Popconfirm
-                    title="Delete the folder"
-                    description="Are you sure to delete this folder?"
-                    onConfirm={() => {
-                        handleDelete(folder.id);
-                        navigate(-1);
-                    }}
-                    okText="Yes"
-                    cancelText="No"
-                >
-                    <div
-                    >
-                        Delete
-                    </div>
-                </Popconfirm>
-            ),
-            disabled: isPending,
-            icon: <MdOutlineDeleteForever className="size-5" />,
-        },
-        {
-            key: "rename",
-            label: (
-                <div
-                    onClick={() => {
-                        setRenamedFolder(folder.id);
-                    }}
-                >
-                    Rename
-                </div>
-            ),
-            icon: <MdOutlineDriveFileRenameOutline className="size-5" />,
-        },
-    ];
-
-    if (isPending) return null;
-
-    return (
-        <div className="group">
-            <Dropdown
-                open={open}
-                onOpenChange={setOpen}
-                menu={{ items }}
-                trigger={["click"]}
-            >
-                <div className="cursor-pointer hover:bg-gray-100 rounded-full p-1">
-                    <LiaEllipsisVSolid
-                        className={classNames({
-                            "size-4 hover:text-gray-600 hidden group-hover:block":
-                                true,
-                            "!block": open,
-                        })}
-                    />
-                </div>
-            </Dropdown>
+  const items: MenuProps["items"] = [
+    {
+      key: "delete",
+      label: (
+        <Popconfirm
+          title="Delete the folder"
+          description="Are you sure to delete this folder?"
+          onConfirm={() => {
+            handleDelete(folder.id);
+          }}
+          okText={isPending ? <Spin size="small" /> : "Yes"}
+          cancelText="No"
+        >
+          <div className="flex items-center gap-2">
+            <span>
+              <MdOutlineDeleteForever className="size-5" />
+            </span>
+            <span>Delete</span>
+          </div>
+        </Popconfirm>
+      ),
+      disabled: isPending,
+    },
+    {
+      key: "rename",
+      label: (
+        <div
+          className="flex items-center gap-2"
+          onClick={() => {
+            setRenamedFolder(folder.id);
+          }}
+        >
+          <span>
+            <MdOutlineDriveFileRenameOutline className="size-5" />
+          </span>
+          <span>Rename</span>
         </div>
-    );
+      ),
+    },
+  ];
+
+
+  return (
+    <Spin size="small" spinning={isPending} className="group">
+      <Dropdown
+        open={open}
+        onOpenChange={setOpen}
+        menu={{ items }}
+        trigger={["click"]}
+      >
+        <div className="cursor-pointer hover:bg-gray-100 rounded-full p-1">
+          <LiaEllipsisVSolid
+            className={classNames({
+              "size-4 hover:text-gray-600 hidden group-hover:block": true,
+              "!block": open,
+            })}
+          />
+        </div>
+      </Dropdown>
+    </Spin>
+  );
 };
 
 export default EllipsisMenu;

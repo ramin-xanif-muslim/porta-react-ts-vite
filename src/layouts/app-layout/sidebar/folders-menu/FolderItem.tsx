@@ -25,7 +25,7 @@ export default function FolderItem({ item, openParents }: Props) {
     const isActiveFolder = () => {
         const isFoldersPath = !!location.pathname?.includes("folders");
         const lastPathSegment = location.pathname.split("/").pop();
-        return isFoldersPath && lastPathSegment === item.id;
+        return isFoldersPath && lastPathSegment === item.id
     };
 
     return (

@@ -49,8 +49,8 @@ export const foldersApi = {
     });
   },
 
-  createFolder: (data: { name: string; parentId?: string }) => {
-    return API.post(FoldersApi.baseUrl, data);
+  createFolder: (data: { name: string; parentId?: string }): Promise<{ id: string }> => {
+    return API.post(FoldersApi.baseUrl, data)
   },
 
   deleteFolder: (id: string) => {

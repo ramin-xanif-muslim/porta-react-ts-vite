@@ -28,6 +28,7 @@ const FileUploader = ({
     }
 
     const uploadPromises = acceptedFiles.map(async (file) => {
+      
       if (file.size > MAX_FILE_SIZE) {
         return notification.error({
           message: `${file.name} is too large. Max file size is 50MB.`,
@@ -39,7 +40,7 @@ const FileUploader = ({
         });
       }
 
-      return uploadDocument.handleCreate({ file });
+      return uploadDocument.handleCreate({ file })
     });
 
     await Promise.all(uploadPromises);
@@ -47,13 +48,13 @@ const FileUploader = ({
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: {
-      "application/msword": [".doc"],
-      "application/pdf": [".pdf"],
-      "text/plain": [".txt", ".text"],
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        [".docx"],
-    },
+    // accept: {
+    //   "application/msword": [".doc"],
+    //   "application/pdf": [".pdf"],
+    //   "text/plain": [".txt", ".text"],
+    //   "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    //     [".docx"],
+    // },
   });
 
   return (
