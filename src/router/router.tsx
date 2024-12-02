@@ -9,6 +9,8 @@ const DocumentLayout = React.lazy(
 
 const NotFount = React.lazy(() => import("../pages/not-found/NotFount"));
 
+const SettingPage = React.lazy(() => import("../pages/setting/SettingPage"));
+
 const DocumentPage = React.lazy(() => import("../pages/document/DocumentPage"));
 
 type Router = {
@@ -30,6 +32,15 @@ const routers: Router[] = [
                 element: (
                     <Suspense fallback={<SuspenseFallback />}>
                         <NotFount />
+                    </Suspense>
+                ),
+            },
+            {
+                path: "setting",
+                name: "setting",
+                element: (
+                    <Suspense fallback={<SuspenseFallback />}>
+                        <SettingPage />
                     </Suspense>
                 ),
             },

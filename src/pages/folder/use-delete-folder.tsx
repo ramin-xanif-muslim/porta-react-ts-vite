@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { foldersApi } from "./api";
 import { notification } from "antd";
+import { t } from "i18next";
 
 export function useDeleteFolder(onSuccessCallback?: () => void) {
     const queryClient = useQueryClient();
@@ -8,10 +9,10 @@ export function useDeleteFolder(onSuccessCallback?: () => void) {
     const deleteFolderMutation = useMutation({
         mutationFn: foldersApi.deleteFolder,
         onSuccess: async () => {
-            notification.success({ message: "Folder deleted" })
-            onSuccessCallback?.()
+            notification.success({ message: t("Folder deleted") });
+            onSuccessCallback?.();
         },
-        onError: () => notification.error({ message: "Error deleting folder" }),
+        onError: () => notification.error({ message: t("Error deleting folder") }),
         async onSettled() {
             await queryClient.invalidateQueries(
                 foldersApi.getFoldersListQueryOptions()

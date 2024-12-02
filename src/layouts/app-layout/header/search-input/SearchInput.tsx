@@ -1,3 +1,4 @@
+import { t } from "i18next";
 
 const SearchInput = () => {
     return (
@@ -6,7 +7,7 @@ const SearchInput = () => {
             <input
                 className="outline-none px-2 bg-transparent placeholder:text-grayColor-400 flex-1"
                 type="text"
-                placeholder="Search"
+                placeholder={t("Search")}
             />
             <div className="cursor-pointer">
                 <i className="fa-solid fa-sliders"></i>

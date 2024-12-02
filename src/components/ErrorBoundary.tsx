@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import  { Component, ErrorInfo, ReactNode } from "react";
 
 interface Props {
@@ -25,7 +26,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      return <h1>Sorry.. there was an error</h1>;
+      return <h1>{t("Sorry.. there was an error")}</h1>;
     }
 
     return this.props.children;

@@ -1,5 +1,6 @@
 import { RiUploadLine } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
+import { t } from "i18next";
 
 const UploadDocumentBtn = () => {
   return (
@@ -7,7 +8,7 @@ const UploadDocumentBtn = () => {
       <span>
         <RiUploadLine />
       </span>
-      <span className="ml-2 hidden sm:block">Upload</span>
+      <span className="ml-2 hidden sm:block">{t("Upload")}</span>
       <span className="ml-6">
         <IoIosArrowDown />
       </span>

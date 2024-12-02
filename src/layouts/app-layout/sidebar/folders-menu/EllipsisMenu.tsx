@@ -10,6 +10,7 @@ import classNames from "classnames";
 import useStore from "../../../../store/useStore";
 import { useDeleteFolder } from "../../../../pages/folder/use-delete-folder";
 import { useNavigate } from "react-router-dom";
+import { t } from "i18next";
 
 const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
   const [open, setOpen] = useState(false);
@@ -17,26 +18,28 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
 
   const navigate = useNavigate();
 
-  const { handleDelete, isPending } = useDeleteFolder(() => navigate("/folders"));
+  const { handleDelete, isPending } = useDeleteFolder(() =>
+    navigate("/folders")
+  );
 
   const items: MenuProps["items"] = [
     {
       key: "delete",
       label: (
         <Popconfirm
-          title="Delete the folder"
-          description="Are you sure to delete this folder?"
+          title={t("Delete the folder")}
+          description={t("Are you sure to delete this folder?")}
           onConfirm={() => {
             handleDelete(folder.id);
           }}
-          okText={isPending ? <Spin size="small" /> : "Yes"}
-          cancelText="No"
+          okText={isPending ? <Spin size="small" /> : t("Yes")}
+          cancelText={t("No")}
         >
           <div className="flex items-center gap-2">
             <span>
               <MdOutlineDeleteForever className="size-5" />
             </span>
-            <span>Delete</span>
+            <span>{t("Delete")}</span>
           </div>
         </Popconfirm>
       ),
@@ -54,12 +57,11 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
           <span>
             <MdOutlineDriveFileRenameOutline className="size-5" />
           </span>
-          <span>Rename</span>
+          <span>{t("Rename")}</span>
         </div>
       ),
     },
   ];
-
 
   return (
     <Spin size="small" spinning={isPending} className="group">

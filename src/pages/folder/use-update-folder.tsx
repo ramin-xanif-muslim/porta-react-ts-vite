@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { foldersApi } from "./api";
 import { notification } from "antd";
+import { t } from "i18next";
 
 export function useUpdateFolder() {
     const queryClient = useQueryClient();
@@ -8,7 +9,7 @@ export function useUpdateFolder() {
     const updateFolderMutation = useMutation({
         mutationFn: foldersApi.updateFolder,
 
-        onSuccess: () => notification.success({ message: "Folder updated" }),
+        onSuccess: () => notification.success({ message: t("Folder updated") }),
         
         async onSettled() {
             await queryClient.invalidateQueries(

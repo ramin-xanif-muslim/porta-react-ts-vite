@@ -9,6 +9,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Spin } from "antd";
 import ErrorBoundary from "../../../../components/ErrorBoundary";
 import { useGetFolders } from "../../../../pages/folder/use-get-folders";
+import { t } from "i18next";
 
 const path = "/folders";
 
@@ -55,7 +56,7 @@ export default function FoldersMenu() {
               <div>
                 <FaRegFolder className="size-6" />
               </div>
-              <span className="">All files</span>
+              <span className="">{t("All files")}</span>
               <span className="flex flex-col ml-auto">
                 <IoIosArrowForward
                   className={classNames({

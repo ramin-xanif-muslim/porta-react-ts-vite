@@ -22,6 +22,7 @@ import FileUploader from "../../layouts/document-layout/upload-document/FileUplo
 import dayjs from "dayjs";
 import { convertFileSize } from "../../lib/utils";
 import classNames from "classnames";
+import { t } from "i18next";
 
 const getFileIcon = (data: FolderDataDTO) => {
   const { fileExtension, isFolder } = data;
@@ -59,7 +60,7 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     render: (_, record) => getFileIcon(record),
   },
   {
-    title: "Name",
+    title: t("Name"),
     dataIndex: "name",
     key: "name",
     sorter: () => 0,
@@ -71,7 +72,7 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     ),
   },
   {
-    title: "Size",
+    title: t("Size"),
     dataIndex: "fileSize",
     key: "fileSize",
     sorter: () => 0,
@@ -80,7 +81,7 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     ),
   },
   {
-    title: "Last modified",
+    title: t("Last modified"),
     dataIndex: "updatedOn",
     key: "updatedOn",
     sorter: () => 0,
@@ -91,7 +92,7 @@ const columns: TableProps<FolderDataDTO>["columns"] = [
     ),
   },
   {
-    title: "Shared to",
+    title: t("Shared to"),
     key: "sharedTo",
     dataIndex: "sharedTo",
     render: () => <div className="line-clamp-1">0 users</div>,

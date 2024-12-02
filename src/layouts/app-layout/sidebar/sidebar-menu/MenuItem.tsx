@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MenuItemI } from "../data-menu";
 import classNames from "classnames";
+import { t } from "i18next";
 
 interface Props {
     item: MenuItemI;
@@ -19,7 +20,7 @@ const MenuItem = ({ item, active }: Props) => {
                 <div>
                     <item.icon className="size-6" />
                 </div>
-                <span>{item.name}</span>
+                <span>{t(item.name)}</span>
             </div>
         </Link>
     );

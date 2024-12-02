@@ -1,7 +1,7 @@
 import { notification } from "antd";
 import { API } from "../../api/api-instance";
-// import { FolderDataDTO } from "../../types";
 import { queryOptions } from "@tanstack/react-query";
+import { t } from "i18next";
 
 export enum DocumentsApi {
   documents = "/api/v0.01/vms/dms/folders/{folderId}/documents",
@@ -28,7 +28,7 @@ export const documentsApi = {
     formData.append("file", file);
     formData.append("name", file.name);
     notification.info({
-      message: `Uploading ${file.name}...`,
+      message: t("Uploading {{fileName}}...", { fileName: file.name }),
       showProgress: true,
       key: file.name,
     });
@@ -38,7 +38,9 @@ export const documentsApi = {
       },
     }).then((res) => {
       notification.destroy(file.name);
-      notification.success({ message: `${file.name} uploaded` });
+      notification.success({
+        message: t("{{fileName}} uploaded", { fileName: file.name }),
+      });
       return res;
     });
   },

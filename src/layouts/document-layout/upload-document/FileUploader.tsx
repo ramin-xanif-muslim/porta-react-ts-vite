@@ -5,9 +5,11 @@ import { notification } from "antd";
 import {
   MAX_FILE_COUNT,
   MAX_FILE_SIZE,
+  SUPPORTED_FILE_EXTENSIONS,
   SUPPORTED_FILE_TYPES,
 } from "../../../constants";
 import { useUploadDocument } from "../../../pages/document/use-upload-document";
+import { t } from "i18next";
 
 const FileUploader = ({
   children,
@@ -23,23 +25,33 @@ const FileUploader = ({
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (acceptedFiles.length > MAX_FILE_COUNT) {
       return notification.error({
-        message: `You can only upload a maximum of ${MAX_FILE_COUNT} files.`,
+        message: t("You can only upload a maximum of {{count}} files.", {
+          count: MAX_FILE_COUNT,
+        }),
       });
     }
 
     const uploadPromises = acceptedFiles.map(async (file) => {
-      
       if (file.size > MAX_FILE_SIZE) {
         return notification.error({
-          message: `${file.name} is too large. Max file size is 50MB.`,
+          message: t(
+            "{{fileName}} is too large. Max file size is {{maxFileSize}}MB.",
+            { fileName: file.name, maxFileSize: MAX_FILE_SIZE }
+          ),
         });
       }
       if (!SUPPORTED_FILE_TYPES.includes(file.type)) {
         return notification.error({
-          message: `${file.name} is not a supported file type. Supported file types are docx, doc, pdf, text, and txt.`,
+          message: t(
+            "{{fileName}} is not a supported file type. Supported file types are {{supportedFileTypes}}.",
+            {
+              fileName: file.name,
+              supportedFileTypes: SUPPORTED_FILE_EXTENSIONS,
+            }
+          ),
         });
       }
-      return uploadDocument.handleCreate({ file })
+      return uploadDocument.handleCreate({ file });
     });
 
     await Promise.all(uploadPromises);

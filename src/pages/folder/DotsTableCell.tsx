@@ -9,12 +9,13 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { IoMdMove } from "react-icons/io";
 import { LiaCopySolid } from "react-icons/lia";
+import { t } from "i18next";
 
 //  text-[#565D6DFF]
 const items: MenuProps["items"] = [
     {
         key: "1",
-        label: "Open in",
+        label: t("Open in"),
         icon: <FaRegFolderOpen className="size-5"/>,
     },
     {
@@ -22,17 +23,17 @@ const items: MenuProps["items"] = [
     },
     {
         key: "2",
-        label: "Share",
+        label: t("Share"),
         icon: <FaShareFromSquare  className="size-5"/>,
     },
     {
         key: "3",
-        label: "Copy link",
+        label: t("Copy link"),
         icon: <IoMdLink className="size-5"/>,
     },
     {
         key: "4",
-        label: "Download",
+        label: t("Download"),
         icon: <FiDownload className="size-5"/>,
     },
     {
@@ -40,22 +41,22 @@ const items: MenuProps["items"] = [
     },
     {
         key: "5",
-        label: "Delete",
+        label: t("Delete"),
         icon: <MdOutlineDeleteForever className="size-5"/>,
     },
     {
         key: "6",
-        label: "Rename",
+        label: t("Rename"),
         icon: <MdOutlineDriveFileRenameOutline className="size-5"/>,
     },
     {
         key: "7",
-        label: "Move",
+        label: t("Move"),
         icon: <IoMdMove className="size-5"/>,
     },
     {
         key: "8",
-        label: "Copy",
+        label: t("Copy"),
         icon: <LiaCopySolid className="size-5"/>,
     },
 ];

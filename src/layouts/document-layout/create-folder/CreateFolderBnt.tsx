@@ -6,6 +6,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaRegFolder } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCreateFolder } from "../../../pages/folder/use-create-folder";
+import { t } from "i18next";
 
 const CreateFolderBnt = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,7 +59,7 @@ const CreateFolderBnt = () => {
           <FiPlus />
         </span>
         <span className="ml-2 hidden sm:flex line-clamp-1 truncate">
-          Create Folder
+        {t("Create Folder")}
         </span>
         <span className="ml-6">
           <IoIosArrowDown />
@@ -71,14 +72,14 @@ const CreateFolderBnt = () => {
             <span className="mr-3 p-2 bg-yellow-50 rounded-full">
               <FaRegFolder className="text-[#EFB034FF] size-5" />
             </span>
-            <span>Create Folder</span>
+            <span>{t("Create Folder")}</span>
           </div>
         }
         open={isModalOpen}
         onCancel={handleCancel}
         footer={[
           <Button key="back" onClick={handleCancel}>
-            Cancel
+            {t("Cancel")}
           </Button>,
           <Button
             key="submit"
@@ -86,7 +87,7 @@ const CreateFolderBnt = () => {
             loading={createFolder.isPending}
             onClick={() => form.submit()}
           >
-            Create
+            {createFolder.isPending ? t("Creating...") : t("Create")}
           </Button>,
         ]}
       >
@@ -98,16 +99,16 @@ const CreateFolderBnt = () => {
           onFinish={handleCreate}
         >
           <Form.Item
-            label="Folder Name"
+            label={t("Folder name")}
             name="name"
             rules={[
               {
                 required: true,
-                message: "Please input folder name!",
+                message: t("Please input folder name!"),
               },
             ]}
           >
-            <Input ref={inputRef} placeholder="Enter folder name" />
+            <Input ref={inputRef} placeholder={t("Enter folder name")} />
           </Form.Item>
         </Form>
       </Modal>

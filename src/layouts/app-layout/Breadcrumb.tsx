@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { menuLists } from "./sidebar/data-menu";
 import useBreadcrumbs from "../../hooks/useBreadcrumbs";
 import { useGetFolders } from "../../pages/folder/use-get-folders";
+import { t } from "i18next";
 
 const firstBreadcrumb = ["MY PORTA", "ADMIN"];
 interface BreadcrumbItemI {
@@ -27,7 +28,7 @@ const BreadcrumbItem = ({ item, items }: Props) => {
         "opacity-50": !isLast,
       })}
     >
-      <span className="text-[14px] line-clamp-1">{item.name}</span>
+      <span className="text-[14px] line-clamp-1">{t(item.name)}</span>
       <span className="size-8 flex items-center p-2">
         {isLast ? <IoIosArrowDown /> : <IoIosArrowForward />}
       </span>
