@@ -28,7 +28,7 @@
 import { ColorPicker } from "antd";
 import useStore from "../store/useStore";
 
-const SelectBrandColor = () => {
+const BrandColorSelector = () => {
     const brandColor = useStore((state) => state.brandColor);
     const setBrandColor = useStore((state) => state.setBrandColor);
 
@@ -51,4 +51,4 @@ const SelectBrandColor = () => {
     );
 };
 
-export default SelectBrandColor;
+export default BrandColorSelector;

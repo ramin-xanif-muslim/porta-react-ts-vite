@@ -47,5 +47,7 @@
   "Error creating folder": "Qovluğu yaratmaq mümkün olmadı",
   "Error creating document": "Sənədi yaratmaq mümkün olmadı",
   "Uploading {{fileName}}...": "{{fileName}} yüklənir...",
-  "{{fileName}} uploaded": "{{fileName}} yükləndi"
+  "{{fileName}} uploaded": "{{fileName}} yükləndi", "Azerbaijani":"Azərbaycan",
+  "English":"İngilis",
+  "xxx":"xxx"
 }
