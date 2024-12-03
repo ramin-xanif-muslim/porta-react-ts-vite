@@ -48,6 +48,8 @@
   "Error creating document": "Sənədi yaratmaq mümkün olmadı",
   "Uploading {{fileName}}...": "{{fileName}} yüklənir...",
   "{{fileName}} uploaded": "{{fileName}} yükləndi", "Azerbaijani":"Azərbaycan",
-  "English":"İngilis",
+  "English":"İngilisce",
+  "Turkish":"Türkçe",
+  "xxx":"xxx",
   "xxx":"xxx"
 }

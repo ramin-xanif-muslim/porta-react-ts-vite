@@ -29,26 +29,26 @@ import { ColorPicker } from "antd";
 import useStore from "../store/useStore";
 
 const BrandColorSelector = () => {
-    const brandColor = useStore((state) => state.brandColor);
-    const setBrandColor = useStore((state) => state.setBrandColor);
+  const brandColor = useStore((state) => state.brandColor);
+  const setBrandColor = useStore((state) => state.setBrandColor);
 
-    const handleColorChange = (color: string | { toHexString: () => string }) => {
-        const newColor = typeof color === "string" ? color : color.toHexString();
-        document.documentElement.style.setProperty("--brand-color", newColor);
-        setBrandColor(newColor);
-    };
+  const handleColorChange = (color: string | { toHexString: () => string }) => {
+    const newColor = typeof color === "string" ? color : color.toHexString();
+    document.documentElement.style.setProperty("--brand-color", newColor);
+    setBrandColor(newColor);
+  };
 
-    return (
-        <div>
-            <ColorPicker
-                value={brandColor}
-                onChange={handleColorChange}
-                format="hex"
-                size="small"
-                showText
-            />
-        </div>
-    );
+  return (
+    <div>
+      <ColorPicker
+        value={brandColor}
+        onChange={handleColorChange}
+        format="hex"
+        size="small"
+        showText
+      />
+    </div>
+  );
 };
 
 export default BrandColorSelector;

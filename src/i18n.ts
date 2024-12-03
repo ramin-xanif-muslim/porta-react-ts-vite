@@ -8,8 +8,8 @@ i18n
   .use(LanguageDetector) 
   .use(initReactI18next) 
   .init({
-    fallbackLng: 'en', 
-    supportedLngs: ['en','az'], 
+    fallbackLng: navigator.language, 
+    supportedLngs: ['en','az','tr'], 
     debug: false, 
     // debug: process.env.NODE_ENV === 'development', 
     // backend: {

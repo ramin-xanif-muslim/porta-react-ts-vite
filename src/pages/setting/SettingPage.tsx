@@ -1,4 +1,3 @@
-
 import LanguageSelector from "../../components/LanguageSelector";
 
 const SettingPage = () => {

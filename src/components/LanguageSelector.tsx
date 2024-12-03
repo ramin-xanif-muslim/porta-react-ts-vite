@@ -9,14 +9,14 @@ const LanguageSelector = () => {
     window.location.reload();
   };
 
-  // useEffect(() => {
-  //   i18n.changeLanguage(navigator.language);
-  // }, []);
+  
 
   const languages = [
     { value: "en", label: t("English") },
     { value: "az", label: t("Azerbaijani") },
+    { value: "tr", label: t("Turkish") },
   ];
+
 
   return (
     <Select
@@ -29,3 +29,9 @@ const LanguageSelector = () => {
 };
 
 export default LanguageSelector;
+
+// export const useBrowserLanguage = () => {
+//   useEffect(() => {
+//     i18n.changeLanguage(navigator.language);
+//   }, []);
+// }
