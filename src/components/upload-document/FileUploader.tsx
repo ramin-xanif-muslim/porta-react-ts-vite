@@ -7,21 +7,20 @@ import {
   MAX_FILE_SIZE,
   SUPPORTED_FILE_EXTENSIONS,
   SUPPORTED_FILE_TYPES,
-} from "../../../constants";
-import { useUploadDocument } from "../../../pages/document/use-upload-document";
+} from "../../constants";
 import { t } from "i18next";
 
 const FileUploader = ({
   children,
   input,
-  folderId,
+  handleUpload,
+  multiple = true,
 }: {
   children?: React.ReactNode;
   input?: boolean;
-  folderId: string;
+  handleUpload: (file: File) => Promise<void>;
+  multiple?: boolean;
 }) => {
-  const uploadDocument = useUploadDocument({ folderId });
-
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (acceptedFiles.length > MAX_FILE_COUNT) {
       return notification.error({
@@ -51,7 +50,7 @@ const FileUploader = ({
           ),
         });
       }
-      return uploadDocument.handleCreate({ file });
+      return handleUpload(file);
     });
 
     await Promise.all(uploadPromises);
@@ -59,6 +58,7 @@ const FileUploader = ({
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
+    multiple
     // accept: {
     //   "application/msword": [".doc"],
     //   "application/pdf": [".pdf"],

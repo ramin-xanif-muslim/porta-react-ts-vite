@@ -1,19 +1,19 @@
 export type FolderDTO = {
-    id: string;
-    name: string;
-    parentId?: string | null | undefined;
+  id: string;
+  name: string;
+  parentId?: string | null | undefined;
 };
 
+interface DocumentDataDTO {
+  // key: string;
+  // isSelected?: boolean;
+  // sharedTo: string;
 
-interface FolderDataDTO {
-    key: string;
-    id: string;
-    name: string;
-    fileSize: string;
-    updatedOn: string;
-    isSelected?: boolean;
-    isFolder: boolean;
-    sharedTo: string;
-    folderId: string;
-    fileExtension: string;
+  fileName: string;
+  name: string;
+  fileSize: string;
+  updatedOn: string;
+  isFolder: boolean;
+  id: string;
+  fileExtension: string;
 }

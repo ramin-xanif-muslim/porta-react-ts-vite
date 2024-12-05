@@ -44,6 +44,8 @@
   "Copy": "Kopyala",
   "Folder updated": "Klasör güncellendi",
   "Error deleting folder": "Klasör silinirken hata oluştu",
+  "Folder deleted":"Klasör silindi",
+  "Folder created":"Klasör oluşturuldu",
   "Error creating folder": "Klasör oluşturulurken hata oluştu",
   "Error creating document": "Belge oluşturulurken hata oluştu",
   "Uploading {{fileName}}...": "{{fileName}} yükleniyor...",
@@ -51,6 +53,6 @@
   "Azerbaijani": "Azerbaycanca",
   "English": "İngilizce",
   "Turkish": "Türkçe",
-  "xxx": "xxx",
-  "xxx": "xxx"
+  "Language Settings": "Dil Ayarları",
+  "Appearance Settings": "Görünüm Ayarları"
 }

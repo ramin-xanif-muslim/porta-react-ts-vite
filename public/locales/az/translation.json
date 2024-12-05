@@ -44,12 +44,14 @@
   "Copy": "Köçür",
   "Folder updated": "Qovluq yeniləndi",
   "Error deleting folder": "Qovluğu silmək mümkün olmadı",
+  "Folder deleted":"Qovluq silindi",
+  "Folder created":"Qovluq yaradıldı",
   "Error creating folder": "Qovluğu yaratmaq mümkün olmadı",
   "Error creating document": "Sənədi yaratmaq mümkün olmadı",
   "Uploading {{fileName}}...": "{{fileName}} yüklənir...",
   "{{fileName}} uploaded": "{{fileName}} yükləndi", "Azerbaijani":"Azərbaycan",
   "English":"İngilisce",
   "Turkish":"Türkçe",
-  "xxx":"xxx",
-  "xxx":"xxx"
+  "Language Settings": "Dil Parametrləri",
+  "Appearance Settings": "Görünüş Parametrləri"
 }

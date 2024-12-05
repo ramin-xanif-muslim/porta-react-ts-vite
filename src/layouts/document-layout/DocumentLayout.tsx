@@ -2,19 +2,26 @@ import { Outlet, useParams } from "react-router-dom";
 import { IoFilter } from "react-icons/io5";
 import { HiOutlineArrowSmDown } from "react-icons/hi";
 import CreateFolderBnt from "./create-folder/CreateFolderBnt";
-import UploadDocumentBtn from "./upload-document/UploadDocumentBtn";
-import FileUploader from "./upload-document/FileUploader";
+import UploadDocumentBtn from "../../components/upload-document/UploadDocumentBtn";
+import FileUploader from "../../components/upload-document/FileUploader";
 import { t } from "i18next";
+import { useUploadDocument } from "../../pages/document/use-upload-document";
 
 const DocumentLayout = () => {
-  const { id } = useParams<{ id?: string }>();
+  const { id = "" } = useParams<{ id?: string }>();
+
+  const uploadDocument = useUploadDocument({ folderId: id });
 
   return (
     <div className="flex flex-col mt-2 bg-white p-2">
       <div className="flex items-center justify-between p-4">
         <div className="flex gap-3 ">
           {id && (
-            <FileUploader key={id} input folderId={id}>
+            <FileUploader
+              key={id}
+              input
+              handleUpload={uploadDocument.handleCreate}
+            >
               <UploadDocumentBtn />
             </FileUploader>
           )}

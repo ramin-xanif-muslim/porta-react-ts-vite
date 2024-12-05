@@ -3,11 +3,11 @@ import { notification } from "antd";
 import { documentsApi } from "./documentsApi";
 import { t } from "i18next";
 
-export function useUploadDocument({folderId}: {folderId: string}) {
+export function useUploadNewVersion({folderId}: {folderId: string}) {
     const queryClient = useQueryClient();
 
-    const uploadDocumentMutation = useMutation({
-        mutationFn: documentsApi.uploadDocument,
+    return useMutation({
+        mutationFn: documentsApi.uploadNewVersion,
         onSuccess: () => {},
         onError: () => notification.error({ message: t("Error creating document") }),
         async onSettled() {
@@ -16,18 +16,5 @@ export function useUploadDocument({folderId}: {folderId: string}) {
             );
         },
     });
-
-    const handleCreate = async (file: File) => {
-        if(!folderId) {
-            console.log("folderId not found");
-            return 
-        }
-        uploadDocumentMutation.mutate({ file, folderId });
-    };
-
-    return {
-        handleCreate,
-        isPending: uploadDocumentMutation.isPending,
-    };
 }
 

@@ -1,15 +1,13 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
 import { documentsApi } from "./documentsApi";
 
-export const useGetDocuments = () => {
-  const { id } = useParams();
+export const useGetDocuments = ({ folderId }: { folderId: string }) => {
 
   return useQuery({
-    ...documentsApi.getDocumentsListQueryOptions({ folderId: id || "1" }),
+    ...documentsApi.getDocumentsListQueryOptions({ folderId }),
     placeholderData: keepPreviousData,
     select: (data) => data.data.list,
-    enabled: Boolean(id),
+    enabled: Boolean(folderId),
     staleTime: 1 * 10 * 1000,
     retry: false,
   });

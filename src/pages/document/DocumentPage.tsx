@@ -2,6 +2,7 @@
 import { Table } from "antd";
 import type { TableProps } from "antd";
 import { useParams, useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
 
 import { FaRegFolder } from "react-icons/fa6";
 import { GrDocumentPdf } from "react-icons/gr";
@@ -13,18 +14,17 @@ import { FaRegStar } from "react-icons/fa";
 import { GrDocumentTxt } from "react-icons/gr";
 import { FaRegFileExcel } from "react-icons/fa";
 
-
-
-import { FolderDataDTO } from "../../types";
-import DotsTableCell from "../folder/DotsTableCell";
+import { DocumentDataDTO } from "../../types";
 import { useGetDocuments } from "./use-get-documents";
-import FileUploader from "../../layouts/document-layout/upload-document/FileUploader";
+import FileUploader from "../../components/upload-document/FileUploader";
 import dayjs from "dayjs";
 import { convertFileSize } from "../../lib/utils";
 import classNames from "classnames";
 import { t } from "i18next";
+import DotsTableCell from "./dots-table-cell/DotsTableCell";
+import { useUploadDocument } from "./use-upload-document";
 
-const getFileIcon = (data: FolderDataDTO) => {
+const getFileIcon = (data: DocumentDataDTO) => {
   const { fileExtension, isFolder } = data;
 
   if (isFolder) return <FaRegFolder className="text-[#15ABFFFF] size-5" />;
@@ -52,82 +52,89 @@ const getFileIcon = (data: FolderDataDTO) => {
   }
 };
 
-const columns: TableProps<FolderDataDTO>["columns"] = [
-  {
-    title: "",
-    dataIndex: "icon",
-    key: "icon",
-    render: (_, record) => getFileIcon(record),
-  },
-  {
-    title: t("Name"),
-    dataIndex: "name",
-    key: "name",
-    sorter: () => 0,
-    render: (value, record) => (
-      <div className="flex w-full">
-        <span className="line-clamp-1">{value}</span>
-        {!record.isFolder && <span>.{record.fileExtension}</span>}
-      </div>
-    ),
-  },
-  {
-    title: t("Size"),
-    dataIndex: "fileSize",
-    key: "fileSize",
-    sorter: () => 0,
-    render: (value, record) => (
-      <div>{record.isFolder ? "-" : convertFileSize(value)}</div>
-    ),
-  },
-  {
-    title: t("Last modified"),
-    dataIndex: "updatedOn",
-    key: "updatedOn",
-    sorter: () => 0,
-    render: (value) => (
-      <div className="line-clamp-1">
-        {dayjs(value).format("DD/MM/YYYY HH:mm")}
-      </div>
-    ),
-  },
-  {
-    title: t("Shared to"),
-    key: "sharedTo",
-    dataIndex: "sharedTo",
-    render: () => <div className="line-clamp-1">0 users</div>,
-  },
-  {
-    title: "",
-    key: "isSelected",
-    dataIndex: "isSelected",
-    render: (val) => (
-      <div className="cursor-pointer">
-        <FaRegStar className={classNames({ "text-[#F2C94CFF]": val })} />
-      </div>
-    ),
-  },
-  {
-    title: "",
-    key: "dots",
-    dataIndex: "dots",
-    render: () => <DotsTableCell />,
-  },
-];
-
 const DocumentPage = () => {
-  const { id } = useParams();
+  const { id = "" } = useParams();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { data, isPlaceholderData } = useGetDocuments();
+  const { data, isPlaceholderData, isFetching } = useGetDocuments({
+    folderId: id,
+  });
+
+  const columns = useMemo<TableProps<DocumentDataDTO>["columns"]>(
+    () => [
+      {
+        title: "",
+        dataIndex: "icon",
+        key: "icon",
+        render: (_, record) => getFileIcon(record),
+      },
+      {
+        title: t("Name"),
+        dataIndex: "name",
+        key: "name",
+        sorter: () => 0,
+        render: (value, record) => (
+          <div className="flex w-full">
+            <span className="line-clamp-1">{value}</span>
+            {!record.isFolder && <span>.{record.fileExtension}</span>}
+          </div>
+        ),
+      },
+      {
+        title: t("Size"),
+        dataIndex: "fileSize",
+        key: "fileSize",
+        sorter: () => 0,
+        render: (value, record) => (
+          <div>{record.isFolder ? "-" : convertFileSize(value)}</div>
+        ),
+      },
+      {
+        title: t("Last modified"),
+        dataIndex: "updatedOn",
+        key: "updatedOn",
+        sorter: () => 0,
+        render: (value) => (
+          <div className="line-clamp-1">
+            {dayjs(value).format("DD/MM/YYYY HH:mm")}
+          </div>
+        ),
+      },
+      {
+        title: t("Shared to"),
+        key: "sharedTo",
+        dataIndex: "sharedTo",
+        render: () => <div className="line-clamp-1">0 users</div>,
+      },
+      {
+        title: "",
+        key: "isSelected",
+        dataIndex: "isSelected",
+        render: (val) => (
+          <div className="cursor-pointer">
+            <FaRegStar className={classNames({ "text-[#F2C94CFF]": val })} />
+          </div>
+        ),
+      },
+      {
+        title: "",
+        key: "dots",
+        dataIndex: "dots",
+        render: (_, record) => <DotsTableCell record={record} />,
+      },
+    ],
+    [isFetching]
+  );
+  
+  const uploadDocument = useUploadDocument({ folderId: id });
 
   if (!id) return null;
 
   return (
     <div className="mt-2" key={id}>
-      <FileUploader folderId={id}>
-        <Table<FolderDataDTO>
+      <FileUploader handleUpload={uploadDocument.handleCreate}>
+        <Table<DocumentDataDTO>
           onChange={(pagination, filters, sorter) => {
             console.log({ pagination, filters, sorter });
             if (!Array.isArray(sorter)) {
