@@ -28,15 +28,11 @@ interface DotsTableCellProps {
 
 const DotsTableCell = ({ record }: DotsTableCellProps) => {
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
-  const [isUploadNewVersionModalOpen, setIsUploadNewVersionModalOpen] =
     useState(false);
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
     if (e.key === "Rename") {
       setIsRenameModalOpen(true);
-    }
-    if (e.key === "UploadNewVersion") {
-      setIsUploadNewVersionModalOpen(true);
     }
   };
   const items: MenuProps["items"] = [
@@ -91,8 +87,16 @@ const DotsTableCell = ({ record }: DotsTableCellProps) => {
     },
     {
       key: "UploadNewVersion",
-      label: t("Upload New Version"),
-      icon: <MdUploadFile className="size-5" />,
+      label: (
+        <UploadNewVersion document={record}>
+          <div className="flex items-center gap-2">
+            <span>
+              <MdUploadFile className="size-5" />
+            </span>
+            <span>{t("Upload New Version")}</span>
+          </div>
+        </UploadNewVersion>
+      ),
     },
     // {
     //   key: "Move",
@@ -125,12 +129,6 @@ const DotsTableCell = ({ record }: DotsTableCellProps) => {
         onClose={() => setIsRenameModalOpen(false)}
         name={record.name}
         id={record.id}
-      />
-
-      <UploadNewVersion
-        isOpen={isUploadNewVersionModalOpen}
-        onClose={() => setIsUploadNewVersionModalOpen(false)}
-        document={record}
       />
     </ErrorBoundary>
   );
