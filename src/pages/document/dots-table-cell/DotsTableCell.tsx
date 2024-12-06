@@ -1,6 +1,7 @@
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { Dropdown } from "antd";
-import type { MenuProps } from "antd";
+import { Dropdown, MenuProps } from "antd";
+import { t } from "i18next";
+import { useState } from "react";
+
 // import { FaRegFolderOpen } from "react-icons/fa";
 // import { FaShareFromSquare } from "react-icons/fa6";
 // import { IoMdLink } from "react-icons/io";
@@ -8,31 +9,44 @@ import type { MenuProps } from "antd";
 // import { MdOutlineDeleteForever } from "react-icons/md";
 // import { IoMdMove } from "react-icons/io";
 // import { LiaCopySolid } from "react-icons/lia";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { MdUploadFile } from "react-icons/md";
-import { t } from "i18next";
-import { useState } from "react";
+import { RiFileEditLine } from "react-icons/ri";
+import { VscVersions } from "react-icons/vsc";
+
 import RenameDocument from "./RenameDocument";
 import { DocumentDataDTO } from "../../../types";
 import UploadNewVersion from "./UploadNewVersion";
-import { RiFileEditLine } from "react-icons/ri";
 import UploadFile from "./UploadFile";
 import ErrorBoundary from "../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../components/error-boundary/ErrorFallback";
+import DocumentVersionsList from "../../../components/document-versions-list/DocumentVersionsList";
 
 
 
 interface DotsTableCellProps {
   record: DocumentDataDTO;
+  folderId: string;
 }
 
-const DotsTableCell = ({ record }: DotsTableCellProps) => {
+const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
     useState(false);
+
+    const [isVersionsModalOpen, setIsVersionsModalOpen] = useState(false);
+    const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
     if (e.key === "Rename") {
       setIsRenameModalOpen(true);
+    }
+    if (e.key === "VersionsList") {
+      if(!record.isFolder) {
+        setSelectedDocumentId(record.id);
+        setIsVersionsModalOpen(true);
+      }
+      
     }
   };
   const items: MenuProps["items"] = [
@@ -98,6 +112,11 @@ const DotsTableCell = ({ record }: DotsTableCellProps) => {
         </UploadNewVersion>
       ),
     },
+    {
+      key: "VersionsList",
+      label: t("Document Versions"),
+      icon: <VscVersions className="size-5" />,
+    },
     // {
     //   key: "Move",
     //   label: t("Move"),
@@ -129,6 +148,16 @@ const DotsTableCell = ({ record }: DotsTableCellProps) => {
         onClose={() => setIsRenameModalOpen(false)}
         name={record.name}
         id={record.id}
+      />
+
+      <DocumentVersionsList
+        documentId={selectedDocumentId || ''} 
+        folderId={folderId}
+        open={isVersionsModalOpen}
+        onClose={() => {
+          setIsVersionsModalOpen(false);
+          setSelectedDocumentId(null);
+        }}
       />
     </ErrorBoundary>
   );

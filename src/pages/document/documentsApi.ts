@@ -1,7 +1,8 @@
 import { notification } from "antd";
+import { t } from "i18next";
+
 import { API } from "../../api/api-instance";
 import { queryOptions } from "@tanstack/react-query";
-import { t } from "i18next";
 
 export enum DocumentsApi {
   documents = "/api/v0.01/vms/dms/folders/{folderId}/documents",
@@ -103,6 +104,7 @@ export const documentsApi = {
       return res;
     });
   },
+
   uploadDocument: ({ folderId, file }: { folderId: string; file: File }) => {
     const url = DocumentsApi.documents.replace("{folderId}", folderId);
     const formData = new FormData();

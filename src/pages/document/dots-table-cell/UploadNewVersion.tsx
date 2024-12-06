@@ -1,6 +1,7 @@
+import { useParams } from "react-router-dom";
+
 import { DocumentDataDTO } from "../../../types";
 import { useUploadNewVersion } from "../use-upload-new-version";
-import { useParams } from "react-router-dom";
 import FileUploader from "../../../components/upload-document/FileUploader";
 
 

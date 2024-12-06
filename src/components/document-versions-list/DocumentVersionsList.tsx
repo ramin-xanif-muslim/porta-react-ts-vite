@@ -1,11 +1,13 @@
 import { Drawer, Table } from 'antd';
 import type { TableProps } from 'antd';
-import { useGetDocumentsVersionsList } from '../../pages/document/use-get-documents-versions-list';
 import dayjs from 'dayjs';
-import { DocumentVersionDTO } from '../../types';
 import { t } from 'i18next';
+
+import { useGetDocumentsVersionsList } from '../../pages/document/use-get-documents-versions-list';
+import { DocumentVersionDTO } from '../../types';
 import { convertFileSize } from '../../lib/utils';
 import ErrorBoundary from '../error-boundary/ErrorBoundary';
+import { DATE_FORMAT } from '../../constants';
 
 interface DocumentVersionsListProps {
   documentId: string;
@@ -40,11 +42,6 @@ const DocumentVersionsList = ({ documentId, folderId, open, onClose }: DocumentV
       key: 'fileExtension',
     },
     {
-      title: t('File Name'),
-      dataIndex: 'fileName',
-      key: 'fileName',
-    },
-    {
       title: t('Size'),
       dataIndex: 'fileSize',
       key: 'fileSize',
@@ -54,7 +51,12 @@ const DocumentVersionsList = ({ documentId, folderId, open, onClose }: DocumentV
       title: t('Created On'),
       dataIndex: 'createdOn',
       key: 'createdOn',
-      render: (value) => dayjs(value).format('DD/MM/YYYY HH:mm'),
+      render: (value) => dayjs(value).format(DATE_FORMAT),
+    },
+    {
+      title: t('Version'),
+      dataIndex: 'number',
+      key: 'number',
     },
   ];
 
@@ -65,7 +67,7 @@ const DocumentVersionsList = ({ documentId, folderId, open, onClose }: DocumentV
         placement="right"
         onClose={onClose}
         open={open}
-        width={900}
+        width={600}
       >
         <Table<DocumentVersionDTO>
           columns={columns}

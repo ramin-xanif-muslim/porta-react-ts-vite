@@ -73,5 +73,6 @@
   "Error loading document versions": "Belge sürümleri yüklenirken hata oluştu",
   "Try again": "Tekrar dene",
   "Failed to load FoldersMenu": "Klasör Menüsü yüklenemedi",
-  "Failed to load document page": "Belge sayfası yüklenemedi"
+  "Failed to load document page": "Belge sayfası yüklenemedi",
+  "Version": "Versiya"
 }

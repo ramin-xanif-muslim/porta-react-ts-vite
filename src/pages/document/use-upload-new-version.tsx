@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { notification } from "antd";
-import { documentsApi } from "./documentsApi";
 import { t } from "i18next";
+
+import { documentsApi } from "./documentsApi";
 
 export function useUploadNewVersion({folderId}: {folderId: string}) {
     const queryClient = useQueryClient();

@@ -2,7 +2,10 @@
 import { Table } from "antd";
 import type { TableProps } from "antd";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import classNames from "classnames";
+import { t } from "i18next";
+import dayjs from "dayjs";
 
 import { FaRegFolder } from "react-icons/fa6";
 import { GrDocumentPdf } from "react-icons/gr";
@@ -17,13 +20,10 @@ import { FaRegFileExcel } from "react-icons/fa";
 import { DocumentDataDTO } from "../../types";
 import { useGetDocuments } from "./use-get-documents";
 import FileUploader from "../../components/upload-document/FileUploader";
-import dayjs from "dayjs";
 import { convertFileSize } from "../../lib/utils";
-import classNames from "classnames";
-import { t } from "i18next";
 import DotsTableCell from "./dots-table-cell/DotsTableCell";
 import { useUploadDocument } from "./use-upload-document";
-import DocumentVersionsList from "../../components/document-versions-list/DocumentVersionsList";
+import { DATE_FORMAT } from "../../constants";
 
 const getFileIcon = (data: DocumentDataDTO) => {
   const { fileExtension, isFolder } = data;
@@ -62,9 +62,6 @@ const DocumentPage = () => {
     folderId: id,
   });
 
-  const [isVersionsModalOpen, setIsVersionsModalOpen] = useState(false);
-  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
-
   const columns = useMemo<TableProps<DocumentDataDTO>["columns"]>(
     () => [
       {
@@ -78,17 +75,7 @@ const DocumentPage = () => {
         dataIndex: "name",
         key: "name",
         sorter: () => 0,
-        render: (value, record) => (
-          <div className="flex w-full" onClick={() => {
-            if(!record.isFolder) {
-              setSelectedDocumentId(record.id);
-              setIsVersionsModalOpen(true);
-            }
-          }}>
-            <span className="line-clamp-1">{value}</span>
-            {!record.isFolder && <span>.{record.fileExtension}</span>}
-          </div>
-        ),
+        render: (value) => <div className="line-clamp-1">{value}</div>,
       },
       {
         title: t("Size"),
@@ -106,7 +93,7 @@ const DocumentPage = () => {
         sorter: () => 0,
         render: (value) => (
           <div className="line-clamp-1">
-            {dayjs(value).format("DD/MM/YYYY HH:mm")}
+            {dayjs(value).format(DATE_FORMAT)}
           </div>
         ),
       },
@@ -130,12 +117,12 @@ const DocumentPage = () => {
         title: "",
         key: "dots",
         dataIndex: "dots",
-        render: (_, record) => <DotsTableCell record={record} />,
+        render: (_, record) => <DotsTableCell record={record} folderId={id} />,
       },
     ],
     [isFetching]
   );
-  
+
   const uploadDocument = useUploadDocument({ folderId: id });
 
   if (!id) return null;
@@ -169,16 +156,6 @@ const DocumentPage = () => {
           })}
         />
       </FileUploader>
-
-      <DocumentVersionsList 
-        documentId={selectedDocumentId || ''} 
-        folderId={id}
-        open={isVersionsModalOpen}
-        onClose={() => {
-          setIsVersionsModalOpen(false);
-          setSelectedDocumentId(null);
-        }}
-      />
     </div>
   );
 };

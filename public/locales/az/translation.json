@@ -72,5 +72,6 @@
   "Error loading document versions": "Sənəd versiyalarının yüklənməsində xəta",
   "Try again": "Yenidən cəhd edin",
   "Failed to load FoldersMenu": "Qovluq Menyusunun yüklənməsi alınmadı",
-  "Failed to load document page": "Sənəd səhifəsinin yüklənməsi alınmadı"
+  "Failed to load document page": "Sənəd səhifəsinin yüklənməsi alınmadı",
+  "Version": "Versiya"
 }
