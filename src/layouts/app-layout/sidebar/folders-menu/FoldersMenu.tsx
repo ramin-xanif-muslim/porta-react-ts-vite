@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 import { Spin } from "antd";
-import ErrorBoundary from "../../../../components/ErrorBoundary";
 import { useGetFolders } from "../../../../pages/folder/use-get-folders";
 import { t } from "i18next";
+import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
+import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
 
 const path = "/folders";
 
@@ -42,7 +43,7 @@ export default function FoldersMenu() {
   const { data: folders, isLoading, isFetching } = useGetFolders();
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary fallback={<ErrorFallback error={new Error('Failed to load FoldersMenu')} />}>
       <div className="flex flex-col">
         <Link to={path}>
           <Spin spinning={isLoading}>

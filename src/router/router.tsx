@@ -1,6 +1,8 @@
 import React, { Suspense } from "react";
 import { Skeleton } from "antd";
 import SuspenseFallback from "../components/suspense-fallback";
+import ErrorBoundary from '../components/error-boundary/ErrorBoundary';
+import ErrorFallback from '../components/error-boundary/ErrorFallback';
 
 const AppLayout = React.lazy(() => import("../layouts/app-layout/AppLayout"));
 const DocumentLayout = React.lazy(
@@ -63,9 +65,13 @@ const routers: Router[] = [
                         path: ":id",
                         name: "folder",
                         element: (
-                            <Suspense fallback={<SuspenseFallback />}>
-                                <DocumentPage />
-                            </Suspense>
+                            <ErrorBoundary
+                                fallback={<ErrorFallback error={new Error('Failed to load document page')} />}
+                            >
+                                <Suspense fallback={<SuspenseFallback />}>
+                                    <DocumentPage />
+                                </Suspense>
+                            </ErrorBoundary>
                         ),
                     },
                 ],

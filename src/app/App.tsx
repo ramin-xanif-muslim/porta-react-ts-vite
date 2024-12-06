@@ -7,7 +7,7 @@ import { Spin } from "antd";
 import router from "../router/router.js";
 import { queryClient } from "../api/query-client.js";
 import { AntdConfigProvider } from "../providers/antd-config-provider.js";
-import ErrorBoundary from "../components/ErrorBoundary.js";
+import ErrorBoundary from "../components/error-boundary/ErrorBoundary.js";
 
 function App() {
     return (

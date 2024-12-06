@@ -9,15 +9,31 @@ export enum DocumentsApi {
   rename = "/api/v0.01/vms/dms/folders/{folderId}/documents/{documentId}/name",
   newVersion = "/api/v0.01/vms/dms/folders/{folderId}/documents/{documentId}/versions",
   file = "/api/v0.01/vms/dms/folders/{folderId}/documents/{documentId}/file",
+  versionsList = "/api/v0.01/vms/dms/folders/{folderId}/documents/{documentId}/versions/list",
 }
 
 export const documentsApi = {
   baseKey: "documents",
+
   getDocumentsListQueryOptions: ({ folderId }: { folderId: string }) => {
     const url = DocumentsApi.list.replace("{folderId}", folderId);
 
     return queryOptions({
       queryKey: [documentsApi.baseKey, folderId],
+      queryFn: (meta) =>
+        API.post(url, {
+          signal: meta?.signal,
+        }),
+    });
+  },
+
+  getDocumentsVersionsListQueryOptions: ({ folderId, documentId }: { folderId: string; documentId: string }) => {
+    const url = DocumentsApi.versionsList
+    .replace("{folderId}", folderId)
+    .replace("{documentId}", documentId)
+
+    return queryOptions({
+      queryKey: [documentsApi.baseKey, folderId, documentId],
       queryFn: (meta) =>
         API.post(url, {
           signal: meta?.signal,

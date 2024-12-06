@@ -5,9 +5,10 @@ export type FolderDTO = {
 };
 
 interface DocumentDataDTO {
-  // key: string;
+  // key?: string;
   // isSelected?: boolean;
-  // sharedTo: string;
+  // sharedTo?: string;
+  // dots?: string;
 
   fileName: string;
   name: string;
@@ -16,4 +17,13 @@ interface DocumentDataDTO {
   isFolder: boolean;
   id: string;
   fileExtension: string;
+}
+
+export interface DocumentVersionDTO {
+  id: string;
+  createdOn: string;
+  number: number;
+  fileName: string;
+  fileExtension: string;
+  fileSize: number;
 }

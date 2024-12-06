@@ -2,7 +2,7 @@
 import { Table } from "antd";
 import type { TableProps } from "antd";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { FaRegFolder } from "react-icons/fa6";
 import { GrDocumentPdf } from "react-icons/gr";
@@ -23,6 +23,7 @@ import classNames from "classnames";
 import { t } from "i18next";
 import DotsTableCell from "./dots-table-cell/DotsTableCell";
 import { useUploadDocument } from "./use-upload-document";
+import DocumentVersionsList from "../../components/document-versions-list/DocumentVersionsList";
 
 const getFileIcon = (data: DocumentDataDTO) => {
   const { fileExtension, isFolder } = data;
@@ -61,6 +62,9 @@ const DocumentPage = () => {
     folderId: id,
   });
 
+  const [isVersionsModalOpen, setIsVersionsModalOpen] = useState(false);
+  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
+
   const columns = useMemo<TableProps<DocumentDataDTO>["columns"]>(
     () => [
       {
@@ -75,7 +79,12 @@ const DocumentPage = () => {
         key: "name",
         sorter: () => 0,
         render: (value, record) => (
-          <div className="flex w-full">
+          <div className="flex w-full" onClick={() => {
+            if(!record.isFolder) {
+              setSelectedDocumentId(record.id);
+              setIsVersionsModalOpen(true);
+            }
+          }}>
             <span className="line-clamp-1">{value}</span>
             {!record.isFolder && <span>.{record.fileExtension}</span>}
           </div>
@@ -153,8 +162,23 @@ const DocumentPage = () => {
           columns={columns}
           dataSource={data || []}
           loading={isPlaceholderData}
+          onRow={(record) => ({
+            onClick: () => {
+              console.log(record);
+            },
+          })}
         />
       </FileUploader>
+
+      <DocumentVersionsList 
+        documentId={selectedDocumentId || ''} 
+        folderId={id}
+        open={isVersionsModalOpen}
+        onClose={() => {
+          setIsVersionsModalOpen(false);
+          setSelectedDocumentId(null);
+        }}
+      />
     </div>
   );
 };

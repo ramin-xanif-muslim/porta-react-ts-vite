@@ -17,6 +17,8 @@ import { DocumentDataDTO } from "../../../types";
 import UploadNewVersion from "./UploadNewVersion";
 import { RiFileEditLine } from "react-icons/ri";
 import UploadFile from "./UploadFile";
+import ErrorBoundary from "../../../components/error-boundary/ErrorBoundary";
+import ErrorFallback from "../../../components/error-boundary/ErrorFallback";
 
 
 
@@ -105,7 +107,10 @@ const DotsTableCell = ({ record }: DotsTableCellProps) => {
   ];
 
   return (
-    <>
+    
+    <ErrorBoundary
+    fallback={<ErrorFallback error={new Error('Failed to load DotsTableCell')} />}
+>
       <Dropdown
         menu={{ items, onClick: handleMenuClick }}
         placement="bottomRight"
@@ -127,7 +132,7 @@ const DotsTableCell = ({ record }: DotsTableCellProps) => {
         onClose={() => setIsUploadNewVersionModalOpen(false)}
         document={record}
       />
-    </>
+    </ErrorBoundary>
   );
 };
 
