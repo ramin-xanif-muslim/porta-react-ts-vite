@@ -1,6 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { notification } from "antd";
+import { MdOutlineCloudUpload } from "react-icons/md";
+
 
 import {
   MAX_FILE_COUNT,
@@ -21,6 +23,8 @@ const FileUploader = ({
   handleUpload: (file: File) => Promise<void>;
   multiple?: boolean;
 }) => {
+  const [isDragging, setIsDragging] = useState(false);
+
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (acceptedFiles.length > MAX_FILE_COUNT) {
       return notification.error({
@@ -58,22 +62,32 @@ const FileUploader = ({
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    multiple
-    // accept: {
-    //   "application/msword": [".doc"],
-    //   "application/pdf": [".pdf"],
-    //   "text/plain": [".txt", ".text"],
-    //   "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-    //     [".docx"],
-    // },
+    multiple,
+    onDragEnter: () => setIsDragging(true),
+    onDragLeave: () => setIsDragging(false),
+    onDropAccepted: () => setIsDragging(false),
+    onDropRejected: () => setIsDragging(false),
   });
 
   return (
-    <div {...getRootProps()} className="cursor-pointer">
+    <div {...getRootProps()} className="relative cursor-pointer">
       {input && <input {...getInputProps()} />}
       {children}
+      
+      {/* Drag overlay */}
+      {isDragging && !input && (
+        <div className="absolute inset-0 bg-brand-50 border-2 border-dashed border-brand rounded-lg flex items-center justify-center">
+          <div className="bg-white px-6 py-4 rounded-lg shadow-md flex flex-col items-center gap-2">
+            <MdOutlineCloudUpload className="text-brand text-6xl" />
+            <p className="text-lg font-medium text-brand">
+              {t("Drop files here to upload")}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
+
 };
 
 export default FileUploader;
