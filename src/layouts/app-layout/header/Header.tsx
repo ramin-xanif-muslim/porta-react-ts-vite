@@ -1,56 +1,58 @@
 import { Link } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
-import { FaBars } from "react-icons/fa6";
-// import SearchInput from "./search-input/SearchInput";
 import Profile from "./profile/Profile";
-import MobileSidebar from "../sidebar/mobile-sidebar/MobileSidebar";
-import useStore from "../../../store/useStore";
+import { GoBell } from "react-icons/go";
+import { BiSearchAlt } from "react-icons/bi";
+import { Button } from "antd";
+import NavMenu from "./NavMenu";
 
 
 const Header = () => {
-    const toggleSidebar = useStore((state) => state.toggleSidebar);
-    return (
-        <div className="flex items-center gap-2 md:gap-0  w-full bg-[#FFF]">
-            {/* left */}
-            <div className="flex items-center gap-8 md:min-w-[308px]">
-                <div className="md:hidden">
-                    <MobileSidebar />
-                </div>
-                <div onClick={toggleSidebar} className="cursor-pointer hidden md:block">
-                    <FaBars />
-                </div>
+  return (
+    <div className="flex items-center p-2 w-full text-gray-400 bg-[#233142]">
+      {/* left */}
+      <div className="flex items-center">
+        {/* logo */}
+        <Link to="/" className="shrink-0 hidden md:block">
+          <img className="w-[93px] h-[32px]" src="/logo.svg" alt="logo" />
+        </Link>
 
-                {/* logo */}
-                <Link to="/" className="shrink-0 hidden md:block">
-                    <img
-                        className="w-[93px] h-[32px]"
-                        src="/logo.svg"
-                        alt="logo"
-                    />
-                </Link>
-            </div>
-
-            {/* search */}
-            {/* <div className="ml-4 w-full">
-                <SearchInput />
-            </div> */}
-
-            {/* right */}
-            <div className="ml-auto flex items-center shrink-0">
-                <div className="hidden cursor-pointer bg-[#F3F4F6FF] size-8 lg:flex items-center justify-center rounded-full">
-                    <i className="fa-regular fa-bell"></i>
-                </div>
-                <div className="hidden cursor-pointer ml-2 bg-brand size-8 lg:flex items-center justify-center rounded-full">
-                    <IoSettingsOutline className="text-white size-5" />
-                </div>
-
-                {/* user profile */}
-                <div className="md:ml-6 ">
-                    <Profile />
-                </div>
-            </div>
+        {/* nav items */}
+        <div className="ml-6">
+          <NavMenu />
         </div>
-    );
+      </div>
+
+      {/* right */}
+      <div className="ml-auto flex items-center shrink-0">
+        <div className="">
+          <Button
+            className="bg-transparent"
+            shape="circle"
+            type="text"
+            icon={<BiSearchAlt className="text-gray-400 size-5" />}
+          />
+          <Button
+            className="bg-transparent"
+            shape="circle"
+            type="text"
+            icon={<GoBell className="text-gray-400 size-5" />}
+          />
+          <Button
+            className="bg-transparent"
+            shape="circle"
+            type="text"
+            icon={<IoSettingsOutline className="text-gray-400 size-5" />}
+          />
+        </div>
+
+        {/* user profile */}
+        <div className="md:ml-6 ">
+          <Profile />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Header;

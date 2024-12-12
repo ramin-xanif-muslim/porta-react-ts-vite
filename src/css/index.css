@@ -2,3 +2,6 @@
 @import "./style.css";
 @import "./tailwind.css";
 
+a:hover {
+  color: inherit;
+}

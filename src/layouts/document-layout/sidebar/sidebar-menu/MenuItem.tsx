@@ -10,7 +10,7 @@ interface Props {
 
 const MenuItem = ({ item, active }: Props) => {
   return (
-    <Link to={item.path}>
+    <Link to={`${item.path}`}>
       <div
         className={classNames({
           "menu-item": true,

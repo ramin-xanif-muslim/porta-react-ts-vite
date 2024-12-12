@@ -17,22 +17,22 @@ export const menuList: MenuItemI[] = [
     {
         name: "Shared with me",
         icon: PiUsersThreeBold,
-        path: "/shared-with-me",
+        path: "/document-management/shared-with-me",
     },
     {
         name: "Recents",
         icon: AiOutlineClockCircle,
-        path: "/recents",
+        path: "/document-management/recents",
     },
     {
         name: "Starred",
         icon: FaRegStar,
-        path: "/starred",
+        path: "/document-management/starred",
     },
     {
         name: "Bin",
         icon: FaRegTrashCan,
-        path: "/bin",
+        path: "/document-management/bin",
     },
 ];
 
@@ -40,17 +40,17 @@ export const menuList2: MenuItemI[] = [
     {
         name: "Insights",
         icon: CgInsights,
-        path: "/insights",
+        path: "/document-management/insights",
     },
     {
         name: "Users",
         icon: FaRegUserCircle,
-        path: "/users",
+        path: "/document-management/users",
     },
     {
         name: "Setting",
         icon: IoSettingsOutline,
-        path: "/setting",
+        path: "/document-management/setting",
     },
 ];
 

@@ -4,15 +4,17 @@ import SuspenseFallback from "../components/suspense-fallback";
 import ErrorBoundary from '../components/error-boundary/ErrorBoundary';
 import ErrorFallback from '../components/error-boundary/ErrorFallback';
 
+// LAYOUTS
 const AppLayout = React.lazy(() => import("../layouts/app-layout/AppLayout"));
-const DocumentLayout = React.lazy(
-    () => import("../layouts/document-layout/DocumentLayout")
+const DocumentLayout = React.lazy(() => import("../layouts/document-layout/DocumentLayout"));
+const DocumentManagementLayout = React.lazy(
+    () => import("../layouts/document-layout/DocumentManagementLayout")
 );
 
 const NotFount = React.lazy(() => import("../pages/not-found/NotFount"));
 
+// PAGES
 const SettingPage = React.lazy(() => import("../pages/setting/SettingPage"));
-
 const DocumentPage = React.lazy(() => import("../pages/document/DocumentPage"));
 
 type Router = {
@@ -37,18 +39,13 @@ const routers: Router[] = [
                     </Suspense>
                 ),
             },
+
+            // -----------------------------------
+            // DOCUMENT MANAGEMENT
+            // -----------------------------------
             {
-                path: "setting",
-                name: "setting",
-                element: (
-                    <Suspense fallback={<SuspenseFallback />}>
-                        <SettingPage />
-                    </Suspense>
-                ),
-            },
-            {
-                path: "/folders",
-                name: "folders",
+                path: "document-management",
+                name: "document-management",
                 element: (
                     <Suspense
                         fallback={
@@ -57,21 +54,54 @@ const routers: Router[] = [
                             </div>
                         }
                     >
-                        <DocumentLayout />
+                        <DocumentManagementLayout />
                     </Suspense>
                 ),
                 children: [
                     {
-                        path: ":id",
-                        name: "folder",
+                        path: "*",
+                        name: "not-found",
+                        element: (
+                            <Suspense fallback={<SuspenseFallback />}>
+                                <NotFount />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: "folders",
+                        name: "documents",
                         element: (
                             <ErrorBoundary
                                 fallback={<ErrorFallback error={new Error('Failed to load document page')} />}
                             >
                                 <Suspense fallback={<SuspenseFallback />}>
-                                    <DocumentPage />
+                                    <DocumentLayout />
                                 </Suspense>
                             </ErrorBoundary>
+                        ),
+                        children: [
+                            {
+                                path: "folders/:id",
+                                name: "document",
+                                element: (
+                                    <ErrorBoundary
+                                        fallback={<ErrorFallback error={new Error('Failed to load document page')} />}
+                                    >
+                                        <Suspense fallback={<SuspenseFallback />}>
+                                            <DocumentPage />
+                                        </Suspense>
+                                    </ErrorBoundary>
+                                ),
+                            },
+                        ]
+                    },
+                    {
+                        path: "setting",
+                        name: "setting",
+                        element: (
+                            <Suspense fallback={<SuspenseFallback />}>
+                                <SettingPage />
+                            </Suspense>
                         ),
                     },
                 ],

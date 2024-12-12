@@ -12,7 +12,7 @@ import { t } from "i18next";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
 
-const path = "/folders";
+const path = "/document-management/folders";
 
 function getParentFoldersId(folders: FolderDTO[], pathname: string): string[] {
   const openIds: string[] = [];
