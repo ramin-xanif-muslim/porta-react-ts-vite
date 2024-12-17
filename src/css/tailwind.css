@@ -18,6 +18,8 @@
         --brand-color-900: color-mix(in srgb, var(--brand-color) 50%, black);
         
 
+        --app-background: #F3F4F6FF;
+
         --background: 0 0% 100%;
         --foreground: 0 0% 3.9%;
         --card: 0 0% 100%;
@@ -53,8 +55,6 @@
         --sidebar-ring: 217.2 91.2% 59.8%;
     }
     .dark {
-        --brand-color: rgb(224, 47, 67);
-        /* --brand-color: */
         --background: 0 0% 3.9%;
         --foreground: 0 0% 98%;
         --card: 0 0% 3.9%;
@@ -97,7 +97,6 @@
         @apply bg-background text-foreground;
     }
 }
-
 @layer utilities {
     .loading {
         @apply h-screen w-full flex items-center justify-center;

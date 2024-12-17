@@ -32,7 +32,7 @@ export default function FolderItem({ item, openParents }: Props) {
   return (
     <>
       <Link
-        to={`document-management/folders/${item.id}`}
+        to={`document-management/documents/folders/${item.id}`}
         className={classNames({
           "menu-item group": true,
           "active-menu": isActiveFolder(),

@@ -12,3 +12,41 @@ export const SUPPORTED_FILE_TYPES = [
 ];
 
 export const DATE_FORMAT = "DD/MM/YYYY HH:mm";
+
+export const HEADER_NAV_ITEMS = [
+  {
+    label: "Dashboard",
+    path: "/",
+  },
+  {
+    label: "Employee management",
+    path: "/employee-management",
+  },
+  {
+    label: "Document management",
+    path: "/document-management",
+  },
+]
+
+export const HEADER_NAV_ITEMS_SUB = {
+  "employee-management": [
+    {
+      label: "Employees",
+      path: "employee-management/employees",
+    },
+    {
+      label: "Departments",
+      path: "employee-management/departments",
+    },
+    {
+      label: "Positions",
+      path: "employee-management/positions",
+    },
+  ],
+  "document-management": [
+    {
+      label: "Documents",
+      path: "document-management/documents",
+    },
+  ],
+};

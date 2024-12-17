@@ -2,3 +2,11 @@
 html, body, #root {
     @apply h-full
 }
+
+main {
+    background-color: var(--app-background);
+}
+
+/* * {
+    outline: 1px solid red;
+} */

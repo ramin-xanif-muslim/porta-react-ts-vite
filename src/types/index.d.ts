@@ -4,7 +4,7 @@ export type FolderDTO = {
   parentId?: string | null | undefined;
 };
 
-interface DocumentDataDTO {
+export type DocumentDataDTO = {
   // key?: string;
   // isSelected?: boolean;
   // sharedTo?: string;
@@ -17,13 +17,42 @@ interface DocumentDataDTO {
   isFolder: boolean;
   id: string;
   fileExtension: string;
-}
+};
 
-export interface DocumentVersionDTO {
+export type DocumentVersionDTO = {
   id: string;
   createdOn: string;
   number: number;
   fileName: string;
   fileExtension: string;
   fileSize: number;
-}
+};
+
+// export type EmployeeDTO = {
+//   FirstName: string;
+//   LastName: string;
+//   BirthDate: string;
+//   Gender: string;
+//   Email: string;
+//   PhoneNumber: string;
+//   IsOffice: boolean;
+//   DepartmentId: number;
+//   PositionId: number;
+//   OfficeNumber: string;
+//   DateIn: string;
+// }
+
+export type EmployeeDTO = {
+  firstName: string;
+  lastName: string;
+  birthDate?: string;
+  gender?: string;
+  email: string;
+  phoneNumber?: string;
+  isOffice: boolean;
+  departmentId?: number;
+  positionId?: number;
+  officeNumber?: string;
+  dateIn?: string;
+  id: string;
+};

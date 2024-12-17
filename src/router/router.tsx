@@ -10,10 +10,16 @@ const DocumentLayout = React.lazy(() => import("../layouts/document-layout/Docum
 const DocumentManagementLayout = React.lazy(
     () => import("../layouts/document-layout/DocumentManagementLayout")
 );
+const EmployeeManagementLayout = React.lazy(
+    () => import("../layouts/employee-layout/EmployeeManagementLayout")
+);
 
 const NotFount = React.lazy(() => import("../pages/not-found/NotFount"));
 
 // PAGES
+const EmployeeCreatePage = React.lazy(() => import("../pages/employees/EmployeeCreatePage"));
+const EmployeeUpdatePage = React.lazy(() => import("../pages/employees/EmployeeUpdatePage"));
+const EmployeesPage = React.lazy(() => import("../pages/employees/EmployeesPage"));
 const SettingPage = React.lazy(() => import("../pages/setting/SettingPage"));
 const DocumentPage = React.lazy(() => import("../pages/document/DocumentPage"));
 
@@ -25,6 +31,16 @@ type Router = {
 };
 
 const routers: Router[] = [
+    {
+        path: "/employees/create",
+        name: "employee-create",
+        element: <EmployeeCreatePage />,
+    },
+    {
+        path: "/employees/:id",
+        name: "employee-update",
+        element: <EmployeeUpdatePage />,
+    },
     {
         path: "/",
         name: "",
@@ -38,6 +54,39 @@ const routers: Router[] = [
                         <NotFount />
                     </Suspense>
                 ),
+            },
+
+            // -----------------------------------
+            // EMPLOYEE MANAGEMENT
+            // -----------------------------------
+            {
+                path: "employee-management",
+                name: "employee-management",
+                element: (
+                    <Suspense fallback={<SuspenseFallback />}>
+                        <EmployeeManagementLayout />
+                    </Suspense>
+                ),
+                children: [
+                    {
+                        path: "",
+                        name: "employee-list",
+                        element: (
+                            <Suspense fallback={<SuspenseFallback />}>
+                                <EmployeesPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: "employees",
+                        name: "employee-list",
+                        element: (
+                            <Suspense fallback={<SuspenseFallback />}>
+                                <EmployeesPage />
+                            </Suspense>
+                        ),
+                    },
+                ]
             },
 
             // -----------------------------------
@@ -81,7 +130,7 @@ const routers: Router[] = [
                         ),
                         children: [
                             {
-                                path: "folders/:id",
+                                path: "documents/folders/:id",
                                 name: "document",
                                 element: (
                                     <ErrorBoundary

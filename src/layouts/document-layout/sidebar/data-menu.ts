@@ -17,22 +17,22 @@ export const menuList: MenuItemI[] = [
     {
         name: "Shared with me",
         icon: PiUsersThreeBold,
-        path: "/document-management/shared-with-me",
+        path: "/document-management/documents/shared-with-me",
     },
     {
         name: "Recents",
         icon: AiOutlineClockCircle,
-        path: "/document-management/recents",
+        path: "/document-management/documents/recents",
     },
     {
         name: "Starred",
         icon: FaRegStar,
-        path: "/document-management/starred",
+        path: "/document-management/documents/starred",
     },
     {
         name: "Bin",
         icon: FaRegTrashCan,
-        path: "/document-management/bin",
+        path: "/document-management/documents/bin",
     },
 ];
 

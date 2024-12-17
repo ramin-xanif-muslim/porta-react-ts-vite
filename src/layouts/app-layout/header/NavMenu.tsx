@@ -1,28 +1,15 @@
 import classNames from "classnames";
 import { NavLink } from "react-router-dom";
-
-const navItems = [
-  {
-    label: "Dashboard",
-    path: "/",
-  },
-  {
-    label: "Employee management",
-    path: "/employee-management",
-  },
-  {
-    label: "Document management",
-    path: "/document-management",
-  },
-];
+import { HEADER_NAV_ITEMS } from "../../../constants";
+import { t } from "i18next";
 
 const NavMenu = () => {
   return (
     <div className="flex items-center gap-4">
-      {navItems.map((item) => (
+      {HEADER_NAV_ITEMS.map((item) => (
         <NavLink
           className={({ isActive }) =>
-            classNames("font-medium hover:text-white", {
+            classNames("font-medium hover:text-white truncate line-clamp-1", {
               "text-brand": isActive,
               "hover:!text-brand": isActive,
             })
@@ -33,7 +20,7 @@ const NavMenu = () => {
             document.title = `${item.label} | HR Portal`;
           }}
         >
-          {item.label}
+          {t(item.label)}
         </NavLink>
       ))}
     </div>

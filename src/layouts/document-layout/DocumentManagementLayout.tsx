@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { CiCircleList } from "react-icons/ci";
 import { IoIosInformationCircleOutline } from "react-icons/io";
-import { FaBars } from "react-icons/fa6";
+import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 
 import {
   ResizableHandle,
@@ -14,10 +14,9 @@ import {
 import useStore from "../../store/useStore";
 import Sidebar from "./sidebar/Sidebar";
 import Breadcrumb from "./Breadcrumb";
-import MobileSidebar from "./sidebar/mobile-sidebar/MobileSidebar";
+import MobileDocSidebar from "./sidebar/mobile-document-sidebar/MobileDocSidebar";
 
 const DocumentManagementLayout = () => {
-
   const isOpenSidebar = useStore((state) => state.isOpenSidebar);
   const openSidebar = useStore((state) => state.openSidebar);
   const toggleSidebar = useStore((state) => state.toggleSidebar);
@@ -32,7 +31,7 @@ const DocumentManagementLayout = () => {
   };
 
   return (
-    <div className="flex flex-col mt-2 bg-white p-2">
+    <div className="flex flex-col bg-white">
       <div className="flex">
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel
@@ -52,7 +51,7 @@ const DocumentManagementLayout = () => {
                   minWidth: isOpenSidebar ? 300 : 0,
                   transition: { duration: 0.3 },
                 }}
-                className="shrink-0 hidden md:block"
+                className="hidden shrink-0 md:block"
               >
                 <Sidebar />
               </motion.aside>
@@ -61,19 +60,23 @@ const DocumentManagementLayout = () => {
           <ResizableHandle withHandle={isOpenSidebar} />
           <ResizablePanel>
             {/* content */}
-            <div className="flex-1 h-[calc(100vh-70px)] md:h-[calc(100vh-100px)] bg-[#F3F4F6FF]  p-4  overflow-y-auto no-scrollbar">
+            <div className="no-scrollbar h-full flex-1 overflow-y-auto bg-[#F3F4F6FF] p-4">
               {/* content header */}
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
                   <div>
                     <div className="md:hidden">
-                      <MobileSidebar />
+                      <MobileDocSidebar />
                     </div>
                     <div
                       onClick={toggleSidebar}
-                      className="cursor-pointer hidden md:block"
+                      className="hidden cursor-pointer md:block"
                     >
-                      <FaBars />
+                      {isOpenSidebar ? (
+                        <AiOutlineMenuFold className="size-5" />
+                      ) : (
+                        <AiOutlineMenuUnfold className="size-5" />
+                      )}
                     </div>
                   </div>
 
@@ -81,10 +84,10 @@ const DocumentManagementLayout = () => {
                 </div>
 
                 <div className="flex items-center">
-                  <span className="p-2 cursor-pointer">
+                  <span className="cursor-pointer p-2">
                     <CiCircleList className="size-[22px]" />
                   </span>
-                  <span className="p-2 cursor-pointer bg-gray-200 rounded-full">
+                  <span className="cursor-pointer rounded-full bg-gray-200 p-2">
                     <IoIosInformationCircleOutline className="size-[22px]" />
                   </span>
                 </div>
