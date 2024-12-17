@@ -2,85 +2,98 @@ import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FolderDTO } from '../types';
 
-interface BreadcrumbItemI {
+interface BreadcrumbItem {
     name: string;
     path: string;
 }
 
+interface MenuItem {
+    path: string;
+    name: string;
+}
+
+const createRootBreadcrumb = (name: string): BreadcrumbItem => ({
+    name,
+    path: "/document-management/documents"
+});
+
+const getFolderHierarchy = (
+    folders: FolderDTO[],
+    currentFolderId: string
+): FolderDTO[] => {
+    const folder = folders.find(f => f.id === currentFolderId);
+    if (!folder) return [];
+    
+    if (folder.parentId) {
+        return [...getFolderHierarchy(folders, folder.parentId), folder];
+    }
+    return [folder];
+};
+
+const createFolderBreadcrumbs = (
+    folders: FolderDTO[],
+    folderId: string,
+    rootName: string
+): BreadcrumbItem[] => {
+    const breadcrumbs = [createRootBreadcrumb(rootName)];
+    
+    const folderHierarchy = getFolderHierarchy(folders, folderId);
+    const folderBreadcrumbs = folderHierarchy.map(folder => ({
+        name: folder.name,
+        path: `/document-management/documents/folders/${folder.id}`
+    }));
+    
+    return [...breadcrumbs, ...folderBreadcrumbs];
+};
+
+const findMenuItemBreadcrumbs = (
+    menuLists: MenuItem[][],
+    currentPath: string,
+    breadcrumbNames: string[]
+): BreadcrumbItem[] | null => {
+    for (let i = 0; i < menuLists.length; i++) {
+        const foundItem = menuLists[i].find(item => item.path === currentPath);
+        if (foundItem) {
+            return [
+                createRootBreadcrumb(breadcrumbNames[i]),
+                { name: foundItem.name, path: foundItem.path }
+            ];
+        }
+    }
+    return null;
+};
+
 const useBreadcrumbs = (
-    menuLists: Array<Array<{ path: string; name: string }>>,
+    menuLists: MenuItem[][],
     folders: FolderDTO[],
     firstBreadcrumb: string[]
-) => {
+): BreadcrumbItem[] => {
     const location = useLocation();
 
     return useMemo(() => {
-        const breadcrumbs: BreadcrumbItemI[] = [];
         const currentPath = location.pathname;
 
         // Handle root paths
-        if (currentPath === "/" || currentPath === "/folders") {
-            return [{
-                name: firstBreadcrumb[0],
-                path: "/"
-            }];
+        if (currentPath === "/document-management/documents" || currentPath === "/document-management/documents/folders") {
+            return [createRootBreadcrumb(firstBreadcrumb[0])];
         }
 
         // Handle folder paths
-        if (currentPath.includes("/folders")) {
-            // Add "All files" as first breadcrumb
-            breadcrumbs.push({
-                name: firstBreadcrumb[0],
-                path: "/"
-            });
-
-            const folderId = currentPath.split("/")[2];
-            if (!folderId) return breadcrumbs;
-
-            // Build folder hierarchy
-            const getFolderHierarchy = (currentFolderId: string): FolderDTO[] => {
-                const folder = folders.find(f => f.id === currentFolderId);
-                if (!folder) return [];
-                
-                if (folder.parentId) {
-                    return [...getFolderHierarchy(folder.parentId), folder];
-                }
-                return [folder];
-            };
-
-            // Add all folders in hierarchy to breadcrumbs
-            const folderHierarchy = getFolderHierarchy(folderId);
-            folderHierarchy.forEach(folder => {
-                breadcrumbs.push({
-                    name: folder.name,
-                    path: `/folders/${folder.id}`
-                });
-            });
-
-            return breadcrumbs;
+        if (currentPath.includes("document-management/documents/folders")) {
+            const folderId = currentPath.split("/")[4];
+            if (!folderId) return [createRootBreadcrumb(firstBreadcrumb[0])];
+            
+            return createFolderBreadcrumbs(folders, folderId, firstBreadcrumb[0]);
         }
 
         // Handle menu list paths
-        for (let i = 0; i < menuLists.length; i++) {
-            const foundItem = menuLists[i].find(item => item.path === currentPath);
-            if (foundItem) {
-                breadcrumbs.push({
-                    name: firstBreadcrumb[i],
-                    path: "/"
-                });
-                breadcrumbs.push({
-                    name: foundItem.name,
-                    path: foundItem.path
-                });
-                return breadcrumbs;
-            }
+        const menuBreadcrumbs = findMenuItemBreadcrumbs(menuLists, currentPath, firstBreadcrumb);
+        if (menuBreadcrumbs) {
+            return menuBreadcrumbs;
         }
 
         // Fallback for unmatched paths
-        return [{
-            name: firstBreadcrumb[0],
-            path: "/"
-        }];
+        return [createRootBreadcrumb(firstBreadcrumb[0])];
     }, [location.pathname, menuLists, folders, firstBreadcrumb]);
 };
 

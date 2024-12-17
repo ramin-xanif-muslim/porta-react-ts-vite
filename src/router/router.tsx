@@ -145,7 +145,7 @@ const routers: Router[] = [
                         ]
                     },
                     {
-                        path: "setting",
+                        path: "documents/setting",
                         name: "setting",
                         element: (
                             <Suspense fallback={<SuspenseFallback />}>
