@@ -2,15 +2,16 @@ import { LiaEllipsisVSolid } from "react-icons/lia";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 
+import { useNavigate } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Dropdown, Popconfirm, Spin } from "antd";
-import { FolderItemI } from "./FolderItem";
+import { t } from "i18next";
 import { useState } from "react";
 import classNames from "classnames";
+
 import useStore from "../../../../store/useStore";
 import { useDeleteFolder } from "../../../../pages/folder/use-delete-folder";
-import { useNavigate } from "react-router-dom";
-import { t } from "i18next";
+import { FolderItemI } from "./FolderItem";
 
 const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
   const [open, setOpen] = useState(false);
@@ -19,7 +20,7 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
   const navigate = useNavigate();
 
   const { handleDelete, isPending } = useDeleteFolder(() =>
-    navigate("/folders")
+    navigate("/document-management/documents/folders")
   );
 
   const items: MenuProps["items"] = [

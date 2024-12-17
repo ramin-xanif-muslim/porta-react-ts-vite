@@ -40,17 +40,17 @@ export const menuList2: MenuItemI[] = [
     {
         name: "Insights",
         icon: CgInsights,
-        path: "/document-management/insights",
+        path: "/document-management/documents/insights",
     },
     {
         name: "Users",
         icon: FaRegUserCircle,
-        path: "/document-management/users",
+        path: "/document-management/documents/users",
     },
     {
         name: "Setting",
         icon: IoSettingsOutline,
-        path: "/document-management/setting",
+        path: "/document-management/documents/setting",
     },
 ];
 

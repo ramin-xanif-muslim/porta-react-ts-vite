@@ -130,5 +130,9 @@
   "Unsaved Changes": "Unsaved Changes",
   "You have unsaved changes. Are you sure you want to leave?": "You have unsaved changes. Are you sure you want to leave?",
   "Leave": "Leave",
-  "Stay": "Stay"
+  "Stay": "Stay",
+  "Please select gender!": "Please select gender!",
+  "Please select department!": "Please select department!",
+  "Please select position!": "Please select position!",
+  "Edit": "Edit"
 }

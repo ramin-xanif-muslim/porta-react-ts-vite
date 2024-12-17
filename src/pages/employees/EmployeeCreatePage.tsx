@@ -9,7 +9,7 @@ const EmployeeCreatePage = () => {
   const [form] = Form.useForm<EmployeeDTO>();
 
   const onSuccessCallback = (id: string) => {
-    navigate(`/employees/${id}`, { replace: true });
+    navigate(`/employees/edit/${id}`, { replace: true });
   };
 
   const handleCreateEmployee = useCreateEmployee(onSuccessCallback);

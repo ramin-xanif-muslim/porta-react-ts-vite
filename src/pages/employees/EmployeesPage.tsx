@@ -1,13 +1,14 @@
-import { Button, Table } from "antd";
+import { Button, Table, TableProps } from "antd";
 import { PiDownload } from "react-icons/pi";
 import { FiPlusCircle } from "react-icons/fi";
 import { t } from "i18next";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useGetEmployeesList } from "./use-get-employees-list";
 import { EmployeeDTO } from "../../types";
 import { useState } from "react";
+import DotsTableCell from "./DotsTableCell";
 
-const columns = [
+const columns: TableProps<EmployeeDTO>["columns"] = [
   {
     title: t("Avatar"),
     dataIndex: "avatar",
@@ -52,6 +53,14 @@ const columns = [
     dataIndex: "isOffice",
     key: "isOffice",
   },
+  {
+    title: "",
+    key: "dots",
+    dataIndex: "dots",
+    width: 50,
+    fixed: "right",
+    render: (_, record) => <DotsTableCell employee={record} />,
+  },
 ];
 
 const EmployeesPage = () => {
@@ -68,7 +77,6 @@ const EmployeesPage = () => {
     currentPage,
   });
 
-  const navigate = useNavigate();
 
   return (
     <div className="flex w-full flex-col">
@@ -99,7 +107,7 @@ const EmployeesPage = () => {
               );
             },
           }}
-          columns={columns.map((i) => ({ ...i, title: i.title.toUpperCase() }))}
+          columns={columns}
           dataSource={employees || []}
           pagination={{
             current: currentPage,
@@ -124,9 +132,9 @@ const EmployeesPage = () => {
           }}
           // sticky
           scroll={{ x: window.innerHeight }}
-          onRow={(record) => ({
-            onClick: () => navigate(`/employees/${record.id}`),
-          })}
+          // onRow={(record) => ({
+          //   onClick: () => navigate(`/employees/${record.id}`),
+          // })}
         />
       </div>
     </div>

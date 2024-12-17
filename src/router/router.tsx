@@ -18,7 +18,7 @@ const NotFount = React.lazy(() => import("../pages/not-found/NotFount"));
 
 // PAGES
 const EmployeeCreatePage = React.lazy(() => import("../pages/employees/EmployeeCreatePage"));
-const EmployeeUpdatePage = React.lazy(() => import("../pages/employees/EmployeeUpdatePage"));
+const EmployeeEditPage = React.lazy(() => import("../pages/employees/EmployeeEditPage"));
 const EmployeesPage = React.lazy(() => import("../pages/employees/EmployeesPage"));
 const SettingPage = React.lazy(() => import("../pages/setting/SettingPage"));
 const DocumentPage = React.lazy(() => import("../pages/document/DocumentPage"));
@@ -37,9 +37,9 @@ const routers: Router[] = [
         element: <EmployeeCreatePage />,
     },
     {
-        path: "/employees/:id",
-        name: "employee-update",
-        element: <EmployeeUpdatePage />,
+        path: "/employees/edit/:id",
+        name: "employee-edit",
+        element: <EmployeeEditPage />,
     },
     {
         path: "/",
@@ -117,8 +117,8 @@ const routers: Router[] = [
                         ),
                     },
                     {
-                        path: "folders",
-                        name: "documents",
+                        path: "documents/folders",
+                        name: "folders",
                         element: (
                             <ErrorBoundary
                                 fallback={<ErrorFallback error={new Error('Failed to load document page')} />}
@@ -130,8 +130,8 @@ const routers: Router[] = [
                         ),
                         children: [
                             {
-                                path: "documents/folders/:id",
-                                name: "document",
+                                path: ":id",
+                                name: "folder",
                                 element: (
                                     <ErrorBoundary
                                         fallback={<ErrorFallback error={new Error('Failed to load document page')} />}

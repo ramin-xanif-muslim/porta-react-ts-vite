@@ -23,8 +23,6 @@ import ErrorBoundary from "../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../components/error-boundary/ErrorFallback";
 import DocumentVersionsList from "../../../components/document-versions-list/DocumentVersionsList";
 
-
-
 interface DotsTableCellProps {
   record: DocumentDataDTO;
   folderId: string;
@@ -32,21 +30,22 @@ interface DotsTableCellProps {
 
 const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
-    useState(false);
+  useState(false);
 
-    const [isVersionsModalOpen, setIsVersionsModalOpen] = useState(false);
-    const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
+  const [isVersionsModalOpen, setIsVersionsModalOpen] = useState(false);
+  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(
+    null,
+  );
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
     if (e.key === "Rename") {
       setIsRenameModalOpen(true);
     }
     if (e.key === "VersionsList") {
-      if(!record.isFolder) {
+      if (!record.isFolder) {
         setSelectedDocumentId(record.id);
         setIsVersionsModalOpen(true);
       }
-      
     }
   };
   const items: MenuProps["items"] = [
@@ -130,10 +129,11 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
   ];
 
   return (
-    
     <ErrorBoundary
-    fallback={<ErrorFallback error={new Error('Failed to load DotsTableCell')} />}
->
+      fallback={
+        <ErrorFallback error={new Error("Failed to load DotsTableCell")} />
+      }
+    >
       <Dropdown
         menu={{ items, onClick: handleMenuClick }}
         placement="bottomRight"
@@ -151,7 +151,7 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       />
 
       <DocumentVersionsList
-        documentId={selectedDocumentId || ''} 
+        documentId={selectedDocumentId || ""}
         folderId={folderId}
         open={isVersionsModalOpen}
         onClose={() => {

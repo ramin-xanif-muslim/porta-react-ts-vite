@@ -126,5 +126,9 @@
   "Unsaved Changes": "Değişiklikler kaydedilmemiş",
   "You have unsaved changes. Are you sure you want to leave?": "Değişiklikleri kaydetmeden çıkış yapmak istediğinizden emin misiniz?",
   "Leave": "Çıkış",
-  "Stay": "Kal"
+  "Stay": "Kal",
+  "Please select gender!": "Zəhmət olmasa cinsi daxil edin!",
+  "Please select department!": "Zəhmət olmasa şöbəni daxil edin!",
+  "Please select position!": "Zəhmət olmasa vəzifəni daxil edin!",
+  "Edit": "Düzənlə"
 }
