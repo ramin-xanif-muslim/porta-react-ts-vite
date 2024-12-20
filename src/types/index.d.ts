@@ -56,3 +56,7 @@ export type EmployeeDTO = {
   dateIn?: string;
   id: string;
 };
+export interface EmployeeLookupTDO {
+  id: string;
+  name: string;
+}

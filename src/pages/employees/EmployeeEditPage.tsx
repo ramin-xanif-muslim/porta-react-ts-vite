@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
-import EmployeePage from "./EmployeePage";
-import { useUpdateEmployee } from "./use-update-employee";
-import { useGetEmployee } from "./use-get-employee";
-import dayjs from "dayjs";
 import { useEffect } from "react";
 import { Form, Spin } from "antd";
+import dayjs from "dayjs";
+
 import { EmployeeDTO } from "../../types";
+import { useUpdateEmployee } from "./use-update-employee";
+import { useGetEmployee } from "./use-get-employee";
+import EmployeeDocument from "./employee-document/EmployeeDocument";
 
 const EmployeeUpdatePage = () => {
   const [form] = Form.useForm<EmployeeDTO>();
@@ -25,13 +26,9 @@ const EmployeeUpdatePage = () => {
     }
   }, [data?.data, isFetching, form]);
 
-  // if (!data?.data) {
-  //   return <div>Employee not found</div>;
-  // }
-
   return (
     <Spin tip="Loading" size="large" spinning={isFetching}>
-      <EmployeePage
+      <EmployeeDocument
         isPending={handleUpdateEmployee.isPending || isFetching}
         onFinish={handleUpdateEmployee.mutate}
         mode="update"

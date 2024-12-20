@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useCreateEmployee } from "./use-create-employee";
-import EmployeePage from "./EmployeePage";
-import { EmployeeDTO } from "../../types";
 import { Form } from "antd";
+  
+import { useCreateEmployee } from "./use-create-employee";
+import { EmployeeDTO } from "../../types";
+import EmployeeDocument from "./employee-document/EmployeeDocument";
 
 const EmployeeCreatePage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const EmployeeCreatePage = () => {
   const handleCreateEmployee = useCreateEmployee(onSuccessCallback);
 
   return (
-    <EmployeePage
+    <EmployeeDocument
       initialValues={{ isOffice: true }}
       isPending={handleCreateEmployee.isPending}
       onFinish={handleCreateEmployee.mutate}

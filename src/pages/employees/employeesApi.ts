@@ -5,6 +5,7 @@ import { EmployeeDTO } from "../../types";
 export enum EmployeesApi {
   employees = "/api/v0.01/vms/cms/employees",
   list = "/api/v0.01/vms/cms/employees/list",
+  lookup = "/api/v0.01/vms/lookups/employees",
 }
 
 export const employeesApi = {
@@ -48,4 +49,6 @@ export const employeesApi = {
 
     return API.delete(url);
   },
+
+  getLookupEmployee: () => API.post(EmployeesApi.lookup, {}),
 };
