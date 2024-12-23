@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 
-import { DocumentDataDTO } from "../../../types";
-import { useUploadNewVersion } from "../use-upload-new-version";
-import FileUploader from "../../../components/upload-document/FileUploader";
-
+import { DocumentDataDTO } from "../../../../types";
+import { useUploadNewVersion } from "../../api/use-upload-new-version";
+import FileUploader from "../../../../components/upload-document/FileUploader";
 
 const UploadNewVersion = ({
   document,
@@ -12,7 +11,7 @@ const UploadNewVersion = ({
   children: React.ReactNode;
   document: DocumentDataDTO;
 }) => {
-  const { id = '' } = useParams();
+  const { id = "" } = useParams();
   const uploadDocument = useUploadNewVersion({ folderId: id });
 
   return (
@@ -34,4 +33,4 @@ const UploadNewVersion = ({
   );
 };
 
-export default UploadNewVersion; 
+export default UploadNewVersion;

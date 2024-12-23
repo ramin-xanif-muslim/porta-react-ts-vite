@@ -1,7 +1,7 @@
 import { Card, Switch, Form, Input, DatePicker, Select, Radio } from "antd";
 import { ImFileText } from "react-icons/im";
 import { t } from "i18next";
-import { EmployeeSelect } from "../components/EmployeeSelect";
+import { EmployeeSelect } from "../EmployeeSelect";
 
 interface GeneralInformationSectionProps {
   isOffice: boolean;

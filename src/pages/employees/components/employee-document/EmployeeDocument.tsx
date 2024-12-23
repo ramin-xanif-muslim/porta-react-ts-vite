@@ -1,16 +1,11 @@
-import {
-  Button,
-  Form,
-  FormInstance,
-  Modal,
-} from "antd";
+import { Button, Form, FormInstance, Modal } from "antd";
 import dayjs from "dayjs";
 import { t } from "i18next";
 
 import { PiArrowLeft } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
-import { EmployeeDTO } from "../../../types";
+import { EmployeeDTO } from "../../../../types";
 import React from "react";
 import { PhotoSection } from "./PhotoSection";
 import { GeneralInformationSection } from "./GeneralInformationSection";

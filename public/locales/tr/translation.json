@@ -130,5 +130,9 @@
   "Please select gender!": "Zəhmət olmasa cinsi daxil edin!",
   "Please select department!": "Zəhmət olmasa şöbəni daxil edin!",
   "Please select position!": "Zəhmət olmasa vəzifəni daxil edin!",
-  "Edit": "Düzənlə"
+  "Edit": "Düzənlə",
+  "Page Not Found": "Səhifə Tapılmadı",
+  "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.": "Siz axtardığınız səhifə silinmiş, adı dəyişmiş və ya vaxtında mövcud olmaya bilər.",
+  "Go to Home": "Ana Səhifəyə Keç",
+  "Go Back": "Geri Dön"
 }

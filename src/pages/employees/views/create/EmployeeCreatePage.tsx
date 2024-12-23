@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Form } from "antd";
-  
-import { useCreateEmployee } from "./use-create-employee";
-import { EmployeeDTO } from "../../types";
-import EmployeeDocument from "./employee-document/EmployeeDocument";
 
-const EmployeeCreatePage = () => {
+import { useCreateEmployee } from "../../api/use-create-employee";
+import { EmployeeDTO } from "../../../../types";
+import EmployeeDocument from "../../components/employee-document/EmployeeDocument";
+
+export function EmployeeCreatePage() {
   const navigate = useNavigate();
   const [form] = Form.useForm<EmployeeDTO>();
 
@@ -24,6 +24,6 @@ const EmployeeCreatePage = () => {
       mode="create"
     />
   );
-};
+}
 
 export default EmployeeCreatePage;

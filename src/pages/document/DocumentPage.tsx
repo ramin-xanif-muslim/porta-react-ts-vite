@@ -18,40 +18,12 @@ import { GrDocumentTxt } from "react-icons/gr";
 import { FaRegFileExcel } from "react-icons/fa";
 
 import { DocumentDataDTO } from "../../types";
-import { useGetDocuments } from "./use-get-documents";
+import { useGetDocuments } from "./api/use-get-documents";
 import FileUploader from "../../components/upload-document/FileUploader";
 import { convertFileSize } from "../../lib/utils";
-import DotsTableCell from "./dots-table-cell/DotsTableCell";
-import { useUploadDocument } from "./use-upload-document";
+import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
+import { useUploadDocument } from "./api/use-upload-document";
 import { DATE_FORMAT } from "../../constants";
-
-const getFileIcon = (data: DocumentDataDTO) => {
-  const { fileExtension, isFolder } = data;
-
-  if (isFolder) return <FaRegFolder className="text-[#15ABFFFF] size-5" />;
-
-  switch (fileExtension) {
-    case "zip":
-      return <FaRegFolder className="text-[#15ABFFFF] size-5" />;
-    case "pdf":
-      return <GrDocumentPdf className="text-[#DE3B40FF] size-5" />;
-    case "jpg":
-      return <CiImageOn className="text-[#424856FF] size-5" />;
-    case "pptx":
-      return <BsFiletypePptx className="text-[#D29211FF] size-5" />;
-    case "xlsx":
-      return <BsFiletypeXlsx className="text-[#117B34FF] size-5" />;
-    case "doc":
-    case "docx":
-      return <CgFileDocument className="text-[#197DCAFF] size-5" />;
-    case "text":
-    case "txt":
-      return <GrDocumentTxt className="text-[#D29211FF] size-5" />;
-
-    default:
-      return <FaRegFileExcel className="text-red-500 size-5" />;
-  }
-};
 
 const DocumentPage = () => {
   const { id = "" } = useParams();
@@ -92,9 +64,7 @@ const DocumentPage = () => {
         key: "updatedOn",
         sorter: () => 0,
         render: (value) => (
-          <div className="line-clamp-1">
-            {dayjs(value).format(DATE_FORMAT)}
-          </div>
+          <div className="line-clamp-1">{dayjs(value).format(DATE_FORMAT)}</div>
         ),
       },
       {
@@ -120,7 +90,7 @@ const DocumentPage = () => {
         render: (_, record) => <DotsTableCell record={record} folderId={id} />,
       },
     ],
-    [isFetching]
+    [isFetching],
   );
 
   const uploadDocument = useUploadDocument({ folderId: id });
@@ -161,3 +131,34 @@ const DocumentPage = () => {
 };
 
 export default DocumentPage;
+
+
+
+
+export function getFileIcon(data: DocumentDataDTO) {
+  const { fileExtension, isFolder } = data;
+
+  if (isFolder) return <FaRegFolder className="size-5 text-[#15ABFFFF]" />;
+
+  switch (fileExtension) {
+    case "zip":
+      return <FaRegFolder className="size-5 text-[#15ABFFFF]" />;
+    case "pdf":
+      return <GrDocumentPdf className="size-5 text-[#DE3B40FF]" />;
+    case "jpg":
+      return <CiImageOn className="size-5 text-[#424856FF]" />;
+    case "pptx":
+      return <BsFiletypePptx className="size-5 text-[#D29211FF]" />;
+    case "xlsx":
+      return <BsFiletypeXlsx className="size-5 text-[#117B34FF]" />;
+    case "doc":
+    case "docx":
+      return <CgFileDocument className="size-5 text-[#197DCAFF]" />;
+    case "text":
+    case "txt":
+      return <GrDocumentTxt className="size-5 text-[#D29211FF]" />;
+
+    default:
+      return <FaRegFileExcel className="size-5 text-red-500" />;
+  }
+};

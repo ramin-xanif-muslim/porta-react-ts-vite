@@ -5,8 +5,7 @@ import { t } from "i18next";
 
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiFileEditLine } from "react-icons/ri";
-
-import { EmployeeDTO } from "../../types";
+import { EmployeeDTO } from "../../../types";
 
 
 const DotsTableCell = ({ employee }: { employee: EmployeeDTO }) => {

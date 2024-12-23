@@ -1,7 +1,7 @@
-import { DocumentDataDTO } from "../../../types";
+import { DocumentDataDTO } from "../../../../types";
 import { useParams } from "react-router-dom";
-import FileUploader from "../../../components/upload-document/FileUploader";
-import { useUploadFile } from "../use-upload-file";
+import FileUploader from "../../../../components/upload-document/FileUploader";
+import { useUploadFile } from "../../api/use-upload-file";
 
 const UploadFile = ({
   document,

@@ -134,5 +134,9 @@
   "Please select gender!": "Please select gender!",
   "Please select department!": "Please select department!",
   "Please select position!": "Please select position!",
-  "Edit": "Edit"
+  "Edit": "Edit",
+  "Page Not Found": "Page Not Found",
+  "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+  "Go to Home": "Go to Home",
+  "Go Back": "Go Back"
 }

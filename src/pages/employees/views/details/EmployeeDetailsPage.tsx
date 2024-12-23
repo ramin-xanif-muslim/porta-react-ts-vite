@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import { Form, Spin } from "antd";
 import dayjs from "dayjs";
 
-import { EmployeeDTO } from "../../types";
-import { useUpdateEmployee } from "./use-update-employee";
-import { useGetEmployee } from "./use-get-employee";
-import EmployeeDocument from "./employee-document/EmployeeDocument";
+import { EmployeeDTO } from "../../../../types";
+import { useUpdateEmployee } from "../../api/use-update-employee";
+import { useGetEmployee } from "../../api/use-get-employee";
+import EmployeeDocument from "../../components/employee-document/EmployeeDocument";
 
-const EmployeeUpdatePage = () => {
+export function EmployeeDetailsPage() {
   const [form] = Form.useForm<EmployeeDTO>();
   const { id = "" } = useParams();
 
@@ -36,6 +36,6 @@ const EmployeeUpdatePage = () => {
       />
     </Spin>
   );
-};
+}
 
-export default EmployeeUpdatePage;
+export default EmployeeDetailsPage;

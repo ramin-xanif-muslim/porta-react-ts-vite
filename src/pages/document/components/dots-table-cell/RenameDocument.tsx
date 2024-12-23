@@ -1,6 +1,6 @@
 import { Modal, Form, Input } from "antd";
 import { t } from "i18next";
-import { useRenameDocument } from "../use-rename-document";
+import { useRenameDocument } from "../../api/use-rename-document";
 import { useParams } from "react-router-dom";
 import { Button } from "antd/lib";
 import { useEffect, useRef } from "react";

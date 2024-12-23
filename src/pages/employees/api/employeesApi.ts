@@ -1,6 +1,6 @@
-import { API } from "../../api/api-instance";
 import { queryOptions } from "@tanstack/react-query";
-import { EmployeeDTO } from "../../types";
+import { API } from "../../../api/api-instance";
+import { EmployeeDTO } from "../../../types";
 
 export enum EmployeesApi {
   employees = "/api/v0.01/vms/cms/employees",
@@ -11,19 +11,25 @@ export enum EmployeesApi {
 export const employeesApi = {
   baseKey: "employees",
 
-  getEmployeesListQueryOptions: (params?: { pageSize?: number; currentPage?: number }) => {
+  getEmployeesListQueryOptions: (params?: {
+    pageSize?: number;
+    currentPage?: number;
+  }) => {
     const url = EmployeesApi.list;
-    const skip = params?.currentPage ? (params.currentPage - 1) * (params?.pageSize || 10) : 0;
+    const skip = params?.currentPage
+      ? (params.currentPage - 1) * (params?.pageSize || 10)
+      : 0;
     const take = params?.pageSize || 10;
 
     return queryOptions({
       queryKey: [employeesApi.baseKey, "list", params],
-      queryFn: (meta) => API.post(url, { 
-        requireTotalCount: true,
-        signal: meta?.signal,
-        skip,
-        take,
-      }),
+      queryFn: (meta) =>
+        API.post(url, {
+          requireTotalCount: true,
+          signal: meta?.signal,
+          skip,
+          take,
+        }),
     });
   },
 
@@ -50,5 +56,5 @@ export const employeesApi = {
     return API.delete(url);
   },
 
-  getLookupEmployee: () => API.post(EmployeesApi.lookup, {}),
+  getLookupEmployee: (data = {}) => API.post(EmployeesApi.lookup, data),
 };

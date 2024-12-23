@@ -16,12 +16,12 @@ import { RiFileEditLine } from "react-icons/ri";
 import { VscVersions } from "react-icons/vsc";
 
 import RenameDocument from "./RenameDocument";
-import { DocumentDataDTO } from "../../../types";
+import { DocumentDataDTO } from "../../../../types";
 import UploadNewVersion from "./UploadNewVersion";
 import UploadFile from "./UploadFile";
-import ErrorBoundary from "../../../components/error-boundary/ErrorBoundary";
-import ErrorFallback from "../../../components/error-boundary/ErrorFallback";
-import DocumentVersionsList from "../../../components/document-versions-list/DocumentVersionsList";
+import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
+import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
+import DocumentVersionsList from "../../../../components/document-versions-list/DocumentVersionsList";
 
 interface DotsTableCellProps {
   record: DocumentDataDTO;

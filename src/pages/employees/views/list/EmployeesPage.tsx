@@ -3,10 +3,10 @@ import { PiDownload } from "react-icons/pi";
 import { FiPlusCircle } from "react-icons/fi";
 import { t } from "i18next";
 import { Link, useSearchParams } from "react-router-dom";
-import { useGetEmployeesList } from "./use-get-employees-list";
-import { EmployeeDTO } from "../../types";
+import { useGetEmployeesList } from "../../api/use-get-employees-list";
+import { EmployeeDTO } from "../../../../types";
 import { useState } from "react";
-import DotsTableCell from "./DotsTableCell";
+import DotsTableCell from "../../components/DotsTableCell";
 
 const columns: TableProps<EmployeeDTO>["columns"] = [
   {
@@ -63,7 +63,7 @@ const columns: TableProps<EmployeeDTO>["columns"] = [
   },
 ];
 
-const EmployeesPage = () => {
+export function EmployeesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(
     () => Number(searchParams.get("page")) || 1,
@@ -76,7 +76,6 @@ const EmployeesPage = () => {
     pageSize,
     currentPage,
   });
-
 
   return (
     <div className="flex w-full flex-col">
@@ -139,6 +138,6 @@ const EmployeesPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default EmployeesPage;

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { employeesApi } from "./employeesApi";
 import { notification } from "antd";
 import { t } from "i18next";
-import { EmployeeDTO } from "../../types";
+import { EmployeeDTO } from "../../../types";
 
 export function useCreateEmployee(onSuccessCallback?: (id: string) => void) {
   const queryClient = useQueryClient();

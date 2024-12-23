@@ -22,6 +22,7 @@ export function AntdConfigProvider({ children }: { children?: ReactNode }) {
     return localeMap[i18n.language] || enUS;
   }, [i18n.language]);
 
+
   return (
     <ConfigProvider
       locale={locale}
@@ -32,6 +33,9 @@ export function AntdConfigProvider({ children }: { children?: ReactNode }) {
           borderRadius: 4,
         },
       }}
+      // spin={{
+      //   indicator: <LoadingOutlined spin />,
+      // }}
     >
       <App>{children}</App>
     </ConfigProvider>
