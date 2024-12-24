@@ -1,7 +1,9 @@
 import { Card, Switch, Form, Input, DatePicker, Select, Radio } from "antd";
 import { ImFileText } from "react-icons/im";
 import { t } from "i18next";
-import { EmployeeSelect } from "../EmployeeSelect";
+// import { useEmployeeSelectOptions } from "../../api/use-employee-select-options";
+import { useDepartmentSelectOptions } from "../../../departments/api/use-department-select-options";
+import { usePositionSelectOptions } from "../../../positions/api/use-position-select-options";
 
 interface GeneralInformationSectionProps {
   isOffice: boolean;
@@ -10,6 +12,10 @@ interface GeneralInformationSectionProps {
 export function GeneralInformationSection({
   isOffice,
 }: GeneralInformationSectionProps) {
+  // const employeeSelectOptions = useEmployeeSelectOptions();
+  const departmentSelectOptions = useDepartmentSelectOptions();
+  const positionSelectOptions = usePositionSelectOptions();
+
   return (
     <Card
       title={
@@ -73,15 +79,20 @@ export function GeneralInformationSection({
           <Switch />
         </Form.Item>
         <div />
-        <Form.Item
+        {/* <Form.Item
           name="employeeId"
           label={t("Employee")}
           rules={[
             { required: isOffice, message: t("Please select employee!") },
           ]}
         >
-          <EmployeeSelect disabled={!isOffice} />
-        </Form.Item>
+          <Select
+            disabled={!isOffice}
+            showSearch
+            filterOption={false}
+            {...employeeSelectOptions}
+          />
+        </Form.Item> */}
         <Form.Item
           name="departmentId"
           label={t("Department")}
@@ -89,9 +100,12 @@ export function GeneralInformationSection({
             { required: isOffice, message: t("Please select department!") },
           ]}
         >
-          <Select disabled={!isOffice}>
-            <Select.Option value={1}>HR</Select.Option>
-          </Select>
+          <Select
+            disabled={!isOffice}
+            showSearch
+            filterOption={false}
+            {...departmentSelectOptions}
+          />
         </Form.Item>
         <Form.Item
           name="positionId"
@@ -100,9 +114,12 @@ export function GeneralInformationSection({
             { required: isOffice, message: t("Please select position!") },
           ]}
         >
-          <Select disabled={!isOffice}>
-            <Select.Option value={1}>Manager</Select.Option>
-          </Select>
+          <Select
+            disabled={!isOffice}
+            showSearch
+            filterOption={false}
+            {...positionSelectOptions}
+          />
         </Form.Item>
         <Form.Item name="officeNumber" label={t("Office Number")}>
           <Input disabled={!isOffice} />

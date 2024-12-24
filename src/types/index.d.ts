@@ -60,3 +60,9 @@ export interface EmployeeLookupTDO {
   id: string;
   name: string;
 }
+
+export type DepartmentDTO = {
+  id?: string;
+  name: string;
+  managerId: string;
+};

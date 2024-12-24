@@ -3,7 +3,6 @@ import { useGetLookupEmployee } from "../api/use-get-lookup-employee";
 import { t } from "i18next";
 import { useState } from "react";
 import { useDebounce } from "../../../hooks/useDebounce";
-import { useIntersection } from "../../../hooks/useIntersection";
 
 interface EmployeeSelectProps {
   value?: string;
@@ -11,7 +10,7 @@ interface EmployeeSelectProps {
   disabled?: boolean;
 }
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 100;
 
 export function EmployeeSelect({
   value,
@@ -20,45 +19,20 @@ export function EmployeeSelect({
 }: EmployeeSelectProps) {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText] = useDebounce(searchText, 300);
-  const [currentPage, setCurrentPage] = useState(0);
 
-  const {
-    data: lookupEmployees,
-    isFetching,
-    fetchNextPage,
-  } = useGetLookupEmployee({
-    skip: currentPage * PAGE_SIZE,
+  const { data: lookupEmployees, isFetching } = useGetLookupEmployee({
     take: PAGE_SIZE,
     filters: {
       searchText: debouncedSearchText,
     },
   });
 
-  const onSearch = (value: string) => {
-    setSearchText(value);
-    setCurrentPage(0); // Reset to first page when searching
-  };
-
-  const intersectionRef = useIntersection(() => {
-    fetchNextPage();
-    console.log("fetchNextPage");
-  });
-
   const options =
-    lookupEmployees?.map(
-      (employee: { id: string; name: string }, index: number) => ({
-        key: employee.id,
-        value: employee.id,
-        label: (
-          <div
-            ref={lookupEmployees.length === index + 1 ? intersectionRef : null}
-          >
-            <span>{index + 1}.</span>
-            <span>{employee.name}</span>
-          </div>
-        ),
-      }),
-    ) ?? [];
+    lookupEmployees?.map((employee: { id: string; name: string }) => ({
+      key: employee.id,
+      value: employee.id,
+      label: employee.name,
+    })) ?? [];
 
   return (
     <Select
@@ -66,8 +40,8 @@ export function EmployeeSelect({
       onChange={onChange}
       disabled={disabled}
       placeholder={t("Select employee")}
-      onSearch={onSearch}
-      filterOption={false}
+      onSearch={setSearchText}
+      // filterOption={false}
       showSearch
       options={options}
       loading={isFetching}
