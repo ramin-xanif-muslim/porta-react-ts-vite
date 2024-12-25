@@ -5,7 +5,7 @@ import { FiPlus } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaRegFolder } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
-import { useCreateFolder } from "../../../pages/folder/use-create-folder";
+import { useCreateFolder } from "../../../pages/folder/api/use-create-folder";
 import { t } from "i18next";
 
 const CreateFolderBnt = () => {

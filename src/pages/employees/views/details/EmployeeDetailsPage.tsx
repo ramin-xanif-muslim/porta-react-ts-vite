@@ -3,13 +3,12 @@ import { useEffect } from "react";
 import { Form, Spin } from "antd";
 import dayjs from "dayjs";
 
-import { EmployeeDTO } from "../../../../types";
-import { useUpdateEmployee } from "../../api/use-update-employee";
-import { useGetEmployee } from "../../api/use-get-employee";
-import EmployeeDocument from "../../components/employee-document/EmployeeDocument";
+import { useUpdateEmployee, useGetEmployee } from "../../api";
+import { Employee } from "../../types";
+import { EmployeeDocument } from "../../components/employee-document";
 
 export function EmployeeDetailsPage() {
-  const [form] = Form.useForm<EmployeeDTO>();
+  const [form] = Form.useForm<Employee>();
   const { id = "" } = useParams();
 
   const { data, isFetching } = useGetEmployee(id);

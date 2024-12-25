@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
+
 import { API } from "../../../api/api-instance";
-import { DepartmentDTO } from "../../../types";
+import { Department } from "../types";
 
 export enum DepartmentsApi {
   departments = "/api/v0.01/vms/cms/departments",
@@ -42,14 +43,14 @@ export const departmentsApi = {
     });
   },
 
-  createDepartment: (data: DepartmentDTO) =>
+  createDepartment: (data: Department) =>
     API.post(DepartmentsApi.departments, data),
 
   updateDepartment: ({
     data,
     id,
   }: {
-    data: DepartmentDTO;
+    data: Department;
     id: string;
   }) => {
     const url = DepartmentsApi.departments + "/" + id;

@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { API } from "../../../api/api-instance";
-import { EmployeeDTO } from "../../../types";
+import { Employee } from "../types";
 
 export enum EmployeesApi {
   employees = "/api/v0.01/vms/cms/employees",
@@ -42,9 +42,9 @@ export const employeesApi = {
     });
   },
 
-  createEmployee: (data: EmployeeDTO) => API.post(EmployeesApi.employees, data),
+  createEmployee: (data: Employee) => API.post(EmployeesApi.employees, data),
 
-  updateEmployee: ({ data, id }: { data: EmployeeDTO; id: string }) => {
+  updateEmployee: ({ data, id }: { data: Employee; id: string }) => {
     const url = EmployeesApi.employees + "/" + id;
 
     return API.put(url, data);

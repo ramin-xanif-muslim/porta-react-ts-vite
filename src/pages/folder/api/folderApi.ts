@@ -1,7 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
-import { API } from "../../api/api-instance";
-import { FolderDTO } from "../../types";
-
+import { API } from "../../../api/api-instance";
+import { Folder } from "../types";
 
 export enum FoldersApi {
   baseUrl = "/api/v0.01/vms/dms/folders",
@@ -45,7 +44,7 @@ export const foldersApi = {
     return API.delete(`${FoldersApi.baseUrl}/${id}`);
   },
 
-  updateFolder: ({ id, name, parentId }: FolderDTO) => {
+  updateFolder: ({ id, name, parentId }: Folder) => {
     return API.put(`${FoldersApi.baseUrl}/${id}`, {
       name,
       parentId,

@@ -3,7 +3,7 @@ import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
 import { Link } from "react-router-dom";
 import { menuLists } from "./sidebar/data-menu";
-import { useGetFolders } from "../../pages/folder/use-get-folders";
+import { useGetFolders } from "../../pages/folder/api/use-get-folders";
 import { t } from "i18next";
 import { useBreadcrumbs } from "../../hooks/breadcrumbs";
 
@@ -24,12 +24,12 @@ const BreadcrumbItem = ({ item, items }: Props) => {
     <Link
       to={item.path}
       className={classNames({
-        "flex items-center font-semibold flex-nowrap": true,
+        "flex flex-nowrap items-center font-semibold": true,
         "opacity-50": !isLast,
       })}
     >
-      <span className="text-[14px] line-clamp-1">{t(item.name)}</span>
-      <span className="size-8 flex items-center p-2">
+      <span className="line-clamp-1 text-[14px]">{t(item.name)}</span>
+      <span className="flex size-8 items-center p-2">
         {isLast ? <IoIosArrowDown /> : <IoIosArrowForward />}
       </span>
     </Link>
@@ -42,12 +42,12 @@ const Breadcrumb = () => {
   const items: BreadcrumbItemI[] = useBreadcrumbs(
     menuLists,
     folders || [],
-    firstBreadcrumb
+    firstBreadcrumb,
   );
 
   return (
     <div>
-      <div className="hidden sm:flex items-center  flex-nowrap overflow-x-auto no-scrollbar">
+      <div className="no-scrollbar hidden flex-nowrap items-center overflow-x-auto sm:flex">
         {items?.map((item, index) => (
           <BreadcrumbItem key={index} item={item} items={items} />
         ))}

@@ -5,20 +5,19 @@ import { t } from "i18next";
 
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiFileEditLine } from "react-icons/ri";
-import { EmployeeDTO } from "../../../types";
 
+import { Employee } from "../types";
 
-const DotsTableCell = ({ employee }: { employee: EmployeeDTO }) => {
+const items: MenuProps["items"] = [
+  {
+    key: "Edit",
+    label: t("Edit"),
+    icon: <RiFileEditLine className="size-5" />,
+  },
+];
+
+const DotsTableCell = ({ employee }: { employee: Employee }) => {
   const navigate = useNavigate();
-
-
-  const items: MenuProps["items"] = [
-    {
-      key: "Edit",
-      label: t("Edit"),
-      icon: <RiFileEditLine className="size-5" />,
-    },
-  ];
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
     if (e.key === "Edit") {

@@ -1,13 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { employeesApi } from "./employeesApi";
 import { notification } from "antd";
 import { t } from "i18next";
-import { EmployeeDTO } from "../../../types";
+
+import { Employee } from "../types";
+import { employeesApi } from "./employeesApi";
 
 export function useUpdateEmployee(id: string, onSuccessCallback?: () => void) {
   const queryClient = useQueryClient();
 
-  const updateEmployeeMutation = useMutation<void, Error, EmployeeDTO>({
+  const updateEmployeeMutation = useMutation<void, Error, Employee>({
     mutationFn: async (data) => {
       await employeesApi.updateEmployee({ id, data });
     },

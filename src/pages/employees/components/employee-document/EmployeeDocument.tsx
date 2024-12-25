@@ -1,14 +1,16 @@
-import { Button, Form, FormInstance, Modal } from "antd";
-import dayjs from "dayjs";
+import { Button, Form, FormInstance } from "antd";
 import { t } from "i18next";
 
 import { PiArrowLeft } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
 
-import { EmployeeDTO } from "../../../../types";
-import React from "react";
+import { Employee } from "../../types";
 import { PhotoSection } from "./PhotoSection";
 import { GeneralInformationSection } from "./GeneralInformationSection";
+import {
+  useFormDirtyState,
+  useFormNavigation,
+  useEmployeeFormSubmit,
+} from "./hooks";
 
 const EmployeeDocument = ({
   initialValues = {},
@@ -17,71 +19,17 @@ const EmployeeDocument = ({
   mode = "create",
   form,
 }: {
-  initialValues?: Partial<EmployeeDTO>;
+  initialValues?: Partial<Employee>;
   isPending: boolean;
-  onFinish: (values: EmployeeDTO) => void;
+  onFinish: (values: Employee) => void;
   mode?: "create" | "update";
-  form: FormInstance<EmployeeDTO>;
+  form: FormInstance<Employee>;
 }) => {
-  const navigate = useNavigate();
   const isOffice = Form.useWatch("isOffice", form);
-  const [isFormDirty, setIsFormDirty] = React.useState(false);
-
-  // Handle form changes
-  const handleFormChange = () => {
-    setIsFormDirty(form.isFieldsTouched());
-  };
-
-  // Split into two separate navigation handlers
-  const handleBackNavigation = () => {
-    if (!isFormDirty) {
-      navigate(-1);
-      return;
-    }
-
-    Modal.confirm({
-      title: t("Unsaved Changes"),
-      content: t("You have unsaved changes. Are you sure you want to leave?"),
-      okText: t("Leave"),
-      cancelText: t("Stay"),
-      onOk: () => {
-        navigate(-1);
-      },
-    });
-  };
-
-  // Update the beforeunload handler
-  React.useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isFormDirty) {
-        e.preventDefault();
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [isFormDirty]);
-
-  const handleFinish = (values: EmployeeDTO) => {
-    const transformedValues: Partial<EmployeeDTO> = {
-      ...values,
-      birthDate: values.birthDate
-        ? dayjs(values.birthDate).format("YYYY-MM-DD")
-        : "",
-      dateIn: values.dateIn ? dayjs(values.dateIn).format("YYYY-MM-DD") : "",
-    };
-    if (!isOffice) {
-      delete transformedValues.departmentId;
-      delete transformedValues.positionId;
-      delete transformedValues.officeNumber;
-      delete transformedValues.dateIn;
-    }
-    onFinish(transformedValues as EmployeeDTO);
-
-    setIsFormDirty(false);
-  };
+  const { isFormDirty, setIsFormDirty, handleFormChange } =
+    useFormDirtyState(form);
+  const { handleBackNavigation } = useFormNavigation(isFormDirty);
+  const { handleFinish } = useEmployeeFormSubmit(onFinish, setIsFormDirty);
 
   return (
     <main className="flex w-full flex-col p-4">

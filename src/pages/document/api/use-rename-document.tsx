@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { documentsApi } from "./documentsApi";
 import { notification } from "antd";
 import { t } from "i18next";
+
+import { documentsApi } from "./documentsApi";
 
 interface RenameDocumentParams {
   folderId: string ;

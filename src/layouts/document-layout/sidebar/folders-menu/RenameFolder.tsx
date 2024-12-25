@@ -1,6 +1,6 @@
 import { Input, Spin } from "antd";
 import { useEffect, useState } from "react";
-import { useUpdateFolder } from "../../../../pages/folder/use-update-folder";
+import { useUpdateFolder } from "../../../../pages/folder/api/use-update-folder";
 import useStore from "../../../../store/useStore";
 
 const RenameFolder = ({

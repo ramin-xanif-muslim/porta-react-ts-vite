@@ -4,7 +4,7 @@ import { t } from "i18next";
 
 import { useDepartmentSelectOptions } from "../../../departments/api/use-department-select-options";
 import { usePositionSelectOptions } from "../../../positions/api/use-position-select-options";
-import { useEmployeeSelectOptionsWithInfinityScroll } from "../../api/use-employee-select-options-with-infinity-scroll";
+import { useInfinityEmployeeSelectOptions } from "../../api/use-infinity-employee-select-options";
 
 interface GeneralInformationSectionProps {
   isOffice: boolean;
@@ -13,7 +13,7 @@ interface GeneralInformationSectionProps {
 export function GeneralInformationSection({
   isOffice,
 }: GeneralInformationSectionProps) {
-  const employeeSelectOptions = useEmployeeSelectOptionsWithInfinityScroll();
+  const employeeSelectOptions = useInfinityEmployeeSelectOptions();
   const departmentSelectOptions = useDepartmentSelectOptions();
   const positionSelectOptions = usePositionSelectOptions();
 

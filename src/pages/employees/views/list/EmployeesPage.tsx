@@ -3,12 +3,13 @@ import { PiDownload } from "react-icons/pi";
 import { FiPlusCircle } from "react-icons/fi";
 import { t } from "i18next";
 import { Link, useSearchParams } from "react-router-dom";
-import { useGetEmployeesList } from "../../api/use-get-employees-list";
-import { EmployeeDTO } from "../../../../types";
 import { useState } from "react";
-import DotsTableCell from "../../components/DotsTableCell";
 
-const columns: TableProps<EmployeeDTO>["columns"] = [
+import DotsTableCell from "../../components/DotsTableCell";
+import { Employee } from "../../types";
+import { useGetEmployeesList } from "../../api";
+
+const columns: TableProps<Employee>["columns"] = [
   {
     title: t("Avatar"),
     dataIndex: "avatar",
@@ -27,7 +28,7 @@ const columns: TableProps<EmployeeDTO>["columns"] = [
     title: t("Full Name"),
     dataIndex: "fullName",
     key: "fullName",
-    render: (_: unknown, record: EmployeeDTO) => (
+    render: (_: unknown, record: Employee) => (
       <span className="line-clamp-1">
         {record.firstName} {record.lastName}
       </span>

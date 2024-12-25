@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 import { Spin } from "antd";
-import { useGetFolders } from "../../../../pages/folder/use-get-folders";
+import { useGetFolders } from "../../../../pages/folder/api/use-get-folders";
 import { t } from "i18next";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
@@ -43,7 +43,11 @@ export default function FoldersMenu() {
   const { data: folders, isLoading, isFetching } = useGetFolders();
 
   return (
-    <ErrorBoundary fallback={<ErrorFallback error={new Error('Failed to load FoldersMenu')} />}>
+    <ErrorBoundary
+      fallback={
+        <ErrorFallback error={new Error("Failed to load FoldersMenu")} />
+      }
+    >
       <div className="flex flex-col">
         <Link to={path}>
           <Spin spinning={isLoading}>
@@ -58,7 +62,7 @@ export default function FoldersMenu() {
                 <FaRegFolder className="size-6" />
               </div>
               <span className="">{t("All files")}</span>
-              <span className="flex flex-col ml-auto">
+              <span className="ml-auto flex flex-col">
                 <IoIosArrowForward
                   className={classNames({
                     "transition-all": true,

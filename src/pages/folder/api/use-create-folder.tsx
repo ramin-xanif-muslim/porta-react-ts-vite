@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { foldersApi } from "./api";
 import { notification } from "antd";
 import { t } from "i18next";
+
+import { foldersApi } from "./folderApi";
 
 export function useCreateFolder(onSuccessCallback?: (id: string) => void) {
   const queryClient = useQueryClient();
@@ -15,7 +16,7 @@ export function useCreateFolder(onSuccessCallback?: (id: string) => void) {
     onError: () => notification.error({ message: t("Error creating folder") }),
     async onSettled() {
       await queryClient.invalidateQueries(
-        foldersApi.getFoldersListQueryOptions()
+        foldersApi.getFoldersListQueryOptions(),
       );
     },
   });
@@ -33,4 +34,3 @@ export function useCreateFolder(onSuccessCallback?: (id: string) => void) {
     isPending: createFolderMutation.isPending,
   };
 }
-

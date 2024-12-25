@@ -1,33 +1,34 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { notification } from "antd";
-import { documentsApi } from "./documentsApi";
 import { t } from "i18next";
 
-export function useUploadDocument({folderId}: {folderId: string}) {
-    const queryClient = useQueryClient();
+import { documentsApi } from "./documentsApi";
 
-    const uploadDocumentMutation = useMutation({
-        mutationFn: documentsApi.uploadDocument,
-        onSuccess: () => {},
-        onError: () => notification.error({ message: t("Error creating document") }),
-        async onSettled() {
-            await queryClient.invalidateQueries(
-                documentsApi.getDocumentsListQueryOptions({ folderId })
-            );
-        },
-    });
+export function useUploadDocument({ folderId }: { folderId: string }) {
+  const queryClient = useQueryClient();
 
-    const handleCreate = async (file: File) => {
-        if(!folderId) {
-            console.log("folderId not found");
-            return 
-        }
-        uploadDocumentMutation.mutate({ file, folderId });
-    };
+  const uploadDocumentMutation = useMutation({
+    mutationFn: documentsApi.uploadDocument,
+    onSuccess: () => {},
+    onError: () =>
+      notification.error({ message: t("Error creating document") }),
+    async onSettled() {
+      await queryClient.invalidateQueries(
+        documentsApi.getDocumentsListQueryOptions({ folderId }),
+      );
+    },
+  });
 
-    return {
-        handleCreate,
-        isPending: uploadDocumentMutation.isPending,
-    };
+  const handleCreate = async (file: File) => {
+    if (!folderId) {
+      console.log("folderId not found");
+      return;
+    }
+    uploadDocumentMutation.mutate({ file, folderId });
+  };
+
+  return {
+    handleCreate,
+    isPending: uploadDocumentMutation.isPending,
+  };
 }
-

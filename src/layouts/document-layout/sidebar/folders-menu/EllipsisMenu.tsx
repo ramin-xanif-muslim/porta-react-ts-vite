@@ -10,7 +10,7 @@ import { useState } from "react";
 import classNames from "classnames";
 
 import useStore from "../../../../store/useStore";
-import { useDeleteFolder } from "../../../../pages/folder/use-delete-folder";
+import { useDeleteFolder } from "../../../../pages/folder/api/use-delete-folder";
 import { FolderItemI } from "./FolderItem";
 
 const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
@@ -20,7 +20,7 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
   const navigate = useNavigate();
 
   const { handleDelete, isPending } = useDeleteFolder(() =>
-    navigate("/document-management/documents/folders")
+    navigate("/document-management/documents/folders"),
   );
 
   const items: MenuProps["items"] = [
@@ -72,10 +72,10 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
         menu={{ items }}
         trigger={["click"]}
       >
-        <div className="cursor-pointer hover:bg-gray-100 rounded-full p-1">
+        <div className="cursor-pointer rounded-full p-1 hover:bg-gray-100">
           <LiaEllipsisVSolid
             className={classNames({
-              "size-4 hover:text-gray-600 hidden group-hover:block": true,
+              "hidden size-4 hover:text-gray-600 group-hover:block": true,
               "!block": open,
             })}
           />

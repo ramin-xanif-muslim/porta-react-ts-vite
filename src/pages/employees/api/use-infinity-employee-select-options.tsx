@@ -2,13 +2,9 @@ import { useState } from "react";
 import { useDebounce } from "../../../hooks/useDebounce";
 import { useGetEmployeeInfinityQuery } from "./use-get-employee-infinity-query";
 import { useIntersection } from "../../../hooks/useIntersection";
+import { EmployeeLookup } from "../types";
 
-interface Employee {
-  id: string;
-  name: string;
-}
-
-export function useEmployeeSelectOptionsWithInfinityScroll() {
+export function useInfinityEmployeeSelectOptions() {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText] = useDebounce(searchText, 300);
 
@@ -43,7 +39,7 @@ export function useEmployeeSelectOptionsWithInfinityScroll() {
   });
 
   const options =
-    lookupEmployees?.list.map((employee: Employee) => ({
+    lookupEmployees?.list.map((employee: EmployeeLookup) => ({
       key: employee.id,
       value: employee.id,
       label: employee.name,

@@ -1,5 +1,6 @@
-import { DocumentDataDTO } from "../../../../types";
 import { useParams } from "react-router-dom";
+
+import { Document } from "../../types";
 import FileUploader from "../../../../components/upload-document/FileUploader";
 import { useUploadFile } from "../../api/use-upload-file";
 
@@ -8,7 +9,7 @@ const UploadFile = ({
   children,
 }: {
   children: React.ReactNode;
-  document: DocumentDataDTO;
+  document: Document;
 }) => {
   const { id = "" } = useParams();
   const uploadDocument = useUploadFile({ folderId: id });

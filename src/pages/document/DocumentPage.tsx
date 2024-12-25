@@ -6,24 +6,16 @@ import { useMemo } from "react";
 import classNames from "classnames";
 import { t } from "i18next";
 import dayjs from "dayjs";
-
-import { FaRegFolder } from "react-icons/fa6";
-import { GrDocumentPdf } from "react-icons/gr";
-import { CiImageOn } from "react-icons/ci";
-import { BsFiletypePptx } from "react-icons/bs";
-import { BsFiletypeXlsx } from "react-icons/bs";
-import { CgFileDocument } from "react-icons/cg";
 import { FaRegStar } from "react-icons/fa";
-import { GrDocumentTxt } from "react-icons/gr";
-import { FaRegFileExcel } from "react-icons/fa";
 
-import { DocumentDataDTO } from "../../types";
+import { Document } from "./types";
 import { useGetDocuments } from "./api/use-get-documents";
 import FileUploader from "../../components/upload-document/FileUploader";
 import { convertFileSize } from "../../lib/utils";
 import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
 import { useUploadDocument } from "./api/use-upload-document";
 import { DATE_FORMAT } from "../../constants";
+import { getFileIcon } from "./utils/file-icons";
 
 const DocumentPage = () => {
   const { id = "" } = useParams();
@@ -34,7 +26,7 @@ const DocumentPage = () => {
     folderId: id,
   });
 
-  const columns = useMemo<TableProps<DocumentDataDTO>["columns"]>(
+  const columns = useMemo<TableProps<Document>["columns"]>(
     () => [
       {
         title: "",
@@ -100,7 +92,7 @@ const DocumentPage = () => {
   return (
     <div className="mt-2" key={id}>
       <FileUploader handleUpload={uploadDocument.handleCreate}>
-        <Table<DocumentDataDTO>
+        <Table<Document>
           onChange={(pagination, filters, sorter) => {
             console.log({ pagination, filters, sorter });
             if (!Array.isArray(sorter)) {
@@ -131,34 +123,3 @@ const DocumentPage = () => {
 };
 
 export default DocumentPage;
-
-
-
-
-export function getFileIcon(data: DocumentDataDTO) {
-  const { fileExtension, isFolder } = data;
-
-  if (isFolder) return <FaRegFolder className="size-5 text-[#15ABFFFF]" />;
-
-  switch (fileExtension) {
-    case "zip":
-      return <FaRegFolder className="size-5 text-[#15ABFFFF]" />;
-    case "pdf":
-      return <GrDocumentPdf className="size-5 text-[#DE3B40FF]" />;
-    case "jpg":
-      return <CiImageOn className="size-5 text-[#424856FF]" />;
-    case "pptx":
-      return <BsFiletypePptx className="size-5 text-[#D29211FF]" />;
-    case "xlsx":
-      return <BsFiletypeXlsx className="size-5 text-[#117B34FF]" />;
-    case "doc":
-    case "docx":
-      return <CgFileDocument className="size-5 text-[#197DCAFF]" />;
-    case "text":
-    case "txt":
-      return <GrDocumentTxt className="size-5 text-[#D29211FF]" />;
-
-    default:
-      return <FaRegFileExcel className="size-5 text-red-500" />;
-  }
-};

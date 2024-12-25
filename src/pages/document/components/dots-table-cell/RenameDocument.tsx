@@ -1,10 +1,11 @@
 import { Modal, Form, Input } from "antd";
 import { t } from "i18next";
-import { useRenameDocument } from "../../api/use-rename-document";
 import { useParams } from "react-router-dom";
 import { Button } from "antd/lib";
 import { useEffect, useRef } from "react";
 import { InputRef } from "antd";
+
+import { useRenameDocument } from "../../api/use-rename-document";
 
 interface RenameProps {
   isOpen: boolean;
