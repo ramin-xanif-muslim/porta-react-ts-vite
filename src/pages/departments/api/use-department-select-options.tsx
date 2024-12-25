@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDebounce } from "../../../hooks/useDebounce";
 import { useGetLookupDepartments } from "./use-get-lookup-departments";
 
-const PAGE_SIZE = 100;
 
 export function useDepartmentSelectOptions() {
   const [searchText, setSearchText] = useState("");
@@ -10,7 +9,7 @@ export function useDepartmentSelectOptions() {
   const [debouncedSearchText] = useDebounce(searchText, 300);
 
   const { data: lookupDepartments, isFetching } = useGetLookupDepartments({
-    take: PAGE_SIZE,
+    take: 100,
     filters: {
       searchText: debouncedSearchText,
     },
@@ -35,7 +34,7 @@ export function useDepartmentSelectOptions() {
 
   return {
     options,
-    isFetching,
+    loading: isFetching,
     onSearch,
     // onFocus,
   };

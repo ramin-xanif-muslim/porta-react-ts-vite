@@ -1,12 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { departmentsApi } from "./departmentsApi";
+import { BaseQueryParams, LookupFilters } from "../../../types/query-params";
 
-interface GetLookupDepartmentParams {
-  take?: number;
-  filters?: {
-    searchText?: string;
-  };
-}
 
 
 
@@ -14,7 +9,7 @@ interface UseGetLookupDepartmentsParams {
   enabled?: boolean;
 }
 
-export function useGetLookupDepartments(params: GetLookupDepartmentParams, options?: UseGetLookupDepartmentsParams) {
+export function useGetLookupDepartments(params: BaseQueryParams<LookupFilters>, options?: UseGetLookupDepartmentsParams) {
   return useQuery({
     queryKey: ["lookupDepartments", params],
     queryFn: () => departmentsApi.getLookupDepartments(params),

@@ -15,7 +15,9 @@ export function usePositionSelectOptions() {
         searchText: debouncedSearchText,
       },
     },
-    {},
+    {
+      staleTime: 1 * 60 * 1000,
+    },
   );
 
   const options =
@@ -31,7 +33,7 @@ export function usePositionSelectOptions() {
 
   return {
     options,
-    isFetching,
+    loading: isFetching,
     onSearch,
   };
 }

@@ -1,14 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { employeesApi } from "./employeesApi";
-import { BaseQueryParams } from "../../../types/query-params";
+import { BaseQueryParams, LookupFilters } from "../../../types/query-params";
 
-type EmployeeFilters = {
-  searchText: string;
-};
-
-export type LookupEmployeeParams = BaseQueryParams<EmployeeFilters>;
-
-export const useGetLookupEmployee = (params?: LookupEmployeeParams) => {
+export const useGetLookupEmployee = (params?: BaseQueryParams<LookupFilters>) => {
 
   return useQuery({
     queryKey: [employeesApi.baseKey, "lookup", params],

@@ -1,8 +1,8 @@
 import { notification } from "antd";
 import { t } from "i18next";
 
-import { API } from "../../api/api-instance";
 import { queryOptions } from "@tanstack/react-query";
+import { API } from "../../../api/api-instance";
 
 export enum DocumentsApi {
   documents = "/api/v0.01/vms/dms/folders/{folderId}/documents",

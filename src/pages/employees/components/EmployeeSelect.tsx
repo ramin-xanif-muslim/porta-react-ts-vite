@@ -1,8 +1,7 @@
 import { Select } from "antd";
-import { useGetLookupEmployee } from "../api/use-get-lookup-employee";
 import { t } from "i18next";
-import { useState } from "react";
-import { useDebounce } from "../../../hooks/useDebounce";
+
+import { useEmployeeSelectOptionsWithInfinityScroll } from "../api/use-employee-select-options-with-infinity-scroll";
 
 interface EmployeeSelectProps {
   value?: string;
@@ -10,29 +9,13 @@ interface EmployeeSelectProps {
   disabled?: boolean;
 }
 
-const PAGE_SIZE = 100;
-
 export function EmployeeSelect({
   value,
   onChange,
   disabled,
 }: EmployeeSelectProps) {
-  const [searchText, setSearchText] = useState("");
-  const [debouncedSearchText] = useDebounce(searchText, 300);
-
-  const { data: lookupEmployees, isFetching } = useGetLookupEmployee({
-    take: PAGE_SIZE,
-    filters: {
-      searchText: debouncedSearchText,
-    },
-  });
-
-  const options =
-    lookupEmployees?.map((employee: { id: string; name: string }) => ({
-      key: employee.id,
-      value: employee.id,
-      label: employee.name,
-    })) ?? [];
+  const { options, loading, onSearch } =
+    useEmployeeSelectOptionsWithInfinityScroll();
 
   return (
     <Select
@@ -40,11 +23,11 @@ export function EmployeeSelect({
       onChange={onChange}
       disabled={disabled}
       placeholder={t("Select employee")}
-      onSearch={setSearchText}
-      // filterOption={false}
+      filterOption={false}
       showSearch
+      onSearch={onSearch}
       options={options}
-      loading={isFetching}
+      loading={loading}
     />
   );
 }

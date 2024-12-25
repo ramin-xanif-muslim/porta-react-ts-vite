@@ -1,15 +1,9 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { employeesApi } from "./employeesApi";
-import { BaseQueryParams } from "../../../types/query-params";
+import { BaseQueryParams, LookupFilters } from "../../../types/query-params";
 
-type EmployeeFilters = {
-  searchText: string;
-};
-
-export type LookupEmployeeParams = BaseQueryParams<EmployeeFilters>;
-
-export const useGetEmployeeInfinityQuery = (params?: LookupEmployeeParams) => {
-  const pageSize = params?.take ?? 10;
+export const useGetEmployeeInfinityQuery = (params?: BaseQueryParams<LookupFilters>) => {
+  const pageSize = params?.take ?? 100;
 
   return useInfiniteQuery({
     queryKey: [employeesApi.baseKey, "lookup", params],
@@ -21,13 +15,16 @@ export const useGetEmployeeInfinityQuery = (params?: LookupEmployeeParams) => {
       });
     },
     getNextPageParam: (lastPage, allPages) => {
-      console.log({ lastPage, allPages });
-      const totalPages = Math.ceil(lastPage.data.totalCount / pageSize);
-      const currentPage = allPages.length;
-
-      return currentPage < totalPages ? currentPage + 1 : undefined;
+      const totalFetched = allPages.length * pageSize;
+      return totalFetched < lastPage.data.totalCount
+        ? allPages.length
+        : undefined;
     },
     initialPageParam: 0,
-    select: (data) => data.pages.flatMap((page) => page.data.list),
+    select: (data) => ({
+      list: data.pages.flatMap((page) => page.data.list),
+      totalCount: data?.pages[0]?.data.totalCount,
+    }),
+    staleTime: 1000 * 60 * 5,
   });
 };

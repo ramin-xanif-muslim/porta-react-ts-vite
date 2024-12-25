@@ -1,9 +1,10 @@
 import { Card, Switch, Form, Input, DatePicker, Select, Radio } from "antd";
 import { ImFileText } from "react-icons/im";
 import { t } from "i18next";
-// import { useEmployeeSelectOptions } from "../../api/use-employee-select-options";
+
 import { useDepartmentSelectOptions } from "../../../departments/api/use-department-select-options";
 import { usePositionSelectOptions } from "../../../positions/api/use-position-select-options";
+import { useEmployeeSelectOptionsWithInfinityScroll } from "../../api/use-employee-select-options-with-infinity-scroll";
 
 interface GeneralInformationSectionProps {
   isOffice: boolean;
@@ -12,7 +13,7 @@ interface GeneralInformationSectionProps {
 export function GeneralInformationSection({
   isOffice,
 }: GeneralInformationSectionProps) {
-  // const employeeSelectOptions = useEmployeeSelectOptions();
+  const employeeSelectOptions = useEmployeeSelectOptionsWithInfinityScroll();
   const departmentSelectOptions = useDepartmentSelectOptions();
   const positionSelectOptions = usePositionSelectOptions();
 
@@ -79,7 +80,7 @@ export function GeneralInformationSection({
           <Switch />
         </Form.Item>
         <div />
-        {/* <Form.Item
+        <Form.Item
           name="employeeId"
           label={t("Employee")}
           rules={[
@@ -92,7 +93,7 @@ export function GeneralInformationSection({
             filterOption={false}
             {...employeeSelectOptions}
           />
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item
           name="departmentId"
           label={t("Department")}

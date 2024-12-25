@@ -6,6 +6,9 @@ export interface SortOption {
 export interface BaseFilters {
   searchText: string;
 }
+export interface LookupFilters {
+  searchText: string;
+}
 
 export interface BaseQueryParams<T = BaseFilters> {
   requireTotalCount?: boolean;

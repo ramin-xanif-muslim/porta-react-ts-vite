@@ -3,9 +3,9 @@ import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
 import { Link } from "react-router-dom";
 import { menuLists } from "./sidebar/data-menu";
-import useBreadcrumbs from "../../hooks/useBreadcrumbs";
 import { useGetFolders } from "../../pages/folder/use-get-folders";
 import { t } from "i18next";
+import { useBreadcrumbs } from "../../hooks/breadcrumbs";
 
 const firstBreadcrumb = ["MY PORTA", "ADMIN"];
 interface BreadcrumbItemI {
