@@ -11,15 +11,15 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "../../components/ui/resizable";
-import useStore from "../../store/useStore";
 import Sidebar from "./sidebar/Sidebar";
 import Breadcrumb from "./Breadcrumb";
 import MobileDocSidebar from "./sidebar/mobile-document-sidebar/MobileDocSidebar";
+import { useGlobalStore } from "../../store";
 
 const DocumentManagementLayout = () => {
-  const isOpenSidebar = useStore((state) => state.isOpenSidebar);
-  const openSidebar = useStore((state) => state.openSidebar);
-  const toggleSidebar = useStore((state) => state.toggleSidebar);
+  const isOpenSidebar = useGlobalStore((state) => state.isOpenSidebar);
+  const openSidebar = useGlobalStore((state) => state.openSidebar);
+  const toggleSidebar = useGlobalStore((state) => state.toggleSidebar);
 
   const defaultSize = localStorage.getItem("sidebar-width")
     ? Number(localStorage.getItem("sidebar-width"))

@@ -11,7 +11,7 @@ export interface StoreState {
     setRenamedFolder: (folderName: string | null) => void;
 }
 
-const useStore = create<StoreState>((set) => ({
+const useGlobalStore = create<StoreState>((set) => ({
     isOpenSidebar: true,
     toggleSidebar: () =>
         set((state) => ({ isOpenSidebar: !state.isOpenSidebar })),
@@ -25,4 +25,6 @@ const useStore = create<StoreState>((set) => ({
     setRenamedFolder: (folderId) => set({ renamedFolder: folderId }),
 }));
 
-export default useStore;
+
+
+export default useGlobalStore;

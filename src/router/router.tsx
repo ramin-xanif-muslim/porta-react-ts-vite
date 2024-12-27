@@ -1,13 +1,16 @@
 import React from "react";
 import AppLayout from "../layouts/app-layout/AppLayout";
 import {
-  employeeRoutes,
+  appDocRoutes,
   employeeManagementRoutes,
   documentManagementRoutes,
-  WithErrorBoundary,
 } from "./routes";
 
-const NotFoundPage = React.lazy(() => import("../pages/not-found/NotFoundPage"));
+import { WithErrorBoundary } from "../components/error-boundary/ErrorBoundary";
+
+const NotFoundPage = React.lazy(
+  () => import("../pages/not-found/NotFoundPage"),
+);
 
 type Router = {
   path: string;
@@ -17,7 +20,7 @@ type Router = {
 };
 
 const routers: Router[] = [
-  ...employeeRoutes,
+  ...appDocRoutes,
   {
     path: "/",
     name: "",

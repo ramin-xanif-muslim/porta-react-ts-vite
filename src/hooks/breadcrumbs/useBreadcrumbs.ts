@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { FolderDTO } from "../../types";
 import { BreadcrumbItem, MenuItem } from "./types";
 import { breadcrumbUtils } from "./utils";
+import { Folder } from "../../pages/folder/types";
 
 const useBreadcrumbs = (
   menuLists: MenuItem[][],
-  folders: FolderDTO[],
+  folders: Folder[],
   firstBreadcrumb: string[],
 ): BreadcrumbItem[] => {
   const location = useLocation();

@@ -1,4 +1,4 @@
-import { FolderDTO } from "../../types";
+import { Folder } from "../../pages/folder/types";
 
 export interface BreadcrumbItem {
   name: string;
@@ -12,12 +12,9 @@ export interface MenuItem {
 
 export interface BreadcrumbUtils {
   createRootBreadcrumb: (name: string) => BreadcrumbItem;
-  getFolderHierarchy: (
-    folders: FolderDTO[],
-    currentFolderId: string,
-  ) => FolderDTO[];
+  getFolderHierarchy: (folders: Folder[], currentFolderId: string) => Folder[];
   createFolderBreadcrumbs: (
-    folders: FolderDTO[],
+    folders: Folder[],
     folderId: string,
     rootName: string,
   ) => BreadcrumbItem[];

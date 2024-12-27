@@ -1,3 +1,4 @@
+import { PlusOutlined } from "@ant-design/icons";
 import {
   Card,
   Switch,
@@ -6,10 +7,13 @@ import {
   DatePicker,
   Select,
   Radio,
+  Button,
+  Space,
 } from "antd";
 import { ImFileText } from "react-icons/im";
 import { t } from "i18next";
 
+import { useModalStore } from "../../../../store";
 import { usePositionSelectOptions } from "../../../positions/api";
 import { useDepartmentSelectOptions } from "../../../departments/api";
 
@@ -22,6 +26,8 @@ export function GeneralInformationSection({
 }: GeneralInformationSectionProps) {
   const departmentSelectOptions = useDepartmentSelectOptions();
   const positionSelectOptions = usePositionSelectOptions();
+
+  const { openModal } = useModalStore();
 
   return (
     <Card
@@ -86,35 +92,51 @@ export function GeneralInformationSection({
           <Switch />
         </Form.Item>
         <div />
-        <Form.Item
-          label={t("Department")}
-          name="departmentId"
-          rules={[
-            { required: isOffice, message: t("Please select department!") },
-          ]}
-        >
-          <Select
-            disabled={!isOffice}
-            showSearch
-            filterOption={false}
-            {...departmentSelectOptions}
-            className="w-full"
-          />
+        <Form.Item label={t("Department")} required={isOffice}>
+          <Space.Compact className="w-full">
+            <Form.Item
+              noStyle
+              name="departmentId"
+              rules={[
+                { required: isOffice, message: t("Please select department!") },
+              ]}
+            >
+              <Select
+                disabled={!isOffice}
+                showSearch
+                filterOption={false}
+                {...departmentSelectOptions}
+                className="w-full"
+              />
+            </Form.Item>
+            <Button
+              onClick={() => openModal("create-department")}
+              icon={<PlusOutlined />}
+            />
+          </Space.Compact>
         </Form.Item>
-        <Form.Item
-          label={t("Position")}
-          name="positionId"
-          rules={[
-            { required: isOffice, message: t("Please select position!") },
-          ]}
-        >
-          <Select
-            disabled={!isOffice}
-            showSearch
-            filterOption={false}
-            {...positionSelectOptions}
-            className="w-full"
-          />
+        <Form.Item label={t("Position")} required={isOffice}>
+          <Space.Compact className="w-full">
+            <Form.Item
+              noStyle
+              name="positionId"
+              rules={[
+                { required: isOffice, message: t("Please select position!") },
+              ]}
+            >
+              <Select
+                disabled={!isOffice}
+                showSearch
+                filterOption={false}
+                {...positionSelectOptions}
+                className="w-full"
+              />
+            </Form.Item>
+            <Button
+              onClick={() => openModal("create-position")}
+              icon={<PlusOutlined />}
+            />
+          </Space.Compact>
         </Form.Item>
         <Form.Item name="officeNumber" label={t("Office Number")}>
           <Input disabled={!isOffice} />

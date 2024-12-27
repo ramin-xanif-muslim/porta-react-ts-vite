@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
-import Profile from "./profile/Profile";
 import { GoBell } from "react-icons/go";
 import { BiSearchAlt } from "react-icons/bi";
 import { Button } from "antd";
+
 import NavMenu from "./NavMenu";
+import Profile from "./profile/Profile";
 
 
 const Header = () => {

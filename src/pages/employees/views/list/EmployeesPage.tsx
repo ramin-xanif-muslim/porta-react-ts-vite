@@ -97,16 +97,16 @@ export function EmployeesPage() {
         <Table
           loading={isLoading}
           rowKey="id"
-          rowSelection={{
-            type: "checkbox",
-            onChange: (selectedRowKeys, selectedRows) => {
-              console.log(
-                `selectedRowKeys: ${selectedRowKeys}`,
-                "selectedRows: ",
-                selectedRows,
-              );
-            },
-          }}
+          // rowSelection={{
+          //   type: "checkbox",
+          //   onChange: (selectedRowKeys, selectedRows) => {
+          //     console.log(
+          //       `selectedRowKeys: ${selectedRowKeys}`,
+          //       "selectedRows: ",
+          //       selectedRows,
+          //     );
+          //   },
+          // }}
           columns={columns}
           dataSource={employees || []}
           pagination={{

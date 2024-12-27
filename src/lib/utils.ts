@@ -1,34 +1,38 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { FolderDTO } from "../types";
+import type React from "react";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { Folder } from "../pages/folder/types";
+
+type DynamicModule = {
+  default: React.ComponentType;
+};
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
-interface HierarchyItem extends FolderDTO {
+interface HierarchyItem extends Folder {
   children: HierarchyItem[];
 }
 
-export function buildHierarchy(data: FolderDTO[]): HierarchyItem[] {
+export function buildHierarchy(data: Folder[]): HierarchyItem[] {
   const map: Record<string, HierarchyItem> = {};
   const result: HierarchyItem[] = [];
 
   data?.forEach((item) => (map[item.id] = { ...item, children: [] }));
 
   data?.forEach((item) => {
-      if (item.parentId) {
-          map[item.parentId]?.children.push(map[item.id]);
-      } else {
-          result.push(map[item.id]);
-      }
+    if (item.parentId) {
+      map[item.parentId]?.children.push(map[item.id]);
+    } else {
+      result.push(map[item.id]);
+    }
   });
 
   return result;
 }
 
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
-
 
 export const convertFileSize = (sizeInBytes: number, digits?: number) => {
   if (sizeInBytes < 1024) {
@@ -44,3 +48,44 @@ export const convertFileSize = (sizeInBytes: number, digits?: number) => {
     return sizeInGB.toFixed(digits || 1) + " GB"; // 1 GB or more, show in GB
   }
 };
+
+export const dynamicImport = async () => {
+  try {
+    const moduleFiles = import.meta.glob("../modals/*.tsx");
+    const modules = await Promise.all(
+      Object.entries(moduleFiles).map(async ([path, importFn]) => {
+        const fileName = path.split("/").pop()?.replace(".tsx", "");
+        if (!fileName) return null;
+
+        const module = (await importFn()) as DynamicModule;
+        return [fileName, module.default] as const;
+      }),
+    );
+
+    return Object.fromEntries(
+      modules.filter(
+        (item): item is [string, React.ComponentType] => item !== null,
+      ),
+    );
+  } catch (error) {
+    console.error("Failed to import modules:", error);
+    return {};
+  }
+};
+
+// export const dynamicImport = async () => {
+//   const modules = {};
+//   const moduleFiles = import.meta.glob('../modals/*.tsx');
+
+//   for (const path in moduleFiles) {
+//       try {
+//           const fileName = path.split('/').pop().replace('.tsx', '')
+//           const module = await moduleFiles[path]();
+//           modules[fileName] = module.default || module;
+//       } catch (e) {
+//           console.error(`Error importing ${moduleFiles}:`, e.message);
+//       }
+//   }
+
+//   return modules;
+// }

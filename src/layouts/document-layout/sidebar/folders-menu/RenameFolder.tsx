@@ -1,7 +1,8 @@
 import { Input, Spin } from "antd";
 import { useEffect, useState } from "react";
+
 import { useUpdateFolder } from "../../../../pages/folder/api/use-update-folder";
-import useStore from "../../../../store/useStore";
+import { useGlobalStore } from "../../../../store";
 
 const RenameFolder = ({
   folderName,
@@ -15,8 +16,8 @@ const RenameFolder = ({
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState<string>(folderName);
 
-  const renamedFolder = useStore((state) => state.renamedFolder);
-  const setRenamedFolder = useStore((state) => state.setRenamedFolder);
+  const renamedFolder = useGlobalStore((state) => state.renamedFolder);
+  const setRenamedFolder = useGlobalStore((state) => state.setRenamedFolder);
 
   useEffect(() => {
     if (renamedFolder === id) {

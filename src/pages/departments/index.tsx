@@ -1,0 +1,1 @@
+export { DepartmentsPage } from "./views/list/DepartmentsPage";

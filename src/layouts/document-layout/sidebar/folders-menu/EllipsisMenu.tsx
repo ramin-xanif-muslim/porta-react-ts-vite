@@ -9,7 +9,7 @@ import { t } from "i18next";
 import { useState } from "react";
 import classNames from "classnames";
 
-import useStore from "../../../../store/useStore";
+import useStore from "../../../../store/global-store";
 import { useDeleteFolder } from "../../../../pages/folder/api/use-delete-folder";
 import { FolderItemI } from "./FolderItem";
 

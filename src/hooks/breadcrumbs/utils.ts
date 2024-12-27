@@ -1,5 +1,5 @@
+import { Folder } from "../../pages/folder/types";
 import { BreadcrumbItem, MenuItem, BreadcrumbUtils } from "./types";
-import { FolderDTO } from "../../types";
 
 const createRootBreadcrumb = (name: string): BreadcrumbItem => ({
   name,
@@ -7,9 +7,9 @@ const createRootBreadcrumb = (name: string): BreadcrumbItem => ({
 });
 
 const getFolderHierarchy = (
-  folders: FolderDTO[],
+  folders: Folder[],
   currentFolderId: string,
-): FolderDTO[] => {
+): Folder[] => {
   const folder = folders.find((f) => f.id === currentFolderId);
   if (!folder) return [];
 
@@ -20,7 +20,7 @@ const getFolderHierarchy = (
 };
 
 const createFolderBreadcrumbs = (
-  folders: FolderDTO[],
+  folders: Folder[],
   folderId: string,
   rootName: string,
 ): BreadcrumbItem[] => {

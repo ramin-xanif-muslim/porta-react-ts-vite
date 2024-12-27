@@ -1,5 +1,6 @@
-import { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode, Suspense } from 'react';
 import ErrorFallback from './ErrorFallback';
+import SuspenseFallback from '../suspense-fallback';
 
 interface Props {
   children: ReactNode;
@@ -48,3 +49,21 @@ class ErrorBoundary extends Component<Props, State> {
 }
 
 export default ErrorBoundary; 
+
+
+
+export const WithErrorBoundary = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => (
+  <ErrorBoundary
+    fallback={
+      <ErrorFallback
+        error={new Error("Something went wrong. Please try again later.")}
+      />
+    }
+  >
+    <Suspense fallback={<SuspenseFallback />}>{children}</Suspense>
+  </ErrorBoundary>
+);

@@ -1,8 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { API } from "../../../api/api-instance";
-import { Position } from "../types";
-
-
+import { CreatePosition, UpdatePosition } from "../types";
 
 export enum PositionsApi {
   positions = "/api/v0.01/vms/cms/positions",
@@ -44,17 +42,11 @@ export const positionsApi = {
     });
   },
 
-  createPosition: (data: Position) =>
+  createPosition: (data: CreatePosition) =>
     API.post(PositionsApi.positions, data),
 
-  updatePosition: ({
-    data,
-    id,
-  }: {
-    data: Position;
-    id: string;
-  }) => {
-    const url = PositionsApi.positions + "/" + id;
+  updatePosition: (data: UpdatePosition) => {
+    const url = PositionsApi.positions + "/" + data.id;
 
     return API.put(url, data);
   },

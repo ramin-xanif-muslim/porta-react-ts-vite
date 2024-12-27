@@ -1,20 +1,22 @@
-import { FaRegFolder } from "react-icons/fa";
-import { IoIosArrowForward } from "react-icons/io";
-import { buildHierarchy } from "../../../../lib/utils";
-import { FolderDTO } from "../../../../types";
-import FolderItem from "./FolderItem";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 import { Spin } from "antd";
-import { useGetFolders } from "../../../../pages/folder/api/use-get-folders";
 import { t } from "i18next";
+
+import { IoIosArrowForward } from "react-icons/io";
+import { FaRegFolder } from "react-icons/fa";
+
+import { buildHierarchy } from "../../../../lib/utils";
+import FolderItem from "./FolderItem";
+import { useGetFolders } from "../../../../pages/folder/api/use-get-folders";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
+import { Folder } from "../../../../pages/folder/types";
 
 const path = "/document-management/documents/folders";
 
-function getParentFoldersId(folders: FolderDTO[], pathname: string): string[] {
+function getParentFoldersId(folders: Folder[], pathname: string): string[] {
   const openIds: string[] = [];
   const folderId = pathname.split("/").pop() || null;
   let currentId = folderId;

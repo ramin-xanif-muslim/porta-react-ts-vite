@@ -1,6 +1,6 @@
 import { ConfigProvider, App } from "antd";
 import { ReactNode, useMemo } from "react";
-import useStore from "../store/useStore";
+import useStore from "../store/global-store";
 
 // Import all required locales
 import azAZ from "antd/locale/az_AZ";
@@ -21,7 +21,6 @@ export function AntdConfigProvider({ children }: { children?: ReactNode }) {
 
     return localeMap[i18n.language] || enUS;
   }, [i18n.language]);
-
 
   return (
     <ConfigProvider
