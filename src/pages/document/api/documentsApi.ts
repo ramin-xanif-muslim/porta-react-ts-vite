@@ -28,6 +28,11 @@ export const documentsApi = {
     });
   },
 
+  getDocumentList: ({ folderId }: { folderId: string }) => {
+    const url = DocumentsApi.documents.replace("{folderId}", folderId);
+    return API.post(url);
+  },
+
   getDocumentsVersionsListQueryOptions: ({ folderId, documentId }: { folderId: string; documentId: string }) => {
     const url = DocumentsApi.versionsList
     .replace("{folderId}", folderId)

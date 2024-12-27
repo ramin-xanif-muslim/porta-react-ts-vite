@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { positionsApi } from "./positionsApi";
-import { BaseQueryParams, LookupFilters } from "../../../types/query-params";
+import { BaseQueryParams } from "../../../types/query-params";
 
 interface Options {
   enabled?: boolean;
@@ -9,7 +9,7 @@ interface Options {
 }
 
 export function useGetLookupPositions(
-  params: BaseQueryParams<LookupFilters>,
+  params: BaseQueryParams,
   options: Options,
 ) {
   return useQuery({

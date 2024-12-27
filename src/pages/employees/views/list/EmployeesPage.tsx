@@ -53,6 +53,7 @@ const columns: TableProps<Employee>["columns"] = [
     title: t("Is Office"),
     dataIndex: "isOffice",
     key: "isOffice",
+    // sorter: () => 0,
   },
   {
     title: "",
@@ -109,6 +110,18 @@ export function EmployeesPage() {
           // }}
           columns={columns}
           dataSource={employees || []}
+          onChange={(pagination, filters, sorter) => {
+            if (!Array.isArray(sorter)) {
+              if (searchParams) {
+                setSearchParams((prev) => {
+                  if (sorter.field)
+                    prev.set("sortBy", `${sorter.field}.${sorter.order}`);
+                  else prev.delete("sortBy");
+                  return prev;
+                });
+              }
+            }
+          }}
           pagination={{
             current: currentPage,
             pageSize: pageSize,

@@ -4,7 +4,8 @@ import { documentsApi } from "./documentsApi";
 export const useGetDocuments = ({ folderId }: { folderId: string }) => {
 
   return useQuery({
-    ...documentsApi.getDocumentsListQueryOptions({ folderId }),
+    queryKey: [documentsApi.baseKey, folderId],
+    queryFn: () => documentsApi.getDocumentList({ folderId }),
     placeholderData: keepPreviousData,
     select: (data) => data.data.list,
     enabled: Boolean(folderId),
