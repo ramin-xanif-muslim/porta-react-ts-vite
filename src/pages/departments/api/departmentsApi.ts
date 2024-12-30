@@ -2,6 +2,7 @@ import { queryOptions } from "@tanstack/react-query";
 
 import { API } from "../../../api/api-instance";
 import { CreateDepartment, UpdateDepartment } from "../types";
+import { BaseQueryParams } from "../../../types/query-params";
 
 export enum DepartmentsApi {
   departments = "/api/v0.01/vms/cms/departments",
@@ -41,6 +42,10 @@ export const departmentsApi = {
       queryKey: [departmentsApi.baseKey, id],
       queryFn: (meta) => API.get(url, { signal: meta?.signal }),
     });
+  },
+
+  getDepartmentsList: (params?: BaseQueryParams) => {
+    return API.post(DepartmentsApi.list, params);
   },
 
   createDepartment: (data: CreateDepartment) =>

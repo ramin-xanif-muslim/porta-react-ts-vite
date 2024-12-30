@@ -10,8 +10,8 @@ const NavMenu = () => {
         <NavLink
           className={({ isActive }) =>
             classNames("font-medium hover:text-white truncate line-clamp-1", {
-              "text-brand": isActive,
-              "hover:!text-brand": isActive,
+              "text-white": isActive,
+              "hover:!text-white": isActive,
             })
           }
           to={item.path}

@@ -43,6 +43,11 @@ export const documentManagementRoutes = {
       ),
     },
     {
+      path: "documents",
+      name: "documents",
+      element: (<></>),
+    },
+    {
       path: "documents/folders",
       name: "folders",
       element: (

@@ -23,7 +23,7 @@ const SubNavMenu = () => {
   );
 
   return (
-    <div className="w-full py-1 px-4 grid grid-col-1 md:grid-cols-3 bg-white shadow-sm">
+    <div className="w-full px-4 grid grid-col-1 md:grid-cols-3 bg-white shadow-sm">
       <div className="hidden md:flex">
         <h1 className="text-2xl font-bold  line-clamp-1">{title}</h1>
       </div>

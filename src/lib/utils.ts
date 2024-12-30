@@ -1,6 +1,7 @@
 import type React from "react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+
 import { Folder } from "../pages/folder/types";
 
 type DynamicModule = {
@@ -72,20 +73,3 @@ export const dynamicImport = async () => {
     return {};
   }
 };
-
-// export const dynamicImport = async () => {
-//   const modules = {};
-//   const moduleFiles = import.meta.glob('../modals/*.tsx');
-
-//   for (const path in moduleFiles) {
-//       try {
-//           const fileName = path.split('/').pop().replace('.tsx', '')
-//           const module = await moduleFiles[path]();
-//           modules[fileName] = module.default || module;
-//       } catch (e) {
-//           console.error(`Error importing ${moduleFiles}:`, e.message);
-//       }
-//   }
-
-//   return modules;
-// }

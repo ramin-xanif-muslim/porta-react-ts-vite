@@ -2,13 +2,15 @@ import { Button, Table, TableProps } from "antd";
 import { PiDownload } from "react-icons/pi";
 import { FiPlusCircle } from "react-icons/fi";
 import { t } from "i18next";
-import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
 
 import { Department } from "../../types";
 import { useModalStore } from "../../../../store";
 import DotsTableCell from "../../components/DotsTableCell";
 import { useGetDepartmentsList } from "../../api/use-get-departments-list";
+import {
+  withListPageContext,
+  useListPageContext,
+} from "../../../../HOC/withListPageContext";
 
 const columns: TableProps<Department>["columns"] = [
   {
@@ -20,7 +22,8 @@ const columns: TableProps<Department>["columns"] = [
     title: t("Manager"),
     dataIndex: "managerFirstName",
     key: "managerFirstName",
-    render: (_, record) => `${record.managerFirstName} ${record.managerLastName}`,
+    render: (_, record) =>
+      `${record.managerFirstName} ${record.managerLastName}`,
   },
   {
     title: "",
@@ -32,18 +35,19 @@ const columns: TableProps<Department>["columns"] = [
   },
 ];
 
-export function DepartmentsPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(
-    () => Number(searchParams.get("page")) || 1,
-  );
-  const [pageSize, setPageSize] = useState(
-    () => Number(searchParams.get("size")) || 10,
-  );
+function DepartmentsPageComponent() {
+  const {
+    onPaginationChange,
+    currentPage,
+    pageSize,
+    sort,
+    onTableChange,
+  } = useListPageContext<Department>();
 
   const { departments, total, isLoading } = useGetDepartmentsList({
     pageSize,
     currentPage,
+    sort,
   });
 
   const { openModal } = useModalStore();
@@ -72,19 +76,12 @@ export function DepartmentsPage() {
           rowKey="id"
           columns={columns}
           dataSource={departments || []}
+          onChange={(_, __, sorter) => onTableChange(sorter)}
           pagination={{
             current: currentPage,
             pageSize: pageSize,
             total: total,
-            onChange: (page, size) => {
-              setSearchParams((prev) => {
-                prev.set("page", page.toString());
-                prev.set("size", size.toString());
-                return prev;
-              });
-              setCurrentPage(page);
-              setPageSize(size);
-            },
+            onChange: onPaginationChange,
             showSizeChanger: true,
             showTotal: (total) =>
               t(`Show {{currentPage}} to {{pageSize}} of {{total}}`, {
@@ -100,4 +97,6 @@ export function DepartmentsPage() {
   );
 }
 
-export default DepartmentsPage;
+const DepartmentsPage = withListPageContext(DepartmentsPageComponent);
+
+export { DepartmentsPage };

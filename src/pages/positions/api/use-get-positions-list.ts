@@ -1,32 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
-import { Position } from "../types";
 import { positionsApi } from "./positionsApi";
+import { SortOption } from "../../../types/query-params";
 
-interface UseGetPositionsListParams {
-  pageSize: number;
-  currentPage: number;
-}
+export const useGetPositionsList = (params?: {
+  pageSize?: number;
+  currentPage?: number;
+  sort?: SortOption[];
+}) => {
+  const skip = params?.currentPage
+    ? (params.currentPage - 1) * (params?.pageSize || 10)
+    : 0;
+  const take = params?.pageSize || 10;
 
-interface PositionsListResponse {
-  positions: Position[];
-  total: number;
-  isLoading: boolean;
-}
-
-export const useGetPositionsList = ({
-  pageSize,
-  currentPage,
-}: UseGetPositionsListParams): PositionsListResponse => {
   const query = useQuery({
-    ...positionsApi.getPositionsListQueryOptions({
-      pageSize,
-      currentPage,
-    }),
+    queryKey: [positionsApi.baseKey, "list", params],
+    queryFn: () =>
+      positionsApi.getPositionsList({
+        requireTotalCount: true,
+        skip,
+        take,
+        sort: params?.sort,
+      }),
   });
 
   return {
     ...query,
-    positions: query.data?.data.list ?? [],
-    total: query.data?.data.totalCount ?? 0,
+    positions: query.data?.data.list || [],
+    total: query.data?.data.totalCount || 0,
   };
 };

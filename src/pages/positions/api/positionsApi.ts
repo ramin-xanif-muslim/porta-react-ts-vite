@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { API } from "../../../api/api-instance";
 import { CreatePosition, UpdatePosition } from "../types";
+import { BaseQueryParams } from "../../../types/query-params";
 
 export enum PositionsApi {
   positions = "/api/v0.01/vms/cms/positions",
@@ -40,6 +41,10 @@ export const positionsApi = {
       queryKey: [positionsApi.baseKey, id],
       queryFn: (meta) => API.get(url, { signal: meta?.signal }),
     });
+  },
+
+  getPositionsList: (params?: BaseQueryParams) => {
+    return API.post(PositionsApi.list, params);
   },
 
   createPosition: (data: CreatePosition) =>

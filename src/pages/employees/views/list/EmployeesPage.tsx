@@ -2,12 +2,15 @@ import { Button, Table, TableProps } from "antd";
 import { PiDownload } from "react-icons/pi";
 import { FiPlusCircle } from "react-icons/fi";
 import { t } from "i18next";
-import { Link, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import DotsTableCell from "../../components/DotsTableCell";
 import { Employee } from "../../types";
 import { useGetEmployeesList } from "../../api";
+import {
+  useListPageContext,
+  withListPageContext,
+} from "../../../../HOC/withListPageContext";
 
 const columns: TableProps<Employee>["columns"] = [
   {
@@ -53,7 +56,7 @@ const columns: TableProps<Employee>["columns"] = [
     title: t("Is Office"),
     dataIndex: "isOffice",
     key: "isOffice",
-    // sorter: () => 0,
+    sorter: true,
   },
   {
     title: "",
@@ -65,18 +68,19 @@ const columns: TableProps<Employee>["columns"] = [
   },
 ];
 
-export function EmployeesPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(
-    () => Number(searchParams.get("page")) || 1,
-  );
-  const [pageSize, setPageSize] = useState(
-    () => Number(searchParams.get("size")) || 10,
-  );
+function EmployeesPageComponent() {
+  const {
+    onPaginationChange,
+    currentPage,
+    pageSize,
+    sort,
+    onTableChange,
+  } = useListPageContext<Employee>();
 
   const { employees, total, isLoading } = useGetEmployeesList({
     pageSize,
     currentPage,
+    sort,
   });
 
   return (
@@ -98,43 +102,14 @@ export function EmployeesPage() {
         <Table
           loading={isLoading}
           rowKey="id"
-          // rowSelection={{
-          //   type: "checkbox",
-          //   onChange: (selectedRowKeys, selectedRows) => {
-          //     console.log(
-          //       `selectedRowKeys: ${selectedRowKeys}`,
-          //       "selectedRows: ",
-          //       selectedRows,
-          //     );
-          //   },
-          // }}
           columns={columns}
           dataSource={employees || []}
-          onChange={(pagination, filters, sorter) => {
-            if (!Array.isArray(sorter)) {
-              if (searchParams) {
-                setSearchParams((prev) => {
-                  if (sorter.field)
-                    prev.set("sortBy", `${sorter.field}.${sorter.order}`);
-                  else prev.delete("sortBy");
-                  return prev;
-                });
-              }
-            }
-          }}
+          onChange={(_, __, sorter) => onTableChange(sorter)}
           pagination={{
             current: currentPage,
             pageSize: pageSize,
             total: total,
-            onChange: (page, size) => {
-              setSearchParams((prev) => {
-                prev.set("page", page.toString());
-                prev.set("size", size.toString());
-                return prev;
-              });
-              setCurrentPage(page);
-              setPageSize(size);
-            },
+            onChange: onPaginationChange,
             showSizeChanger: true,
             showTotal: (total) =>
               t(`Show {{currentPage}} to {{pageSize}} of {{total}}`, {
@@ -143,15 +118,13 @@ export function EmployeesPage() {
                 pageSize,
               }),
           }}
-          // sticky
           scroll={{ x: window.innerHeight }}
-          // onRow={(record) => ({
-          //   onClick: () => navigate(`/employees/${record.id}`),
-          // })}
         />
       </div>
     </div>
   );
 }
 
-export default EmployeesPage;
+const EmployeesPage = withListPageContext(EmployeesPageComponent);
+
+export { EmployeesPage };

@@ -4,13 +4,13 @@ import SubNavMenu from "./header/SubNavMenu";
 
 const AppLayout = () => {
   return (
-    <div className="max-w-[1600px] mx-auto relative">
-      <div className="h-[100px]">
+    <div className="relative mx-auto max-w-[1600px]">
+      <div className="h-[86px]">
         <Header />
         <SubNavMenu />
       </div>
 
-      <div className="flex-1 h-[calc(100vh-100px)] bg-[#F3F4F6FF] overflow-y-auto no-scrollbar">
+      <div className="no-scrollbar h-[calc(100vh-86px)] flex-1 overflow-y-auto bg-[#F3F4F6FF]">
         <Outlet />
       </div>
     </div>

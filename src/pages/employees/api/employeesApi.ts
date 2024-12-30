@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { API } from "../../../api/api-instance";
 import { Employee } from "../types";
+import { BaseQueryParams, SortOption } from "../../../types/query-params";
 
 export enum EmployeesApi {
   employees = "/api/v0.01/vms/cms/employees",
@@ -14,6 +15,7 @@ export const employeesApi = {
   getEmployeesListQueryOptions: (params?: {
     pageSize?: number;
     currentPage?: number;
+    sort?: SortOption[];
   }) => {
     const url = EmployeesApi.list;
     const skip = params?.currentPage
@@ -29,6 +31,7 @@ export const employeesApi = {
           signal: meta?.signal,
           skip,
           take,
+          sort: params?.sort,
         }),
     });
   },
@@ -40,6 +43,10 @@ export const employeesApi = {
       queryKey: [employeesApi.baseKey, id],
       queryFn: (meta) => API.get(url, { signal: meta?.signal }),
     });
+  },
+  
+  getEmployeesList: (params?: BaseQueryParams) => {
+    return API.post(EmployeesApi.list, params);
   },
 
   createEmployee: (data: Employee) => API.post(EmployeesApi.employees, data),

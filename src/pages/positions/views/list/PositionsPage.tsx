@@ -2,19 +2,22 @@ import { Button, Table, TableProps } from "antd";
 import { PiDownload } from "react-icons/pi";
 import { FiPlusCircle } from "react-icons/fi";
 import { t } from "i18next";
-import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
 
 import { Position } from "../../types";
 import { useGetPositionsList } from "../../api";
 import { useModalStore } from "../../../../store";
 import DotsTableCell from "../../components/DotsTableCell";
+import {
+  useListPageContext,
+  withListPageContext,
+} from "../../../../HOC/withListPageContext";
 
 const columns: TableProps<Position>["columns"] = [
   {
     title: t("Position Name"),
     dataIndex: "name",
     key: "name",
+    sorter: true,
   },
   {
     title: "",
@@ -26,18 +29,19 @@ const columns: TableProps<Position>["columns"] = [
   },
 ];
 
-export function PositionsPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(
-    () => Number(searchParams.get("page")) || 1,
-  );
-  const [pageSize, setPageSize] = useState(
-    () => Number(searchParams.get("size")) || 10,
-  );
+function PositionsPageComponent() {
+  const {
+    onPaginationChange,
+    currentPage,
+    pageSize,
+    sort,
+    onTableChange,
+  } = useListPageContext<Position>();
 
   const { positions, total, isLoading } = useGetPositionsList({
     pageSize,
     currentPage,
+    sort,
   });
 
   const { openModal } = useModalStore();
@@ -66,19 +70,12 @@ export function PositionsPage() {
           rowKey="id"
           columns={columns}
           dataSource={positions || []}
+          onChange={(_, __, sorter) => onTableChange(sorter)}
           pagination={{
             current: currentPage,
             pageSize: pageSize,
             total: total,
-            onChange: (page, size) => {
-              setSearchParams((prev) => {
-                prev.set("page", page.toString());
-                prev.set("size", size.toString());
-                return prev;
-              });
-              setCurrentPage(page);
-              setPageSize(size);
-            },
+            onChange: onPaginationChange,
             showSizeChanger: true,
             showTotal: (total) =>
               t(`Show {{currentPage}} to {{pageSize}} of {{total}}`, {
@@ -94,4 +91,6 @@ export function PositionsPage() {
   );
 }
 
-export default PositionsPage;
+const PositionsPage = withListPageContext(PositionsPageComponent);
+
+export { PositionsPage };

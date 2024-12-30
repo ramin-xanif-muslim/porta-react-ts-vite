@@ -1,27 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-import { Department } from "../types";
 import { departmentsApi } from "./departmentsApi";
+import { SortOption } from "../../../types/query-params";
 
-interface UseGetDepartmentsListParams {
-  pageSize: number;
-  currentPage: number;
-}
+export const useGetDepartmentsList = (params?: {
+  pageSize?: number;
+  currentPage?: number;
+  sort?: SortOption[];
+}) => {
+  const skip = params?.currentPage
+    ? (params.currentPage - 1) * (params?.pageSize || 10)
+    : 0;
+  const take = params?.pageSize || 10;
 
-interface DepartmentsListResponse {
-  departments: Department[];
-  total: number;
-  isLoading: boolean;
-}
-
-export const useGetDepartmentsList = ({
-  pageSize,
-  currentPage,
-}: UseGetDepartmentsListParams): DepartmentsListResponse => {
   const query = useQuery({
-    ...departmentsApi.getDepartmentsListQueryOptions({
-      pageSize,
-      currentPage,
-    }),
+    queryKey: [departmentsApi.baseKey, "list", params],
+    queryFn: () =>
+      departmentsApi.getDepartmentsList({
+        requireTotalCount: true,
+        skip,
+        take,
+        sort: params?.sort,
+      }),
   });
 
   return {

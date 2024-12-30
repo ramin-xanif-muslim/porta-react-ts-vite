@@ -29,7 +29,7 @@ export const documentsApi = {
   },
 
   getDocumentList: ({ folderId }: { folderId: string }) => {
-    const url = DocumentsApi.documents.replace("{folderId}", folderId);
+    const url = DocumentsApi.list.replace("{folderId}", folderId);
     return API.post(url);
   },
 
