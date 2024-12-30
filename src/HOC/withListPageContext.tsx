@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import { t } from "i18next";
 import { SortOption } from "../types/query-params";
-import { SorterResult } from "antd/es/table/interface";
+import { SorterResult, TablePaginationConfig } from "antd/es/table/interface";
 
 interface ListPageContextType<T> {
   searchParams: URLSearchParams;
@@ -16,6 +17,7 @@ interface ListPageContextType<T> {
   setSort: (sort: SortOption[]) => void;
   onTableChange: (sorter: SorterResult<T> | SorterResult<T>[]) => void;
   onPaginationChange: (page: number, size: number) => void;
+  tablePaginationConfig: TablePaginationConfig;
 }
 
 // Create a default type parameter that can be overridden
@@ -85,6 +87,21 @@ export function withListPageContext<P extends object>(
       });
     };
 
+    const tablePaginationConfig = useMemo(() => {
+      return {
+        current: currentPage,
+        pageSize: pageSize,
+        onChange: onPaginationChange,
+        showSizeChanger: true,
+        showTotal: (total: number) =>
+          t(`Show {{currentPage}} to {{pageSize}} of {{total}}`, {
+            total,
+            currentPage,
+            pageSize,
+          }),
+      };
+    }, [currentPage, pageSize]);
+
     const contextValue: ListPageContextType<unknown> = {
       onPaginationChange,
       onTableChange,
@@ -96,6 +113,7 @@ export function withListPageContext<P extends object>(
       setPageSize,
       sort,
       setSort,
+      tablePaginationConfig,
     };
 
     return (

@@ -70,7 +70,7 @@ const columns: TableProps<Employee>["columns"] = [
 
 function EmployeesPageComponent() {
   const {
-    onPaginationChange,
+    tablePaginationConfig,
     currentPage,
     pageSize,
     sort,
@@ -106,17 +106,8 @@ function EmployeesPageComponent() {
           dataSource={employees || []}
           onChange={(_, __, sorter) => onTableChange(sorter)}
           pagination={{
-            current: currentPage,
-            pageSize: pageSize,
+            ...tablePaginationConfig,
             total: total,
-            onChange: onPaginationChange,
-            showSizeChanger: true,
-            showTotal: (total) =>
-              t(`Show {{currentPage}} to {{pageSize}} of {{total}}`, {
-                total,
-                currentPage,
-                pageSize,
-              }),
           }}
           scroll={{ x: window.innerHeight }}
         />

@@ -37,11 +37,11 @@ const columns: TableProps<Department>["columns"] = [
 
 function DepartmentsPageComponent() {
   const {
-    onPaginationChange,
     currentPage,
     pageSize,
     sort,
     onTableChange,
+    tablePaginationConfig,
   } = useListPageContext<Department>();
 
   const { departments, total, isLoading } = useGetDepartmentsList({
@@ -78,17 +78,8 @@ function DepartmentsPageComponent() {
           dataSource={departments || []}
           onChange={(_, __, sorter) => onTableChange(sorter)}
           pagination={{
-            current: currentPage,
-            pageSize: pageSize,
+            ...tablePaginationConfig,
             total: total,
-            onChange: onPaginationChange,
-            showSizeChanger: true,
-            showTotal: (total) =>
-              t(`Show {{currentPage}} to {{pageSize}} of {{total}}`, {
-                total,
-                currentPage,
-                pageSize,
-              }),
           }}
           scroll={{ x: window.innerHeight }}
         />
