@@ -3,6 +3,7 @@ import { t } from "i18next";
 
 import { queryOptions } from "@tanstack/react-query";
 import { API } from "../../../api/api-instance";
+import { SortOption } from "../../../types/query-params";
 
 export enum DocumentsApi {
   documents = "/api/v0.01/vms/dms/folders/{folderId}/documents",
@@ -28,15 +29,35 @@ export const documentsApi = {
     });
   },
 
-  getDocumentList: ({ folderId }: { folderId: string }) => {
+  getDocumentList: ({
+    folderId,
+    skip,
+    take,
+    sort,
+  }: {
+    folderId: string;
+    skip: number;
+    take: number;
+    sort: SortOption[];
+  }) => {
     const url = DocumentsApi.list.replace("{folderId}", folderId);
-    return API.post(url);
+    return API.post(url, {
+      skip,
+      take,
+      sort,
+    });
   },
 
-  getDocumentsVersionsListQueryOptions: ({ folderId, documentId }: { folderId: string; documentId: string }) => {
+  getDocumentsVersionsListQueryOptions: ({
+    folderId,
+    documentId,
+  }: {
+    folderId: string;
+    documentId: string;
+  }) => {
     const url = DocumentsApi.versionsList
-    .replace("{folderId}", folderId)
-    .replace("{documentId}", documentId)
+      .replace("{folderId}", folderId)
+      .replace("{documentId}", documentId);
 
     return queryOptions({
       queryKey: [documentsApi.baseKey, folderId, documentId],
@@ -47,8 +68,15 @@ export const documentsApi = {
     });
   },
 
-  renameDocument: ({ folderId, documentId, name }: { folderId: string; documentId: string; name: string }) => {
-    
+  renameDocument: ({
+    folderId,
+    documentId,
+    name,
+  }: {
+    folderId: string;
+    documentId: string;
+    name: string;
+  }) => {
     const url = DocumentsApi.rename
       .replace("{folderId}", folderId)
       .replace("{documentId}", documentId);
@@ -58,10 +86,18 @@ export const documentsApi = {
     });
   },
 
-  uploadFile: ({ folderId, documentId, file }: { folderId: string; documentId: string; file: File }) => {
+  uploadFile: ({
+    folderId,
+    documentId,
+    file,
+  }: {
+    folderId: string;
+    documentId: string;
+    file: File;
+  }) => {
     const url = DocumentsApi.file
-    .replace("{folderId}", folderId)
-    .replace("{documentId}", documentId);
+      .replace("{folderId}", folderId)
+      .replace("{documentId}", documentId);
 
     const formData = new FormData();
     formData.append("file", file);
@@ -84,10 +120,18 @@ export const documentsApi = {
     });
   },
 
-  uploadNewVersion: ({ folderId, documentId, file }: { folderId: string; documentId: string; file: File }) => {
+  uploadNewVersion: ({
+    folderId,
+    documentId,
+    file,
+  }: {
+    folderId: string;
+    documentId: string;
+    file: File;
+  }) => {
     const url = DocumentsApi.newVersion
-    .replace("{folderId}", folderId)
-    .replace("{documentId}", documentId);
+      .replace("{folderId}", folderId)
+      .replace("{documentId}", documentId);
 
     const formData = new FormData();
     formData.append("file", file);

@@ -69,13 +69,8 @@ const columns: TableProps<Employee>["columns"] = [
 ];
 
 function EmployeesPageComponent() {
-  const {
-    tablePaginationConfig,
-    currentPage,
-    pageSize,
-    sort,
-    onTableChange,
-  } = useListPageContext<Employee>();
+  const { tablePaginationConfig, currentPage, pageSize, sort, onTableChange } =
+    useListPageContext<Employee>();
 
   const { employees, total, isLoading } = useGetEmployeesList({
     pageSize,
@@ -84,8 +79,8 @@ function EmployeesPageComponent() {
   });
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="flex justify-end">
+    <div className="flex min-h-screen w-full flex-col bg-gradient-to-br from-blue-50 via-white to-blue-50">
+      <div className="flex justify-end p-6">
         <div className="flex gap-2">
           <Button size="large" icon={<PiDownload />}>
             {t("Download")}
@@ -98,8 +93,9 @@ function EmployeesPageComponent() {
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="px-6 pb-6">
         <Table
+          className="rounded-lg bg-white shadow-sm"
           loading={isLoading}
           rowKey="id"
           columns={columns}

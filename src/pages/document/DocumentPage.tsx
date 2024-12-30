@@ -1,6 +1,6 @@
 import { Table } from "antd";
 import type { TableProps } from "antd";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useMemo } from "react";
 import classNames from "classnames";
 import { t } from "i18next";
@@ -15,15 +15,27 @@ import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
 import { useUploadDocument } from "./api/use-upload-document";
 import { DATE_FORMAT } from "../../constants";
 import { getFileIcon } from "./utils/file-icons";
+import {
+  useListPageContext,
+  withListPageContext,
+} from "../../HOC/withListPageContext";
 
-const DocumentPage = () => {
+const DocumentPageComponent = () => {
   const { id = "" } = useParams();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { tablePaginationConfig, currentPage, pageSize, sort, onTableChange } =
+    useListPageContext<Document>();
 
-  const { data, isPlaceholderData, isFetching } = useGetDocuments({
+  const { documents, total, isLoading, isFetching } = useGetDocuments({
     folderId: id,
+    params: {
+      pageSize,
+      currentPage,
+      sort,
+    },
   });
+
+  const uploadDocument = useUploadDocument({ folderId: id });
 
   const columns = useMemo<TableProps<Document>["columns"]>(
     () => [
@@ -84,41 +96,28 @@ const DocumentPage = () => {
     [isFetching],
   );
 
-  const uploadDocument = useUploadDocument({ folderId: id });
-
   if (!id) return null;
 
   return (
     <div className="mt-2" key={id}>
       <FileUploader handleUpload={uploadDocument.handleCreate}>
-        <Table<Document>
-          onChange={(pagination, filters, sorter) => {
-            console.log({ pagination, filters, sorter });
-            if (!Array.isArray(sorter)) {
-              if (searchParams) {
-                setSearchParams((prev) => {
-                  if (sorter.field)
-                    prev.set("sortBy", `${sorter.field}.${sorter.order}`);
-                  else prev.delete("sortBy");
-                  return prev;
-                });
-              }
-            }
-          }}
-          pagination={false}
-          scroll={{ x: window.innerHeight }}
+        <Table
+          loading={isLoading}
+          rowKey="id"
           columns={columns}
-          dataSource={data || []}
-          loading={isPlaceholderData}
-          onRow={(record) => ({
-            onClick: () => {
-              console.log(record);
-            },
-          })}
+          dataSource={documents || []}
+          onChange={(_, __, sorter) => onTableChange(sorter)}
+          pagination={{
+            ...tablePaginationConfig,
+            total: total,
+          }}
+          scroll={{ x: window.innerHeight }}
         />
       </FileUploader>
     </div>
   );
 };
+
+const DocumentPage = withListPageContext(DocumentPageComponent);
 
 export default DocumentPage;
