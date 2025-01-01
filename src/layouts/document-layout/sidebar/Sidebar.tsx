@@ -1,18 +1,17 @@
-import { TbArrowsMoveVertical } from "react-icons/tb";
-import { FaBuffer } from "react-icons/fa";
-import classNames from "classnames";
+// import { TbArrowsMoveVertical } from "react-icons/tb";
+// import { FaBuffer } from "react-icons/fa";
+// import classNames from "classnames";
+// import { t } from "i18next";
+
 import FoldersMenu from "./folders-menu/FoldersMenu";
 import SidebarMenu from "./sidebar-menu/SidebarMenu";
-import { menuList, menuList2, menuList3 } from "./data-menu";
-import { t } from "i18next";
+import { menuList } from "./data-menu";
 
 const Sidebar = () => {
-    
-    
-    return (
-        <div className="text-gray-500 overflow-y-auto h-screen md:h-[calc(100vh-100px)] no-scrollbar min-w-[250px]  py-8">
-            <div className="mx-8">
-                <div
+  return (
+    <div className="no-scrollbar h-screen min-w-[250px] overflow-y-auto py-8 text-gray-500 md:h-[calc(100vh-100px)]">
+      <div className="mx-8">
+        {/* <div
                     className={classNames({
                         "menu-item": true,
                     })}
@@ -24,28 +23,18 @@ const Sidebar = () => {
                     <span className="flex flex-col ml-auto">
                         <TbArrowsMoveVertical />
                     </span>
-                </div>
+                </div> */}
 
-                <FoldersMenu />
+        <FoldersMenu />
 
-                <SidebarMenu list={menuList} />
-            </div>
+<hr className="my-5 border border-[#F3F4F6FF]" />
 
-            <hr className="border border-[#F3F4F6FF] my-5" />
+        <SidebarMenu list={menuList} />
 
-            <div className="mx-8">
-                <h2 className="pl-4">{t("ADMIN")}</h2>
-
-                <SidebarMenu list={menuList2} />
-            </div>
-
-            <hr className="border border-[#F3F4F6FF] my-5" />
-
-            <div className="mx-8">
-                <SidebarMenu list={menuList3} />
-            </div>
-        </div>
-    );
+        <hr className="my-5 border border-[#F3F4F6FF]" />
+      </div>
+    </div>
+  );
 };
 
 export default Sidebar;

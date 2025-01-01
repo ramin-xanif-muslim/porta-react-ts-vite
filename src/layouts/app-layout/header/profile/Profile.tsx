@@ -5,7 +5,7 @@ const Profile = () => {
         <div className="cursor-pointer flex items-center gap-1">
             <div className="relative">
                 <img
-                    className="w-[32px] h-[32px] size-full object-cover rounded-full"
+                    className="w-[32px] h-[32px] object-cover rounded-full"
                     src="/user.jpg"
                     alt="user"
                 />

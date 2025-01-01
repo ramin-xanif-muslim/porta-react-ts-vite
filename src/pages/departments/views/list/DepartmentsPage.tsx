@@ -54,7 +54,8 @@ function DepartmentsPageComponent() {
 
   return (
     <div className="flex w-full flex-col">
-      <div className="flex justify-end">
+      <div className="flex justify-between p-6">
+        <h1 className="mb-6 text-2xl font-bold">{t("Departments")}</h1>
         <div className="flex gap-2">
           <Button size="large" icon={<PiDownload />}>
             {t("Download")}
@@ -70,7 +71,7 @@ function DepartmentsPageComponent() {
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="px-6 pb-6">
         <Table
           loading={isLoading}
           rowKey="id"

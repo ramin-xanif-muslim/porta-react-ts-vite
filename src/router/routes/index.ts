@@ -1,3 +1,4 @@
-export * from "./employee-management-routes";
-export * from "./document-management-routes";
+export * from "./cms_routes";
+export * from "./dms-routes";
 export * from "./app-doc-routes";
+export * from "./settings-routes";

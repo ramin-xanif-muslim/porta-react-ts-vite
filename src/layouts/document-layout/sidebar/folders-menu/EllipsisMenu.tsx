@@ -20,7 +20,7 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
   const navigate = useNavigate();
 
   const { handleDelete, isPending } = useDeleteFolder(() =>
-    navigate("/document-management/documents/folders"),
+    navigate("/documents/documents/folders"),
   );
 
   const items: MenuProps["items"] = [

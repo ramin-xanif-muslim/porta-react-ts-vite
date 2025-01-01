@@ -58,9 +58,6 @@
   "Click or drag file to this area to upload":"Click or drag file to this area to upload",
   "Support for a single file upload. Strictly prohibited from uploading company data or other banned files.":"Support for a single file upload. Strictly prohibited from uploading company data or other banned files.",
   "Error uploading file":"Error uploading file",
-  "Uploading {{fileName}}...":"Uploading {{fileName}}...",
-  "{{fileName}} uploaded":"{{fileName}} uploaded",
-  "Error uploading file":"Error uploading file",
   "Document renamed successfully":"Document renamed successfully",
   "Failed to rename document":"Failed to rename document",
   "Edit file":"Edit file",
@@ -138,5 +135,10 @@
   "Page Not Found": "Page Not Found",
   "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
   "Go to Home": "Go to Home",
-  "Go Back": "Go Back"
+  "Go Back": "Go Back",
+  "Project Status": "Project Status",
+  "Employee Distribution": "Employee Distribution",
+  "Total Employees": "Total Employees",
+  "Active Projects": "Active Projects",
+  "Total Tasks": "Total Tasks"
 }

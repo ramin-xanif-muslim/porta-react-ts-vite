@@ -3,7 +3,7 @@ import { BreadcrumbItem, MenuItem, BreadcrumbUtils } from "./types";
 
 const createRootBreadcrumb = (name: string): BreadcrumbItem => ({
   name,
-  path: "/document-management/documents",
+  path: "/documents/documents",
 });
 
 const getFolderHierarchy = (
@@ -29,7 +29,7 @@ const createFolderBreadcrumbs = (
   const folderHierarchy = getFolderHierarchy(folders, folderId);
   const folderBreadcrumbs = folderHierarchy.map((folder) => ({
     name: folder.name,
-    path: `/document-management/documents/folders/${folder.id}`,
+    path: `/documents/documents/folders/${folder.id}`,
   }));
 
   return [...breadcrumbs, ...folderBreadcrumbs];

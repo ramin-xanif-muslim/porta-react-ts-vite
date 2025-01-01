@@ -32,7 +32,7 @@ export default function FolderItem({ item, openParents }: Props) {
   return (
     <>
       <Link
-        to={`/document-management/documents/folders/${item.id}`}
+        to={`/documents/documents/folders/${item.id}`}
         className={classNames({
           "menu-item group": true,
           "active-menu": isActiveFolder(),
@@ -59,7 +59,7 @@ export default function FolderItem({ item, openParents }: Props) {
         <div>
           <FaRegFolder className="size-6" />
         </div>
-        <span className="w-full line-clamp-1" title={item.name}>
+        <span className="line-clamp-1 w-full" title={item.name}>
           <RenameFolder
             folderName={item.name}
             id={item.id}

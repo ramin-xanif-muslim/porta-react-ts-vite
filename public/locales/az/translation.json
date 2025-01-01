@@ -57,8 +57,6 @@
   "Click or drag file to this area to upload": "Yükləmək üçün faylı bu sahəyə klikləyin və ya sürükləyin",
   "Support for a single file upload. Strictly prohibited from uploading company data or other banned files.": "Tək fayl yükləməsi dəstəklənir. Şirkət məlumatlarının və ya qadağan edilmiş faylların yüklənməsi qəti qadağandır.",
   "Error uploading file": "Fayl yüklənərkən xəta baş verdi",
-  "Uploading {{fileName}}...": "{{fileName}} yüklənir...",
-  "{{fileName}} uploaded": "{{fileName}} yükləndi",
   "Document renamed successfully": "Sənədin adı uğurla dəyişdirildi",
   "Failed to rename document": "Sənədin adını dəyişmək alınmadı",
   "Edit file": "Faylı redaktə et",
@@ -133,6 +131,11 @@
   "Page Not Found": "Səhifə Tapılmadı",
   "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.": "Siz axtardığınız səhifə silinmiş, adı dəyişmiş və ya vaxtında mövcud olmaya bilər.",
   "Go to Home": "Ana Səhifəyə Keç",
-  "Go Back": "Geri Dön"
+  "Go Back": "Geri Dön",
+  "Project Status": "Layihə Statusu",
+  "Employee Distribution": "Çalışan Dağılımı",
+  "Total Employees": "Ümumi Çalışanlar",
+  "Active Projects": "Aktiv Layihələr",
+  "Total Tasks": "Ümumi Tapşırıqlar"
 
 }

@@ -2,11 +2,13 @@ import React from "react";
 import AppLayout from "../layouts/app-layout/AppLayout";
 import {
   appDocRoutes,
-  employeeManagementRoutes,
-  documentManagementRoutes,
+  cms_routes,
+  dms_routes,
+  settingsRoutes
 } from "./routes";
 
 import { WithErrorBoundary } from "../components/error-boundary/ErrorBoundary";
+import DashboardPage from "../pages/dashboard/DashboardPage";
 
 const NotFoundPage = React.lazy(
   () => import("../pages/not-found/NotFoundPage"),
@@ -15,7 +17,7 @@ const NotFoundPage = React.lazy(
 type Router = {
   path: string;
   name: string;
-  element: JSX.Element;
+  element?: JSX.Element;
   children?: Router[];
 };
 
@@ -27,6 +29,16 @@ const routers: Router[] = [
     element: <AppLayout />,
     children: [
       {
+        path: "/",
+        name: "dashboard",
+        element: <DashboardPage />,
+      },
+      {
+        path: "/dashboard",
+        name: "dashboard",
+        element: <DashboardPage />,
+      },
+      {
         path: "*",
         name: "not-found",
         element: (
@@ -35,8 +47,9 @@ const routers: Router[] = [
           </WithErrorBoundary>
         ),
       },
-      employeeManagementRoutes,
-      documentManagementRoutes,
+      cms_routes,
+      dms_routes,
+      settingsRoutes,
     ],
   },
 ];

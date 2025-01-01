@@ -19,7 +19,7 @@ const CreateFolderBnt = () => {
 
   const onSuccessCallback = (folderId: string) => {
     handleCancel();
-    navigate(`/document-management/documents/folders/${folderId}`)
+    navigate(`/documents/documents/folders/${folderId}`)
   }
 
   const createFolder = useCreateFolder((id) => onSuccessCallback(id));

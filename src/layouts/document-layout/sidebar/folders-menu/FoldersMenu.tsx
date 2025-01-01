@@ -14,7 +14,7 @@ import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
 import { Folder } from "../../../../pages/folder/types";
 
-const path = "/document-management/documents/folders";
+const path = "/documents/documents/folders";
 
 function getParentFoldersId(folders: Folder[], pathname: string): string[] {
   const openIds: string[] = [];

@@ -4,7 +4,7 @@
 
 @layer base {
     :root {
-        --brand-color: #313875;
+        --brand-color: #30459EFF;
 
         --brand-color-50: color-mix(in srgb, var(--brand-color) 5%, white);
         --brand-color-100: color-mix(in srgb, var(--brand-color) 10%, white);

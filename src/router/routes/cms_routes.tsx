@@ -1,5 +1,6 @@
 import React from "react";
 import { WithErrorBoundary } from "../../components/error-boundary/ErrorBoundary";
+import NotFoundPage from "../../pages/not-found/NotFoundPage";
 
 
 const EmployeeManagementLayout = React.lazy(
@@ -21,15 +22,24 @@ const DepartmentsPage = React.lazy(() =>
   })),
 );
 
-export const employeeManagementRoutes = {
-  path: "employee-management",
-  name: "employee-management",
+export const cms_routes = {
+  path: "crew",
+  name: "crew",
   element: (
     <WithErrorBoundary>
       <EmployeeManagementLayout />
     </WithErrorBoundary>
   ),
   children: [
+    {
+      path: "*",
+      name: "not-found",
+      element: (
+        <WithErrorBoundary>
+          <NotFoundPage />
+        </WithErrorBoundary>
+      ),
+    },
     {
       path: "",
       name: "employee-list",
@@ -41,19 +51,10 @@ export const employeeManagementRoutes = {
     },
     {
       path: "employees",
-      name: "employee-list",
+      name: "employees",
       element: (
         <WithErrorBoundary>
           <EmployeesPage />
-        </WithErrorBoundary>
-      ),
-    },
-    {
-      path: "positions",
-      name: "positions-list",
-      element: (
-        <WithErrorBoundary>
-          <PositionsPage />
         </WithErrorBoundary>
       ),
     },
@@ -63,6 +64,15 @@ export const employeeManagementRoutes = {
       element: (
         <WithErrorBoundary>
           <DepartmentsPage />
+        </WithErrorBoundary>
+      ),
+    },
+    {
+      path: "positions",
+      name: "positions-list",
+      element: (
+        <WithErrorBoundary>
+          <PositionsPage />
         </WithErrorBoundary>
       ),
     },

@@ -1,0 +1,1 @@
+export { RolesListPage } from "./views/list/RolesListPage";

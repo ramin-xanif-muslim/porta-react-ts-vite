@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
 import { Link } from "react-router-dom";
-import { menuLists } from "./sidebar/data-menu";
+import { menuList } from "./sidebar/data-menu";
 import { useGetFolders } from "../../pages/folder/api/use-get-folders";
 import { t } from "i18next";
 import { useBreadcrumbs } from "../../hooks/breadcrumbs";
@@ -40,7 +40,7 @@ const Breadcrumb = () => {
   const { data: folders } = useGetFolders();
 
   const items: BreadcrumbItemI[] = useBreadcrumbs(
-    menuLists,
+    [menuList],
     folders || [],
     firstBreadcrumb,
   );

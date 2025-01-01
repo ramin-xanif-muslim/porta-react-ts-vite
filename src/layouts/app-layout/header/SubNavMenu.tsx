@@ -1,5 +1,5 @@
 import { useLocation, NavLink } from "react-router-dom";
-import { useMemo } from "react";
+// import { useMemo } from "react";
 import classNames from "classnames";
 import { HEADER_NAV_ITEMS_SUB } from "../../../constants";
 import { t } from "i18next";
@@ -7,9 +7,9 @@ import { t } from "i18next";
 const SubNavMenu = () => {
   const location = useLocation();
 
-  const title = useMemo(() => {
-    return document.title.split("|")[0] || location.pathname.split("/")[1];
-  }, [location.pathname]);
+  // const title = useMemo(() => {
+  //   return document.title.split("|")[0] || location.pathname.split("/")[1];
+  // }, [location.pathname]);
 
   // Get the current section's nav items
   const currentSectionNavItems =
@@ -19,27 +19,27 @@ const SubNavMenu = () => {
 
   // Determine if any NavLink is active
   const isAnyNavLinkActive = currentSectionNavItems.some((item) =>
-    location.pathname.includes(item.path)
+    location.pathname.includes(item.path),
   );
 
   return (
-    <div className="w-full px-4 grid grid-col-1 md:grid-cols-3 bg-white shadow-sm">
-      <div className="hidden md:flex">
-        <h1 className="text-2xl font-bold  line-clamp-1">{title}</h1>
-      </div>
-      <div className="flex items-center justify-center gap-4">
+    <div className="grid-col-1 grid w-full bg-brand px-4 text-brand-200 shadow-sm md:grid-cols-3 h-full ">
+      {/* <div className="hidden md:flex">
+        <h1 className="line-clamp-1 text-2xl font-bold">{title}</h1>
+      </div> */}
+      <div className="flex items-center">
         {currentSectionNavItems.map((item, index) => (
           <NavLink
             to={item.path}
             key={item.path}
             className={({ isActive }) =>
               classNames(
-                "text-sm font-medium p-2 text-gray-500 border-white border-b-2 cursor-pointer transition-all",
+                "cursor-pointer px-4 border-l-2 border-transparent text-sm font-medium transition-all h-full flex items-center justify-center hover:bg-brand-500 hover:text-white",
                 {
                   // Active if explicitly active or if it's the first item and no other items are active
-                  "!text-brand !border-brand-400 border-b-2":
+                  "bg-brand-600 !border-brand-400  !text-white":
                     isActive || (!isAnyNavLinkActive && index === 0),
-                }
+                },
               )
             }
           >

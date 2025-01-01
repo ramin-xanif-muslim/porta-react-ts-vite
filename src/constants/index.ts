@@ -1,3 +1,9 @@
+import { IoDocumentsOutline } from "react-icons/io5";
+import { RxDashboard } from "react-icons/rx";
+import { PiUsersThree } from "react-icons/pi";
+
+
+
 export const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
 export const MAX_FILE_COUNT = 3;
@@ -17,36 +23,56 @@ export const HEADER_NAV_ITEMS = [
   {
     label: "Dashboard",
     path: "/",
+    icon: RxDashboard,
   },
   {
-    label: "Employee management",
-    path: "/employee-management",
+    label: "Crew",
+    path: "/crew",
+    icon: PiUsersThree,
   },
   {
-    label: "Document management",
-    path: "/document-management",
+    label: "Documents",
+    path: "/documents",
+    icon: IoDocumentsOutline,
   },
 ]
 
 export const HEADER_NAV_ITEMS_SUB = {
-  "employee-management": [
+  "": [
+    {
+      label: "Dashboard",
+      path: "",
+    },
+  ],
+  "crew": [
     {
       label: "Employees",
-      path: "employee-management/employees",
+      path: "crew/employees",
+
     },
     {
       label: "Departments",
-      path: "employee-management/departments",
+      path: "crew/departments",
     },
     {
       label: "Positions",
-      path: "employee-management/positions",
+      path: "crew/positions",
     },
   ],
-  "document-management": [
+  "documents": [
     {
       label: "Documents",
-      path: "document-management/documents",
+      path: "documents/documents",
+    },
+    {
+      label: "Tags",
+      path: "documents/tags",
+    },
+  ],
+  "settings": [
+    {
+      label: "Settings",
+      path: "settings",
     },
   ],
 };
