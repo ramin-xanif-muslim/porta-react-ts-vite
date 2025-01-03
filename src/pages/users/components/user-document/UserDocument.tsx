@@ -1,35 +1,40 @@
 import { Button, Form, FormInstance } from "antd";
 import { t } from "i18next";
-
 import { PiArrowLeft } from "react-icons/pi";
 
-import { Employee } from "../../types";
-import { PhotoSection } from "./PhotoSection";
+import { User } from "../../types";
 import { GeneralInformationSection } from "./GeneralInformationSection";
-import {
-  useEmployeeFormSubmit,
-} from "./hooks";
 import { useFormDirtyState } from "../../../../hooks/useFormDirtyState";
+import { useCallback } from "react";
 import { useFormNavigation } from "../../../../hooks/useFormNavigation";
+import { PhotoSection } from "./PhotoSection";
 
-const EmployeeDocument = ({
+const UserDocument = ({
   initialValues = {},
   isPending,
   onFinish,
   mode = "create",
   form,
 }: {
-  initialValues?: Partial<Employee>;
+  initialValues?: Partial<User>;
   isPending: boolean;
-  onFinish: (values: Employee) => void;
+  onFinish: (values: User) => void;
   mode?: "create" | "update";
-  form: FormInstance<Employee>;
+  form: FormInstance<User>;
 }) => {
-  const isOffice = Form.useWatch("isOffice", form);
+  const isEmployee = Form.useWatch("employeeId", form);
+
   const { isFormDirty, setIsFormDirty, handleFormChange } =
     useFormDirtyState(form);
   const { handleBackNavigation } = useFormNavigation(isFormDirty);
-  const { handleFinish } = useEmployeeFormSubmit(onFinish, setIsFormDirty);
+
+  const handleFinish = useCallback(
+    (values: User) => {
+      onFinish(values);
+      setIsFormDirty(false);
+    },
+    [onFinish, setIsFormDirty],
+  );
 
   return (
     <main className="flex w-full flex-col p-4">
@@ -42,7 +47,7 @@ const EmployeeDocument = ({
             icon={<PiArrowLeft size={24} />}
           />
           <h1 className="text-2xl font-bold">
-            {mode === "create" ? t("Create Employee") : t("Update Employee")}
+            {mode === "create" ? t("Create User") : t("Update User")}
           </h1>
         </div>
 
@@ -50,7 +55,7 @@ const EmployeeDocument = ({
           <Button onClick={handleBackNavigation}>{t("Cancel")}</Button>
           <Button
             htmlType="submit"
-            form="employee-document"
+            form="user-document"
             type="primary"
             loading={isPending}
           >
@@ -61,23 +66,25 @@ const EmployeeDocument = ({
 
       {/* BODY */}
       <Form
-        name="employee-document"
+        name="user-document"
         form={form}
         layout="vertical"
         onFinish={handleFinish}
-        initialValues={initialValues}
         onFieldsChange={handleFormChange}
+        initialValues={{
+          ...initialValues,
+        }}
       >
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[35%_1fr]">
           {/* PHOTO */}
           <PhotoSection />
 
           {/* GENERAL INFORMATION */}
-          <GeneralInformationSection isOffice={isOffice} />
+          <GeneralInformationSection form={form} isEmployee={!!isEmployee} mode={mode} />
         </div>
       </Form>
     </main>
   );
 };
 
-export default EmployeeDocument;
+export default UserDocument;

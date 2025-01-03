@@ -1,12 +1,21 @@
 import type { MenuProps } from "antd";
-import { Menu } from "antd";
-import { FaUsers, FaUserShield } from "react-icons/fa6";
+import { Button, Menu } from "antd";
+import classNames from "classnames";
+import { useState } from "react";
+import {
+  FaUsers,
+  FaUserShield,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa6";
 import { useLocation, useNavigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 const SettingsSideBar = () => {
   const router = useNavigate();
+
+  const [collapsed, setCollapsed] = useState(false);
 
   const items: MenuItem[] = [
     {
@@ -30,17 +39,27 @@ const SettingsSideBar = () => {
   const selectedKey = useLocation().pathname.split("/").pop() || "users";
 
   return (
-    <>
+    <div className="flex flex-col">
       <Menu
-        className="max-w-[200px] border-r border-gray-200"
+        className={classNames("h-full border-r border-gray-200", {
+          "w-[200px]": !collapsed,
+        })}
         defaultSelectedKeys={[selectedKey]}
-        defaultOpenKeys={["profile"]}
         mode="inline"
         theme="light"
-        // inlineCollapsed={collapsed}
+        inlineCollapsed={collapsed}
         items={items}
       />
-    </>
+      <div className="flex justify-center">
+        <Button
+          // type="text"
+          block
+          className="block"
+          icon={collapsed ? <FaChevronRight /> : <FaChevronLeft />}
+          onClick={() => setCollapsed(!collapsed)}
+        />
+      </div>
+    </div>
   );
 };
 

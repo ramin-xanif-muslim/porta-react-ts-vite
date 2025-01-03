@@ -13,7 +13,6 @@ const EmployeeDetailsPage = React.lazy(() =>
     default: module.EmployeeDetailsPage,
   })),
 );
-
 const employeeRoutes = [
   {
     path: "/employees/create",
@@ -35,6 +34,39 @@ const employeeRoutes = [
   },
 ];
 
+const UserCreatePage = React.lazy(() =>
+  import("../../pages/users").then((module) => ({
+    default: module.UserCreatePage,
+  })),
+);
+const UserDetailsPage = React.lazy(() =>
+  import("../../pages/users").then((module) => ({
+    default: module.UserDetailsPage,
+  })),
+);
+
+const userRoutes = [
+  {
+    path: "/users/create",
+    name: "user-create",
+    element: (
+      <WithErrorBoundary>
+        <UserCreatePage />
+      </WithErrorBoundary>
+    ),
+  },
+  {
+    path: "/users/edit/:id",
+    name: "user-edit",
+    element: (
+      <WithErrorBoundary>
+        <UserDetailsPage />
+      </WithErrorBoundary>
+    ),
+  },
+];
+
 export const appDocRoutes = [
-  ...employeeRoutes
-]
+  ...employeeRoutes,
+  ...userRoutes,
+];

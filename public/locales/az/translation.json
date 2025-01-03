@@ -136,6 +136,35 @@
   "Employee Distribution": "Çalışan Dağılımı",
   "Total Employees": "Ümumi Çalışanlar",
   "Active Projects": "Aktiv Layihələr",
-  "Total Tasks": "Ümumi Tapşırıqlar"
+  "Total Tasks": "Ümumi Tapşırıqlar",
+
+  "Create role": "Rol Yarat",
+  "Description": "Açıqlama",
+  "Role created": "Rol yaradıldı",
+  "Error creating role": "Rol yaradılırken xəta baş verdi",
+  "Role updated": "Rol güncelləndi",
+  "Error updating role": "Rol güncellenirken xəta baş verdi",
+  "Role deleted": "Rol silindi",
+  "Error deleting role": "Rol silinirken xəta baş verdi",
+  "Role": "Rol",
+  "Roles": "Roller",
+  "Create Role": "Rol Yarat",
+  "Update Role": "Rol Güncəllə",
+  "Role List": "Rol Listesi",
+  "Role Details": "Rol Detayları",
+
+  "User created": "İstifadəçi yaradıldı",
+  "Error creating user": "İstifadəçi yaradılırken xəta baş verdi",
+  "User updated": "İstifadəçi güncelləndi",
+  "Error updating user": "İstifadəçi güncellenirken xəta baş verdi",
+  "User deleted": "İstifadəçi silindi",
+  "Error deleting user": "İstifadəçi silinirken xəta baş verdi",
+  "User": "İstifadəçi",
+  "Username": "İstifadəçi Adı",
+  "Password": "Şifrə",
+  "Main Role": "Əsas Rol",
+  "Permissions": "İmzalar",
+  "Add User": "İstifadəçi Əlavə Et",
+  "Update User": "İstifadəçi Güncəllə" 
 
 }
