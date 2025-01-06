@@ -1,8 +1,8 @@
 import { Card, Form, FormInstance, Input, Select } from "antd";
 import { t } from "i18next";
 import { ImFileText } from "react-icons/im";
-import { useEmployeeSelectOptions } from "../../../employees/api/use-employee-select-options";
 import { useRoleSelectOptions } from "../../../roles/api/use-role-select-options";
+import { useEmployeeSelectTableOptions } from "../../../employees/api/use-employee-select-table-options";
 
 export const GeneralInformationSection = ({
   isEmployee,
@@ -13,32 +13,8 @@ export const GeneralInformationSection = ({
   form: FormInstance;
   mode: "create" | "update";
 }) => {
-  const employeeSelectOptions = useEmployeeSelectOptions();
+  const employeeSelectOptions = useEmployeeSelectTableOptions({ form });
   const roleSelectOptions = useRoleSelectOptions();
-
-  const onChangeEmployee = (value: string) => {
-    if (!value) {
-      form.setFieldsValue({
-        firstName: "",
-        lastName: "",
-      });
-      return;
-    }
-
-    const employee = employeeSelectOptions?.options?.find(
-      (option: { value: string }) => option.value === value,
-    );
-
-    if (!employee) {
-      return;
-    }
-
-    const [firstName, lastName] = employee.label.split(" ");
-    form.setFieldsValue({
-      firstName,
-      lastName,
-    });
-  };
   return (
     <Card
       title={
@@ -61,16 +37,25 @@ export const GeneralInformationSection = ({
         <Form.Item name="email" label={t("Email")} rules={[{ required: true }]}>
           <Input />
         </Form.Item>
-        <Form.Item label={t("Employee")} name="employeeId">
-          <Select
-            showSearch
-            filterOption={false}
-            {...employeeSelectOptions}
-            className="w-full"
-            onChange={onChangeEmployee}
-            allowClear
-          />
-        </Form.Item>
+        <div className="relative">
+          <Form.Item label={t("Employee")} name="employeeId">
+            <Select
+              onClear={() => {
+                form.setFieldsValue({
+                  firstName: "",
+                  lastName: "",
+                });
+              }}
+              showSearch
+              filterOption={false}
+              {...employeeSelectOptions.selectOptions}
+              className="w-full"
+              allowClear
+              popupClassName="hidden"
+            />
+          </Form.Item>
+          {employeeSelectOptions.dropdownContainer}
+        </div>
         <div />
         <Form.Item
           name="firstName"
@@ -108,29 +93,26 @@ export const GeneralInformationSection = ({
         </Form.Item>
         <Form.Item label={t("Roles")} shouldUpdate>
           {({ getFieldValue }) => {
-              return (
-                <Form.Item name="roleIds" noStyle>
-                  <Select
-                    showSearch
-                    filterOption={false}
-                    options={
-                      roleSelectOptions.options.filter(
-                        (option: {
-                          key: string;
-                          value: string;
-                          label: string;
-                        }) => option.value !== form.getFieldValue("mainRoleId"),
-                      ) || []
-                    }
-                    onSearch={roleSelectOptions.onSearch}
-                    loading={roleSelectOptions.loading}
-                    className="w-full"
-                    allowClear
-                    mode="multiple"
-                    disabled={!getFieldValue("mainRoleId")}
-                  />
-                </Form.Item>
-              );
+            return (
+              <Form.Item name="roleIds" noStyle>
+                <Select
+                  showSearch
+                  filterOption={false}
+                  options={
+                    roleSelectOptions.options.filter(
+                      (option: { key: string; value: string; label: string }) =>
+                        option.value !== form.getFieldValue("mainRoleId"),
+                    ) || []
+                  }
+                  onSearch={roleSelectOptions.onSearch}
+                  loading={roleSelectOptions.loading}
+                  className="w-full"
+                  allowClear
+                  mode="multiple"
+                  disabled={!getFieldValue("mainRoleId")}
+                />
+              </Form.Item>
+            );
           }}
         </Form.Item>
       </div>
