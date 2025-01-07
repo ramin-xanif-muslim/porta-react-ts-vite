@@ -1,6 +1,4 @@
-import { Button, Table, TableProps } from "antd";
-import { PiDownload } from "react-icons/pi";
-import { FiPlusCircle } from "react-icons/fi";
+import { Table, TableProps } from "antd";
 import { t } from "i18next";
 
 import { Position } from "../../types";
@@ -11,6 +9,7 @@ import {
   useListPageContext,
   withListPageContext,
 } from "../../../../HOC/withListPageContext";
+import { CreateBtn, DownloadBtn } from "../../../../components/ui/buttons";
 
 const columns: TableProps<Position>["columns"] = [
   {
@@ -51,22 +50,15 @@ function PositionsPageComponent() {
       <div className="flex justify-between p-6">
         <h1 className="mb-6 text-2xl font-bold">{t("Positions")}</h1>
         <div className="flex gap-2">
-          <Button size="large" icon={<PiDownload />}>
-            {t("Download")}
-          </Button>
-          <Button
-            onClick={() => openModal("create-position")}
-            size="large"
-            type="primary"
-            icon={<FiPlusCircle />}
-          >
+          <DownloadBtn />
+          <CreateBtn onClick={() => openModal("create-position")}>
             {t("Add Position")}
-          </Button>
+          </CreateBtn>
         </div>
       </div>
 
       <div className="px-6 pb-6">
-        <Table
+        <Table      
           loading={isLoading}
           rowKey="id"
           columns={columns}

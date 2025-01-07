@@ -1,6 +1,4 @@
-import { Button, Table, TableProps } from "antd";
-import { PiDownload } from "react-icons/pi";
-import { FiPlusCircle } from "react-icons/fi";
+import { Table, TableProps } from "antd";
 import { t } from "i18next";
 
 import { Department } from "../../types";
@@ -11,6 +9,7 @@ import {
   withListPageContext,
   useListPageContext,
 } from "../../../../HOC/withListPageContext";
+import { CreateBtn, DownloadBtn } from "../../../../components/ui/buttons";
 
 const columns: TableProps<Department>["columns"] = [
   {
@@ -57,17 +56,10 @@ function DepartmentsPageComponent() {
       <div className="flex justify-between p-6">
         <h1 className="mb-6 text-2xl font-bold">{t("Departments")}</h1>
         <div className="flex gap-2">
-          <Button size="large" icon={<PiDownload />}>
-            {t("Download")}
-          </Button>
-          <Button
-            onClick={() => openModal("create-department")}
-            size="large"
-            type="primary"
-            icon={<FiPlusCircle />}
-          >
+          <DownloadBtn />
+          <CreateBtn onClick={() => openModal("create-department")}>
             {t("Add Department")}
-          </Button>
+          </CreateBtn>
         </div>
       </div>
 

@@ -1,6 +1,4 @@
-import { Button, Table, TableProps } from "antd";
-import { PiDownload } from "react-icons/pi";
-import { FiPlusCircle } from "react-icons/fi";
+import { Table, TableProps } from "antd";
 import { t } from "i18next";
 import { Link } from "react-router-dom";
 
@@ -11,6 +9,7 @@ import {
   useListPageContext,
   withListPageContext,
 } from "../../../../HOC/withListPageContext";
+import { CreateBtn, DownloadBtn } from "../../../../components/ui/buttons";
 
 const columns: TableProps<Employee>["columns"] = [
   {
@@ -83,13 +82,9 @@ function EmployeesPageComponent() {
       <div className="flex justify-between p-6">
         <h1 className="mb-6 text-2xl font-bold">{t("Employees")}</h1>
         <div className="flex gap-2">
-          <Button size="large" icon={<PiDownload />}>
-            {t("Download")}
-          </Button>
+          <DownloadBtn />
           <Link to="/employees/create">
-            <Button size="large" type="primary" icon={<FiPlusCircle />}>
-              {t("Add Employee")}
-            </Button>
+            <CreateBtn>{t("Add Employee")}</CreateBtn>
           </Link>
         </div>
       </div>

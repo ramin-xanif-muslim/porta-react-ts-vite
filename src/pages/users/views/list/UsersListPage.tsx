@@ -1,6 +1,4 @@
-import { Button, Table, TableProps } from "antd";
-import { PiDownload } from "react-icons/pi";
-import { FiPlusCircle } from "react-icons/fi";
+import { Table, TableProps } from "antd";
 import { t } from "i18next";
 import { Link } from "react-router-dom";
 
@@ -11,6 +9,7 @@ import {
   withListPageContext,
 } from "../../../../HOC/withListPageContext";
 import DotsTableCell from "../../components/DotsTableCell";
+import { CreateBtn, DownloadBtn } from "../../../../components/ui/buttons";
 
 const columns: TableProps<User>["columns"] = [
   {
@@ -72,13 +71,9 @@ function UsersListPageComponent() {
       <div className="flex justify-between p-6">
         <h1 className="mb-6 text-2xl font-bold">{t("Users")}</h1>
         <div className="flex gap-2">
-          <Button size="large" icon={<PiDownload />}>
-            {t("Download")}
-          </Button>
+          <DownloadBtn />
           <Link to="/users/create">
-            <Button size="large" type="primary" icon={<FiPlusCircle />}>
-              {t("Add User")}
-            </Button>
+            <CreateBtn>{t("Add User")}</CreateBtn>
           </Link>
         </div>
       </div>

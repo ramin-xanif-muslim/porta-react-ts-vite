@@ -2,13 +2,6 @@ import { Dropdown, MenuProps } from "antd";
 import { t } from "i18next";
 import { useState } from "react";
 
-// import { FaRegFolderOpen } from "react-icons/fa";
-// import { FaShareFromSquare } from "react-icons/fa6";
-// import { IoMdLink } from "react-icons/io";
-// import { FiDownload } from "react-icons/fi";
-// import { MdOutlineDeleteForever } from "react-icons/md";
-// import { IoMdMove } from "react-icons/io";
-// import { LiaCopySolid } from "react-icons/lia";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { MdUploadFile } from "react-icons/md";
@@ -49,37 +42,6 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
     }
   };
   const items: MenuProps["items"] = [
-    // {
-    //   key: "OpenIn",
-    //   label: t("Open in"),
-    //   icon: <FaRegFolderOpen className="size-5" />,
-    // },
-    // {
-    //   type: "divider",
-    // },
-    // {
-    //   key: "Share",
-    //   label: t("Share"),
-    //   icon: <FaShareFromSquare className="size-5" />,
-    // },
-    // {
-    //   key: "CopyLink",
-    //   label: t("Copy link"),
-    //   icon: <IoMdLink className="size-5" />,
-    // },
-    // {
-    //   key: "Download",
-    //   label: t("Download"),
-    //   icon: <FiDownload className="size-5" />,
-    // },
-    // {
-    //   type: "divider",
-    // },
-    // {
-    //   key: "Delete",
-    //   label: t("Delete"),
-    //   icon: <MdOutlineDeleteForever className="size-5" />,
-    // },
     {
       key: "Rename",
       label: t("Rename"),
@@ -116,16 +78,6 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       label: t("Document Versions"),
       icon: <VscVersions className="size-5" />,
     },
-    // {
-    //   key: "Move",
-    //   label: t("Move"),
-    //   icon: <IoMdMove className="size-5" />,
-    // },
-    // {
-    //   key: "Copy",
-    //   label: t("Copy"),
-    //   icon: <LiaCopySolid className="size-5" />,
-    // },
   ];
 
   return (

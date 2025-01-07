@@ -49,7 +49,7 @@ export default function CreateRoleModal() {
           <Input ref={inputRef} disabled={isPending} />
         </Form.Item>
         <Form.Item name="description" label={t("Description")}>
-          <Input.TextArea disabled={isPending} />
+          <Input.TextArea disabled={isPending} autoSize={{ minRows: 3 }} />
         </Form.Item>
       </Form>
     </Modal>

@@ -1,6 +1,4 @@
-import { Button, Table, TableProps } from "antd";
-import { PiDownload } from "react-icons/pi";
-import { FiPlusCircle } from "react-icons/fi";
+import { Table, TableProps } from "antd";
 import { t } from "i18next";
 
 import {
@@ -11,6 +9,8 @@ import { Role } from "../../types";
 import { useGetRolesList } from "../../api";
 import DotsTableCell from "../../components/DotsTableCell";
 import { useModalStore } from "../../../../store";
+import { CreateBtn } from "../../../../components/ui/buttons";
+import { DownloadBtn } from "../../../../components/ui/buttons";
 
 const columns: TableProps<Role>["columns"] = [
   {
@@ -50,17 +50,10 @@ function RolesListPageComponent() {
       <div className="flex justify-between p-6">
         <h1 className="mb-6 text-2xl font-bold">{t("Roles")}</h1>
         <div className="flex gap-2">
-          <Button size="large" icon={<PiDownload />}>
-            {t("Download")}
-          </Button>
-          <Button
-            onClick={() => openModal("create-role")}
-            size="large"
-            type="primary"
-            icon={<FiPlusCircle />}
-          >
+          <DownloadBtn />
+          <CreateBtn onClick={() => openModal("create-role")}>
             {t("Add Role")}
-          </Button>
+          </CreateBtn>
         </div>
       </div>
 
