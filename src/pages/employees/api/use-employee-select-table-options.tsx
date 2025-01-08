@@ -17,54 +17,52 @@ export function useEmployeeSelectTableOptions({
   const [debouncedSearchText] = useDebounce(searchText, 300);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  
-
-const columns: TableProps<Employee>["columns"] = [
-  {
-    title: t("Avatar"),
-    dataIndex: "avatar",
-    key: "avatar",
-    width: 100,
-    ellipsis: true,
-    render: (value?: string) => (
-      <img
-        src={value || "/avatar.jpg"}
-        alt="avatar"
-        className="size-9 rounded-full"
-      />
-    ),
-  },
-  {
-    title: t("Full Name"),
-    dataIndex: "fullName",
-    key: "fullName",
-    render: (_: unknown, record: Employee) => (
-      <span className="line-clamp-1">
-        {record.firstName} {record.lastName}
-      </span>
-    ),
-  },
-  {
-    title: t("Email"),
-    dataIndex: "email",
-    key: "email",
-  },
-  {
-    title: t("Office Number"),
-    dataIndex: "officeNumber",
-    key: "officeNumber",
-  },
-  {
-    title: t("Position"),
-    dataIndex: "positionName",
-    key: "positionName",
-  },
-  {
-    title: t("Is Office"),
-    dataIndex: "isOffice",
-    key: "isOffice",
-  },
-];
+  const columns: TableProps<Employee>["columns"] = [
+    {
+      title: t("Avatar"),
+      dataIndex: "avatar",
+      key: "avatar",
+      width: 100,
+      ellipsis: true,
+      render: (value?: string) => (
+        <img
+          src={value || "/avatar.jpg"}
+          alt="avatar"
+          className="size-9 rounded-full"
+        />
+      ),
+    },
+    {
+      title: t("Full Name"),
+      dataIndex: "fullName",
+      key: "fullName",
+      render: (_: unknown, record: Employee) => (
+        <span className="line-clamp-1">
+          {record.firstName} {record.lastName}
+        </span>
+      ),
+    },
+    {
+      title: t("Email"),
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: t("Office Number"),
+      dataIndex: "officeNumber",
+      key: "officeNumber",
+    },
+    {
+      title: t("Position"),
+      dataIndex: "positionName",
+      key: "positionName",
+    },
+    {
+      title: t("Is Office"),
+      dataIndex: "isOffice",
+      key: "isOffice",
+    },
+  ];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -114,7 +112,6 @@ const columns: TableProps<Employee>["columns"] = [
       className="absolute left-0 right-0 top-[60px] z-10 rounded border border-gray-300 bg-white shadow-md"
     >
       <Table
-
         loading={query.isFetching}
         size="small"
         dataSource={query?.data?.data.list}

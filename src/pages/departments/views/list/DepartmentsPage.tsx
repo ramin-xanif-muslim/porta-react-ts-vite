@@ -52,10 +52,10 @@ function DepartmentsPageComponent() {
   const { openModal } = useModalStore();
 
   return (
-    <div className="list-page-container">
-      <div className="list-page-header">
-        <h1 className="list-page-title">{t("Departments")}</h1>
-        <div className="list-page-actions-wrapper">
+    <div className="page">
+      <div className="header-page">
+        <h1 className="header-page__title">{t("Departments")}</h1>
+        <div className="header-page__actions">
           <DownloadBtn />
           <CreateBtn onClick={() => openModal("create-department")}>
             {t("Add Department")}
@@ -63,7 +63,7 @@ function DepartmentsPageComponent() {
         </div>
       </div>
 
-      <div className="list-page-table-wrapper">
+      <div className="table-page-wrapper">
         <Table
           loading={isLoading}
           rowKey="id"

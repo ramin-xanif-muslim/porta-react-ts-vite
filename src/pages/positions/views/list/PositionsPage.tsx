@@ -41,10 +41,10 @@ function PositionsPageComponent() {
   const { openModal } = useModalStore();
 
   return (
-    <div className="list-page-container">
-      <div className="list-page-header">
-        <h1 className="list-page-title">{t("Positions")}</h1>
-        <div className="list-page-actions-wrapper">
+    <div className="page">
+      <div className="header-page">
+        <h1 className="header-page__title">{t("Positions")}</h1>
+        <div className="header-page__actions">
           <DownloadBtn />
           <CreateBtn onClick={() => openModal("create-position")}>
             {t("Add Position")}
@@ -52,7 +52,7 @@ function PositionsPageComponent() {
         </div>
       </div>
 
-      <div className="list-page-table-wrapper">
+      <div className="table-page-wrapper">
         <Table
           loading={isLoading}
           rowKey="id"

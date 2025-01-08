@@ -32,21 +32,21 @@ const EmployeeDocument = ({
   const { handleFinish } = useEmployeeFormSubmit(onFinish, setIsFormDirty);
 
   return (
-    <main className="flex w-full flex-col p-4">
+    <main className="page">
       {/* HEADER */}
-      <div className="flex items-center justify-between">
+      <div className="header-page">
         <div className="flex items-center gap-2">
           <Button
             onClick={handleBackNavigation}
             type="text"
             icon={<PiArrowLeft size={24} />}
           />
-          <h1 className="text-2xl font-bold">
+          <h1 className="header-page__title">
             {mode === "create" ? t("Create Employee") : t("Update Employee")}
           </h1>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="header-page__actions">
           <Button onClick={handleBackNavigation}>{t("Cancel")}</Button>
           <Button
             htmlType="submit"

@@ -109,25 +109,25 @@
     scrollbar-width: none;
   }
 
-  /*  list page layout utilities */
-  .list-page-container {
-    @apply flex w-full flex-col;
+  /* page layout utilities */
+  .page {
+    @apply flex w-full flex-col p-6;
   }
 
-  .list-page-header {
-    @apply mb-4 flex justify-between p-6;
+  .header-page {
+    @apply mb-4 flex justify-between;
   }
 
-  .list-page-title {
+  .header-page__title {
     @apply text-2xl font-bold;
   }
 
-  .list-page-actions-wrapper {
+  .header-page__actions {
     @apply flex gap-2;
   }
 
-  .list-page-table-wrapper {
-    @apply px-6 pb-6;
+  .table-page-wrapper {
+    @apply py-6;
   }
 }
 
