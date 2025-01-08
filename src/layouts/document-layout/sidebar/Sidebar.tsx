@@ -1,8 +1,3 @@
-// import { TbArrowsMoveVertical } from "react-icons/tb";
-// import { FaBuffer } from "react-icons/fa";
-// import classNames from "classnames";
-// import { t } from "i18next";
-
 import FoldersMenu from "./folders-menu/FoldersMenu";
 import SidebarMenu from "./sidebar-menu/SidebarMenu";
 import { menuList } from "./data-menu";
@@ -10,7 +5,7 @@ import { menuList } from "./data-menu";
 const Sidebar = () => {
   return (
     <div className="no-scrollbar h-screen min-w-[250px] overflow-y-auto py-8 text-gray-500 md:h-[calc(100vh-100px)]">
-      <div className="mx-8">
+      <div className="">
         {/* <div
                     className={classNames({
                         "menu-item": true,
@@ -27,7 +22,7 @@ const Sidebar = () => {
 
         <FoldersMenu />
 
-<hr className="my-5 border border-[#F3F4F6FF]" />
+        <hr className="my-5 border border-[#F3F4F6FF]" />
 
         <SidebarMenu list={menuList} />
 

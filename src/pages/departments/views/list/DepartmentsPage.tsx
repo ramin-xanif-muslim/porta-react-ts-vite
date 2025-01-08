@@ -52,10 +52,10 @@ function DepartmentsPageComponent() {
   const { openModal } = useModalStore();
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="flex justify-between p-6">
-        <h1 className="mb-6 text-2xl font-bold">{t("Departments")}</h1>
-        <div className="flex gap-2">
+    <div className="list-page-container">
+      <div className="list-page-header">
+        <h1 className="list-page-title">{t("Departments")}</h1>
+        <div className="list-page-actions-wrapper">
           <DownloadBtn />
           <CreateBtn onClick={() => openModal("create-department")}>
             {t("Add Department")}
@@ -63,7 +63,7 @@ function DepartmentsPageComponent() {
         </div>
       </div>
 
-      <div className="px-6 pb-6">
+      <div className="list-page-table-wrapper">
         <Table
           loading={isLoading}
           rowKey="id"

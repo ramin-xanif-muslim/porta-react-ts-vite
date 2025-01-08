@@ -67,10 +67,10 @@ function UsersListPageComponent() {
   });
 
   return (
-    <div className="flex min-h-screen w-full flex-col">
-      <div className="flex justify-between p-6">
-        <h1 className="mb-6 text-2xl font-bold">{t("Users")}</h1>
-        <div className="flex gap-2">
+    <div className="list-page-container">
+      <div className="list-page-header">
+        <h1 className="list-page-title">{t("Users")}</h1>
+        <div className="list-page-actions-wrapper">
           <DownloadBtn />
           <Link to="/users/create">
             <CreateBtn>{t("Add User")}</CreateBtn>
@@ -78,9 +78,8 @@ function UsersListPageComponent() {
         </div>
       </div>
 
-      <div className="px-6 pb-6">
+      <div className="list-page-table-wrapper">
         <Table
-          className="rounded-lg bg-white shadow-sm"
           loading={isLoading}
           rowKey="id"
           columns={columns}
