@@ -1,8 +1,25 @@
 # Project Name
 
+Blue Mind Hub
+
 ## Live Demo
 
-You can see the live version of the project here: [Aster News Live Demo](https://news-aster.netlify.app/)
+You can see the live version of the project here: [Blue Mind Hub Live Demo](https://jolly-pond-0cd4dca03.5.azurestaticapps.net/)
+
+## Technologies used
+
+- React
+- Tailwind CSS
+- TypeScript
+- Vite
+- React Router
+- React Query
+- React Hook Form
+- React Icons
+- React i18n
+- React Context
+- Ant Design
+- Zustand
 
 ## Project Structure
 
@@ -109,7 +126,7 @@ To get started with this project, follow the steps below to set up your local de
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/bluemindhub/vms-front
    ```
 
 2. Navigate to the project directory:
