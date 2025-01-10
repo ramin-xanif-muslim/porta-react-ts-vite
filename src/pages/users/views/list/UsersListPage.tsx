@@ -10,6 +10,7 @@ import {
 } from "../../../../HOC/withListPageContext";
 import DotsTableCell from "../../components/DotsTableCell";
 import { CreateBtn, DownloadBtn } from "../../../../components/ui/buttons";
+import { PageContentHeader } from "../../../../components/page-content-header";
 
 const columns: TableProps<User>["columns"] = [
   {
@@ -27,9 +28,18 @@ const columns: TableProps<User>["columns"] = [
     ),
   },
   {
+    title: "",
+    key: "dots",
+    dataIndex: "dots",
+    width: 50,
+    fixed: "left",
+    render: (_, record) => <DotsTableCell user={record} />,
+  },
+  {
     title: t("Username"),
     dataIndex: "username",
     key: "username",
+    fixed: "left",
   },
   {
     title: t("Full Name"),
@@ -46,14 +56,6 @@ const columns: TableProps<User>["columns"] = [
     dataIndex: "email",
     key: "email",
   },
-  {
-    title: "",
-    key: "dots",
-    dataIndex: "dots",
-    width: 50,
-    fixed: "right",
-    render: (_, record) => <DotsTableCell user={record} />,
-  },
 ];
 
 function UsersListPageComponent() {
@@ -69,7 +71,6 @@ function UsersListPageComponent() {
   return (
     <div className="page">
       <div className="header-page">
-        <h1 className="header-page__title">{t("Users")}</h1>
         <div className="header-page__actions">
           <DownloadBtn />
           <Link to="/users/create">
@@ -77,20 +78,23 @@ function UsersListPageComponent() {
           </Link>
         </div>
       </div>
+      <div className="content-page">
+        <PageContentHeader total={total} />
 
-      <div className="table-page-wrapper">
-        <Table
-          loading={isLoading}
-          rowKey="id"
-          columns={columns}
-          dataSource={users || []}
-          onChange={(_, __, sorter) => onTableChange(sorter)}
-          pagination={{
-            ...tablePaginationConfig,
-            total: total,
-          }}
-          scroll={{ x: window.innerHeight }}
-        />
+        <div className="table-page-wrapper">
+          <Table
+            loading={isLoading}
+            rowKey="id"
+            columns={columns}
+            dataSource={users || []}
+            onChange={(_, __, sorter) => onTableChange(sorter)}
+            pagination={{
+              ...tablePaginationConfig,
+              total: total,
+            }}
+            scroll={{ x: window.innerHeight }}
+          />
+        </div>
       </div>
     </div>
   );

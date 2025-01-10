@@ -80,7 +80,7 @@ const UserDocument = ({
           <PhotoSection />
 
           {/* GENERAL INFORMATION */}
-          <GeneralInformationSection form={form} isEmployee={!!isEmployee} mode={mode} />
+          <GeneralInformationSection form={form} isEmployee={!!isEmployee}  mode={mode} />
         </div>
       </Form>
     </main>

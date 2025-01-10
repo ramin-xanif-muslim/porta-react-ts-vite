@@ -41,6 +41,14 @@ const DocumentPageComponent = () => {
     () => [
       {
         title: "",
+        key: "dots",
+        dataIndex: "dots",
+        fixed: "left",
+        width: 50,
+        render: (_, record) => <DotsTableCell record={record} folderId={id} />,
+      },
+      {
+        title: "",
         dataIndex: "icon",
         key: "icon",
         render: (_, record) => getFileIcon(record),
@@ -85,12 +93,6 @@ const DocumentPageComponent = () => {
             <FaRegStar className={classNames({ "text-[#F2C94CFF]": val })} />
           </div>
         ),
-      },
-      {
-        title: "",
-        key: "dots",
-        dataIndex: "dots",
-        render: (_, record) => <DotsTableCell record={record} folderId={id} />,
       },
     ],
     [isFetching],

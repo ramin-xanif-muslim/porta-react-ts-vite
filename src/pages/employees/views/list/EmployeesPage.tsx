@@ -10,8 +10,17 @@ import {
   withListPageContext,
 } from "../../../../HOC/withListPageContext";
 import { CreateBtn, DownloadBtn } from "../../../../components/ui/buttons";
+import { PageContentHeader } from "../../../../components/page-content-header";
 
 const columns: TableProps<Employee>["columns"] = [
+  {
+    title: "",
+    key: "dots",
+    dataIndex: "dots",
+    width: 50,
+    fixed: "left",
+    render: (_, record) => <DotsTableCell employee={record} />,
+  },
   {
     title: t("Avatar"),
     dataIndex: "avatar",
@@ -57,14 +66,6 @@ const columns: TableProps<Employee>["columns"] = [
     key: "isOffice",
     sorter: true,
   },
-  {
-    title: "",
-    key: "dots",
-    dataIndex: "dots",
-    width: 50,
-    fixed: "right",
-    render: (_, record) => <DotsTableCell employee={record} />,
-  },
 ];
 
 function EmployeesPageComponent() {
@@ -80,7 +81,6 @@ function EmployeesPageComponent() {
   return (
     <div className="page">
       <div className="header-page">
-        <h1 className="header-page__title">{t("Employees")}</h1>
         <div className="header-page__actions">
           <DownloadBtn />
           <Link to="/employees/create">
@@ -88,20 +88,23 @@ function EmployeesPageComponent() {
           </Link>
         </div>
       </div>
-
-      <div className="table-page-wrapper">
-        <Table
-          loading={isLoading}
-          rowKey="id"
-          columns={columns}
-          dataSource={employees || []}
-          onChange={(_, __, sorter) => onTableChange(sorter)}
-          pagination={{
-            ...tablePaginationConfig,
-            total: total,
-          }}
-          scroll={{ x: window.innerHeight }}
-        />
+      <div className="content-page">
+        <PageContentHeader total={total} />
+        
+        <div className="table-page-wrapper">
+          <Table
+            loading={isLoading}
+            rowKey="id"
+            columns={columns}
+            dataSource={employees || []}
+            onChange={(_, __, sorter) => onTableChange(sorter)}
+            pagination={{
+              ...tablePaginationConfig,
+              total: total,
+            }}
+            scroll={{ x: window.innerHeight }}
+          />
+        </div>
       </div>
     </div>
   );

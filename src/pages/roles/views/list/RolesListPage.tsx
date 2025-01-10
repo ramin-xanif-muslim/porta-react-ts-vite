@@ -11,8 +11,17 @@ import DotsTableCell from "../../components/DotsTableCell";
 import { useModalStore } from "../../../../store";
 import { CreateBtn } from "../../../../components/ui/buttons";
 import { DownloadBtn } from "../../../../components/ui/buttons";
+import { PageContentHeader } from "../../../../components/page-content-header";
 
 const columns: TableProps<Role>["columns"] = [
+  {
+    title: "",
+    key: "dots",
+    dataIndex: "dots",
+    width: 50,
+    fixed: "left",
+    render: (_, record) => <DotsTableCell role={record} />,
+  },
   {
     title: t("Name"),
     dataIndex: "name",
@@ -22,14 +31,6 @@ const columns: TableProps<Role>["columns"] = [
     title: t("Description"),
     dataIndex: "description",
     key: "description",
-  },
-  {
-    title: "",
-    key: "dots",
-    dataIndex: "dots",
-    width: 50,
-    fixed: "right",
-    render: (_, record) => <DotsTableCell role={record} />,
   },
 ];
 
@@ -48,28 +49,30 @@ function RolesListPageComponent() {
   return (
     <div className="page">
       <div className="header-page">
-        <h1 className="header-page__title">{t("Roles")}</h1>
-        <div className="list-page-actions-wrapper">
+        <div className="header-page__actions">
           <DownloadBtn />
           <CreateBtn onClick={() => openModal("create-role")}>
             {t("Add Role")}
           </CreateBtn>
         </div>
       </div>
+      <div className="content-page">
+        <PageContentHeader total={total} />
 
-      <div className="table-page-wrapper">
-        <Table
-          loading={isLoading}
-          rowKey="id"
-          columns={columns}
-          dataSource={roles || []}
-          onChange={(_, __, sorter) => onTableChange(sorter)}
-          pagination={{
-            ...tablePaginationConfig,
-            total: total,
-          }}
-          scroll={{ x: window.innerHeight }}
-        />
+        <div className="table-page-wrapper">
+          <Table
+            loading={isLoading}
+            rowKey="id"
+            columns={columns}
+            dataSource={roles || []}
+            onChange={(_, __, sorter) => onTableChange(sorter)}
+            pagination={{
+              ...tablePaginationConfig,
+              total: total,
+            }}
+            scroll={{ x: window.innerHeight }}
+          />
+        </div>
       </div>
     </div>
   );

@@ -71,8 +71,12 @@ export const HEADER_NAV_ITEMS_SUB = {
   ],
   "settings": [
     {
-      label: "Settings",
-      path: "settings",
+      label: "Users",
+      path: "settings/users",
+    },
+    {
+      label: "Roles",
+      path: "settings/roles",
     },
   ],
 };

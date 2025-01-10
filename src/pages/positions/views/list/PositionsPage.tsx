@@ -10,21 +10,22 @@ import {
   withListPageContext,
 } from "../../../../HOC/withListPageContext";
 import { CreateBtn, DownloadBtn } from "../../../../components/ui/buttons";
+import { PageContentHeader } from "../../../../components/page-content-header";
 
 const columns: TableProps<Position>["columns"] = [
-  {
-    title: t("Position Name"),
-    dataIndex: "name",
-    key: "name",
-    sorter: true,
-  },
   {
     title: "",
     key: "dots",
     dataIndex: "dots",
     width: 50,
-    fixed: "right",
+    fixed: "left",
     render: (_, record) => <DotsTableCell position={record} />,
+  },
+  {
+    title: t("Position Name"),
+    dataIndex: "name",
+    key: "name",
+    sorter: true,
   },
 ];
 
@@ -43,7 +44,6 @@ function PositionsPageComponent() {
   return (
     <div className="page">
       <div className="header-page">
-        <h1 className="header-page__title">{t("Positions")}</h1>
         <div className="header-page__actions">
           <DownloadBtn />
           <CreateBtn onClick={() => openModal("create-position")}>
@@ -51,20 +51,23 @@ function PositionsPageComponent() {
           </CreateBtn>
         </div>
       </div>
-
-      <div className="table-page-wrapper">
-        <Table
-          loading={isLoading}
-          rowKey="id"
-          columns={columns}
-          dataSource={positions || []}
-          onChange={(_, __, sorter) => onTableChange(sorter)}
-          pagination={{
-            ...tablePaginationConfig,
-            total: total,
-          }}
-          scroll={{ x: window.innerHeight }}
-        />
+      <div className="content-page">
+        <PageContentHeader total={total} />
+        
+        <div className="table-page-wrapper">
+          <Table
+            loading={isLoading}
+            rowKey="id"
+            columns={columns}
+            dataSource={positions || []}
+            onChange={(_, __, sorter) => onTableChange(sorter)}
+            pagination={{
+              ...tablePaginationConfig,
+              total: total,
+            }}
+            scroll={{ x: window.innerHeight }}
+          />
+        </div>
       </div>
     </div>
   );

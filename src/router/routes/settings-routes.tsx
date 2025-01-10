@@ -2,10 +2,6 @@ import React from "react";
 import { WithErrorBoundary } from "../../components/error-boundary/ErrorBoundary";
 import NotFoundPage from "../../pages/not-found/NotFoundPage";
 
-
-const SettingsLayout = React.lazy(
-  () => import("../../layouts/settings-layout/SettingsLayout"),
-);
 const UsersListPage = React.lazy(() =>
   import("../../pages/users").then((module) => ({
     default: module.UsersListPage,
@@ -20,11 +16,6 @@ const RolesListPage = React.lazy(() =>
 export const settingsRoutes = {
   path: "settings",
   name: "settings",
-  element: (
-    <WithErrorBoundary>
-      <SettingsLayout />
-    </WithErrorBoundary>
-  ),
   children: [
     {
       path: "*",

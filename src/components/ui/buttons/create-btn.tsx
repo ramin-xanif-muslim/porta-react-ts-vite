@@ -1,6 +1,7 @@
 import { Button } from "antd";
 import { t } from "i18next";
-import { FiPlusCircle } from "react-icons/fi";
+import { FaCirclePlus } from "react-icons/fa6";
+
 
 interface CreateBtnProps {
   onClick?: () => void;
@@ -13,12 +14,12 @@ interface CreateBtnProps {
 export const CreateBtn = ({
   onClick,
   size = "large",
-  type = "primary",
-  icon = <FiPlusCircle />,
+  type = "link",
+  icon = <FaCirclePlus  />,
   children,
 }: CreateBtnProps) => {
   return (
-    <Button size={size} type={type} icon={icon} onClick={onClick}>
+    <Button className="text-brand" size={size} type={type} icon={icon} onClick={onClick}>
       {children || t("Create")}
     </Button>
   );

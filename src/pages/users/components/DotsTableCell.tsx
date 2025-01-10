@@ -8,7 +8,7 @@ const DotsTableCell = ({ user }: { user: User }) => {
   const navigate = useNavigate();
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
-    if (e.key === "edit") {
+    if (e.key === "Edit") {
       navigate(`/users/edit/${user.id}`);
     }
   };

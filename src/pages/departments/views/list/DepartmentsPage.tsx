@@ -10,8 +10,17 @@ import {
   useListPageContext,
 } from "../../../../HOC/withListPageContext";
 import { CreateBtn, DownloadBtn } from "../../../../components/ui/buttons";
+import { PageContentHeader } from "../../../../components/page-content-header";
 
 const columns: TableProps<Department>["columns"] = [
+  {
+    title: "",
+    key: "dots",
+    dataIndex: "dots",
+    width: 50,
+    fixed: "left",
+    render: (_, record) => <DotsTableCell department={record} />,
+  },
   {
     title: t("Department Name"),
     dataIndex: "name",
@@ -24,24 +33,11 @@ const columns: TableProps<Department>["columns"] = [
     render: (_, record) =>
       `${record.managerFirstName} ${record.managerLastName}`,
   },
-  {
-    title: "",
-    key: "dots",
-    dataIndex: "dots",
-    width: 50,
-    fixed: "right",
-    render: (_, record) => <DotsTableCell department={record} />,
-  },
 ];
 
 function DepartmentsPageComponent() {
-  const {
-    currentPage,
-    pageSize,
-    sort,
-    onTableChange,
-    tablePaginationConfig,
-  } = useListPageContext<Department>();
+  const { currentPage, pageSize, sort, onTableChange, tablePaginationConfig } =
+    useListPageContext<Department>();
 
   const { departments, total, isLoading } = useGetDepartmentsList({
     pageSize,
@@ -54,7 +50,6 @@ function DepartmentsPageComponent() {
   return (
     <div className="page">
       <div className="header-page">
-        <h1 className="header-page__title">{t("Departments")}</h1>
         <div className="header-page__actions">
           <DownloadBtn />
           <CreateBtn onClick={() => openModal("create-department")}>
@@ -62,20 +57,23 @@ function DepartmentsPageComponent() {
           </CreateBtn>
         </div>
       </div>
+      <div className="content-page">
+        <PageContentHeader total={total} />
 
-      <div className="table-page-wrapper">
-        <Table
-          loading={isLoading}
-          rowKey="id"
-          columns={columns}
-          dataSource={departments || []}
-          onChange={(_, __, sorter) => onTableChange(sorter)}
-          pagination={{
-            ...tablePaginationConfig,
-            total: total,
-          }}
-          scroll={{ x: window.innerHeight }}
-        />
+        <div className="table-page-wrapper">
+          <Table
+            loading={isLoading}
+            rowKey="id"
+            columns={columns}
+            dataSource={departments || []}
+            onChange={(_, __, sorter) => onTableChange(sorter)}
+            pagination={{
+              ...tablePaginationConfig,
+              total: total,
+            }}
+            scroll={{ x: window.innerHeight }}
+          />
+        </div>
       </div>
     </div>
   );

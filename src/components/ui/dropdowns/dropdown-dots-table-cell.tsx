@@ -1,7 +1,7 @@
 import { Dropdown, MenuProps } from "antd";
 import { t } from "i18next";
 
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDots } from "react-icons/bs";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { IoMdLink, IoMdMove } from "react-icons/io";
 import { FaShareFromSquare } from "react-icons/fa6";
@@ -77,7 +77,7 @@ export const DropdownDotsTableCell = ({
   onClick,
   placement = "bottomRight",
   overlayClassName = "text-[#565D6DFF]",
-  children = <BsThreeDotsVertical className="text-grayColor-600" />,
+  children = <BsThreeDots className="text-grayColor-600" />,
 }: DropdownDotsProps) => {
   return (
     <Dropdown

@@ -71,49 +71,45 @@ export const GeneralInformationSection = ({
         >
           <Input disabled={isEmployee} />
         </Form.Item>
-        <Form.Item
-          label={t("Main Role")}
-          name="mainRoleId"
-          rules={[{ required: true }]}
-        >
-          <Select
-            showSearch
-            filterOption={false}
-            {...roleSelectOptions}
-            className="w-full"
-            allowClear
-            onChange={(value) => {
-              if (!value) {
-                form.setFieldsValue({
-                  roleIds: [],
-                });
-              }
-            }}
-          />
-        </Form.Item>
-        <Form.Item label={t("Roles")} shouldUpdate>
+        <Form.Item label={t("Main Role")} shouldUpdate>
           {({ getFieldValue }) => {
             return (
-              <Form.Item name="roleIds" noStyle>
+              <Form.Item name="mainRoleId" noStyle>
                 <Select
                   showSearch
                   filterOption={false}
                   options={
                     roleSelectOptions.options.filter(
                       (option: { key: string; value: string; label: string }) =>
-                        option.value !== form.getFieldValue("mainRoleId"),
+                        form.getFieldValue("roleIds")?.includes(option.value),
                     ) || []
                   }
                   onSearch={roleSelectOptions.onSearch}
                   loading={roleSelectOptions.loading}
                   className="w-full"
                   allowClear
-                  mode="multiple"
-                  disabled={!getFieldValue("mainRoleId")}
+                  disabled={!getFieldValue("roleIds")?.[0]}
                 />
               </Form.Item>
             );
           }}
+        </Form.Item>
+        <Form.Item label={t("Roles")} name="roleIds">
+          <Select
+            showSearch
+            filterOption={false}
+            options={roleSelectOptions.options}
+            onSearch={roleSelectOptions.onSearch}
+            loading={roleSelectOptions.loading}
+            className="w-full"
+            allowClear
+            mode="multiple"
+            onChange={(value) => {
+              form.setFieldsValue({
+                mainRoleId: value[0],
+              });
+            }}
+          />
         </Form.Item>
       </div>
     </Card>

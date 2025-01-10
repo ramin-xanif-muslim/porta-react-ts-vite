@@ -1,5 +1,9 @@
 # Project Name
 
+## Live Demo
+
+You can see the live version of the project here: [Aster News Live Demo](https://news-aster.netlify.app/)
+
 ## Project Structure
 
 src/

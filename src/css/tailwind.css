@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --brand-color: #30459eff;
+    --brand-color: #379AE6FF;
 
     --brand-color-50: color-mix(in srgb, var(--brand-color) 5%, white);
     --brand-color-100: color-mix(in srgb, var(--brand-color) 10%, white);
@@ -111,11 +111,11 @@
 
   /* page layout utilities */
   .page {
-    @apply flex w-full flex-col p-6;
+    @apply flex w-full flex-col;
   }
 
   .header-page {
-    @apply mb-4 flex justify-between;
+    @apply flex justify-between px-6;
   }
 
   .header-page__title {
@@ -123,11 +123,18 @@
   }
 
   .header-page__actions {
-    @apply flex gap-2;
+    @apply flex ml-auto gap-2;
   }
 
+  .content-page {
+    @apply flex flex-col gap-4 bg-white p-6;
+  }
+
+  .content-page__header-right {
+    @apply ;
+  }
+  
   .table-page-wrapper {
-    @apply py-6;
   }
 }
 

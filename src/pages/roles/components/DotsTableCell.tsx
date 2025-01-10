@@ -8,7 +8,7 @@ const DotsTableCell = ({ role }: { role: Role }) => {
   const { openModal } = useModalStore();
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
-    if (e.key === "edit") {
+    if (e.key === "Edit") {
       openModal("edit-role", {
         role,
       });

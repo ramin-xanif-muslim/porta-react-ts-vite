@@ -1,5 +1,5 @@
 import { useLocation, NavLink } from "react-router-dom";
-// import { useMemo } from "react";
+import { useMemo } from "react";
 import classNames from "classnames";
 import { HEADER_NAV_ITEMS_SUB } from "../../../constants";
 import { t } from "i18next";
@@ -7,9 +7,12 @@ import { t } from "i18next";
 const SubNavMenu = () => {
   const location = useLocation();
 
-  // const title = useMemo(() => {
-  //   return document.title.split("|")[0] || location.pathname.split("/")[1];
-  // }, [location.pathname]);
+  const title = useMemo(() => {
+    if (!location.pathname.split("/")[1]) return "Dashboard";
+
+    const pathSection = location.pathname.split("/")[1];
+    return pathSection.charAt(0).toUpperCase() + pathSection.slice(1);
+  }, [location.pathname]);
 
   // Get the current section's nav items
   const currentSectionNavItems =
@@ -23,22 +26,24 @@ const SubNavMenu = () => {
   );
 
   return (
-    <div className="grid-col-1 grid w-full bg-brand px-4 text-brand-200 shadow-sm md:grid-cols-3 h-full ">
-      {/* <div className="hidden md:flex">
-        <h1 className="line-clamp-1 text-2xl font-bold">{title}</h1>
-      </div> */}
-      <div className="flex items-center">
+    <div className="flex h-full w-full bg-brand px-4 text-white shadow-sm">
+      <div className="mr-10 hidden items-center md:flex">
+        <h1 className="line-clamp-1 text-2xl font-semibold">{title}</h1>
+      </div>
+      <div className="flex  gap-1 items-center py-2">
         {currentSectionNavItems.map((item, index) => (
           <NavLink
             to={item.path}
             key={item.path}
             className={({ isActive }) =>
               classNames(
-                "cursor-pointer px-4 border-l-2 border-transparent text-sm font-medium transition-all h-full flex items-center justify-center hover:bg-brand-500 hover:text-white",
+                "flex h-full cursor-pointer items-center justify-center rounded-md px-4 py-3 text-sm font-medium transition-all",
                 {
                   // Active if explicitly active or if it's the first item and no other items are active
-                  "bg-brand-600 !border-brand-400  !text-white":
+                  "!border-brand-400 bg-white !text-brand":
                     isActive || (!isAnyNavLinkActive && index === 0),
+                  "hover:bg-brand-400 hover:text-brand":
+                    !isActive,
                 },
               )
             }

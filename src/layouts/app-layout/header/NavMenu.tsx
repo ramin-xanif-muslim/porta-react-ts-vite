@@ -5,7 +5,7 @@ import { t } from "i18next";
 
 const NavMenu = () => {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center">
       {HEADER_NAV_ITEMS.map((item) => (
         <NavLink
           className={({ isActive }) =>
@@ -20,11 +20,11 @@ const NavMenu = () => {
           to={item.path}
           key={item.path}
           onClick={() => {
-            document.title = `${item.label} | HR Portal`;
+            document.title = `${item.label}`;
           }}
         >
           <div className="flex items-center gap-2">
-            {<item.icon className="size-6" />}
+            {/* {<item.icon className="size-6" />} */}
             {t(item.label)}
           </div>
         </NavLink>

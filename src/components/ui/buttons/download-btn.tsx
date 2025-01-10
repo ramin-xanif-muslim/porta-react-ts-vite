@@ -13,6 +13,7 @@ export const DownloadBtn = ({
   size = "large",
   children,
 }: DownloadBtnProps) => {
+  return 
   return (
     <Button size={size} icon={<PiDownload />} onClick={onClick}>
       {children || t("Download")}
