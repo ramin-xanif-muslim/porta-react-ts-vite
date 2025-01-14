@@ -85,6 +85,7 @@ export const DropdownDotsTableCell = ({
       placement={placement}
       className="cursor-pointer"
       overlayClassName={overlayClassName}
+      trigger={["click"]}
     >
       {children}
     </Dropdown>

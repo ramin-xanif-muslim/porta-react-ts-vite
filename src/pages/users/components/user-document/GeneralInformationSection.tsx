@@ -71,6 +71,23 @@ export const GeneralInformationSection = ({
         >
           <Input disabled={isEmployee} />
         </Form.Item>
+        <Form.Item label={t("Roles")} name="roleIds">
+          <Select
+            showSearch
+            filterOption={false}
+            options={roleSelectOptions.options}
+            onSearch={roleSelectOptions.onSearch}
+            loading={roleSelectOptions.loading}
+            className="w-full"
+            allowClear
+            mode="multiple"
+            onChange={(value) => {
+              form.setFieldsValue({
+                mainRoleId: value[0],
+              });
+            }}
+          />
+        </Form.Item>
         <Form.Item label={t("Main Role")} shouldUpdate>
           {({ getFieldValue }) => {
             return (
@@ -93,23 +110,6 @@ export const GeneralInformationSection = ({
               </Form.Item>
             );
           }}
-        </Form.Item>
-        <Form.Item label={t("Roles")} name="roleIds">
-          <Select
-            showSearch
-            filterOption={false}
-            options={roleSelectOptions.options}
-            onSearch={roleSelectOptions.onSearch}
-            loading={roleSelectOptions.loading}
-            className="w-full"
-            allowClear
-            mode="multiple"
-            onChange={(value) => {
-              form.setFieldsValue({
-                mainRoleId: value[0],
-              });
-            }}
-          />
         </Form.Item>
       </div>
     </Card>

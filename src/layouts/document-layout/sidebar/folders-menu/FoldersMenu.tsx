@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 import { Spin } from "antd";
@@ -32,15 +32,7 @@ function getParentFoldersId(folders: Folder[], pathname: string): string[] {
 
 export default function FoldersMenu() {
   const { pathname } = useLocation();
-  const [open, setOpen] = useState(pathname.includes(path));
-
-  useEffect(() => {
-    setOpen(pathname.includes(path));
-
-    return () => {
-      setOpen(false);
-    };
-  }, [pathname]);
+  const [open, setOpen] = useState(true);
 
   const { data: folders, isLoading, isFetching } = useGetFolders();
 

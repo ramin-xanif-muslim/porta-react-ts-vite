@@ -32,7 +32,7 @@ const EmployeeDocument = ({
   const { handleFinish } = useEmployeeFormSubmit(onFinish, setIsFormDirty);
 
   return (
-    <main className="page">
+    <main className="page p-4">
       {/* HEADER */}
       <div className="header-page">
         <div className="flex items-center gap-2">

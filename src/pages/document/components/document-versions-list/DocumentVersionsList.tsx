@@ -3,11 +3,11 @@ import type { TableProps } from "antd";
 import dayjs from "dayjs";
 import { t } from "i18next";
 
-import { useGetDocumentsVersionsList } from "../../pages/document/api/use-get-documents-versions-list";
-import { DocumentVersionDTO } from "../../types";
-import { convertFileSize } from "../../lib/utils";
-import ErrorBoundary from "../error-boundary/ErrorBoundary";
-import { DATE_FORMAT } from "../../constants";
+import { useGetDocumentsVersionsList } from "../../api/use-get-documents-versions-list";
+import { DocumentVersionDTO } from "../../../../types";
+import { convertFileSize } from "../../../../lib/utils";
+import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
+import { DATE_FORMAT } from "../../../../constants";
 
 interface DocumentVersionsListProps {
   documentId: string;
