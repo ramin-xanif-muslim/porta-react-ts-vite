@@ -165,6 +165,18 @@
   "Main Role": "Əsas Rol",
   "Permissions": "İmzalar",
   "Add User": "İstifadəçi Əlavə Et",
-  "Update User": "İstifadəçi Güncəllə" 
+  "Update User": "İstifadəçi Güncəllə",
+  "Create User": "İstifadəçi Yarat",
+  "User List": "İstifadəçi Listesi",
+  "User Details": "İstifadəçi Detayları",
+
+  "Create tag": "Etiket yarat",
+  "Tag created": "Etiket yaradıldı",
+  "Error creating tag": "Etiket yaradılırken xəta baş verdi",
+  "Tag updated": "Etiket güncelləndi",
+  "Error updating tag": "Etiket güncellenirken xəta baş verdi",
+  "Tag deleted": "Etiket silindi",
+  "Error deleting tag": "Etiket silinirken xəta baş verdi",
+  "Tag": "Etiket"
 
 }

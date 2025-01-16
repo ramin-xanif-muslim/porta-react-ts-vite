@@ -172,5 +172,14 @@
   "Update User": "Kullanıcıyı Güncelle",
   "Create User": "Kullanıcı Oluştur",
   "User List": "Kullanıcı Listesi",
-  "User Details": "Kullanıcı Detayları"
+  "User Details": "Kullanıcı Detayları",
+
+  "Create tag": "Etiket oluştur",
+  "Tag created": "Etiket oluşturuldu",
+  "Error creating tag": "Etiket oluşturulurken hata oluştu",
+  "Tag updated": "Etiket güncellendi",
+  "Error updating tag": "Etiket güncellenirken hata oluştu",
+  "Tag deleted": "Etiket silindi",
+  "Error deleting tag": "Etiket silinirken hata oluştu",
+  "Tag": "Etiket"
 }

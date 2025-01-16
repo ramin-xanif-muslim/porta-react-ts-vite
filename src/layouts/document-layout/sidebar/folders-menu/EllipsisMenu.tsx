@@ -19,9 +19,11 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
 
   const navigate = useNavigate();
 
-  const { handleDelete, isPending } = useDeleteFolder(() =>
-    navigate("/documents/documents/folders"),
-  );
+  const onSuccessCallback = () => {
+    navigate("/documents/documents/folders");
+  }
+
+  const { mutate: deleteFolderMutation, isPending } = useDeleteFolder(onSuccessCallback);
 
   const items: MenuProps["items"] = [
     {
@@ -31,10 +33,14 @@ const EllipsisMenu = ({ folder }: { folder: FolderItemI }) => {
           title={t("Delete the folder")}
           description={t("Are you sure to delete this folder?")}
           onConfirm={() => {
-            handleDelete(folder.id);
+            deleteFolderMutation(folder.id);
           }}
           okText={isPending ? <Spin size="small" /> : t("Yes")}
           cancelText={t("No")}
+          okButtonProps={{
+            disabled: isPending,
+            loading: isPending,
+          }}
         >
           <div className="flex items-center gap-2">
             <span>

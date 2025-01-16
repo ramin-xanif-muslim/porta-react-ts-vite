@@ -172,5 +172,14 @@
   "Update User": "Update User",
   "Create User": "Create User",
   "User List": "User List",
-  "User Details": "User Details"
+  "User Details": "User Details",
+
+  "Create tag": "Create tag",
+  "Tag created": "Tag created",
+  "Error creating tag": "Error creating tag",
+  "Tag updated": "Tag updated",
+  "Error updating tag": "Error updating tag",
+  "Tag deleted": "Tag deleted",
+  "Error deleting tag": "Error deleting tag",
+  "Tag": "Tag"
 }

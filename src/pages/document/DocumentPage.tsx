@@ -1,6 +1,6 @@
 import { Table } from "antd";
 import type { TableProps } from "antd";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMemo } from "react";
 import classNames from "classnames";
 import { t } from "i18next";
@@ -19,12 +19,21 @@ import {
   useListPageContext,
   withListPageContext,
 } from "../../HOC/withListPageContext";
+import { PageContentHeader } from "../../components/page-content-header";
 
 const DocumentPageComponent = () => {
   const { id = "" } = useParams();
 
-  const { tablePaginationConfig, currentPage, pageSize, sort, onTableChange } =
-    useListPageContext<Document>();
+  const navigate = useNavigate();
+
+  const {
+    tablePaginationConfig,
+    currentPage,
+    pageSize,
+    sort,
+    onTableChange,
+    searchText,
+  } = useListPageContext<Document>();
 
   const { documents, total, isLoading, isFetching } = useGetDocuments({
     folderId: id,
@@ -32,8 +41,21 @@ const DocumentPageComponent = () => {
       pageSize,
       currentPage,
       sort,
+      searchText,
     },
   });
+
+  const onDoubleClickName = (
+    e: React.MouseEvent<HTMLDivElement>,
+    record: Document,
+  ) => {
+    console.log(record);
+    e.stopPropagation();
+    e.preventDefault();
+    if (record.isFolder) {
+      navigate(`/documents/documents/folders/${record.id}`);
+    }
+  };
 
   const uploadDocument = useUploadDocument({ folderId: id });
 
@@ -51,7 +73,11 @@ const DocumentPageComponent = () => {
         title: "",
         dataIndex: "icon",
         key: "icon",
-        render: (_, record) => getFileIcon(record),
+        render: (_, record) => (
+          <div onDoubleClick={(e) => onDoubleClickName(e, record)}>
+            {getFileIcon(record)}
+          </div>
+        ),
       },
       {
         title: t("Name"),
@@ -98,23 +124,24 @@ const DocumentPageComponent = () => {
     [isFetching],
   );
 
-  if (!id) return null;
-
   return (
-    <div className="mt-2" key={id}>
+    <div className="content-page" key={id}>
+      <PageContentHeader total={total} />
       <FileUploader handleUpload={uploadDocument.handleCreate}>
-        <Table
-          loading={isLoading}
-          rowKey="id"
-          columns={columns}
-          dataSource={documents || []}
-          onChange={(_, __, sorter) => onTableChange(sorter)}
-          pagination={{
-            ...tablePaginationConfig,
-            total: total,
-          }}
-          scroll={{ x: window.innerHeight }}
-        />
+        <div className="table-page-wrapper">
+          <Table
+            loading={isLoading}
+            rowKey="id"
+            columns={columns}
+            dataSource={documents || []}
+            onChange={(_, __, sorter) => onTableChange(sorter)}
+            pagination={{
+              ...tablePaginationConfig,
+              total: total,
+            }}
+            scroll={{ x: window.innerHeight }}
+          />
+        </div>
       </FileUploader>
     </div>
   );

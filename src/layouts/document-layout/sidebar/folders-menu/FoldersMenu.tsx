@@ -50,13 +50,13 @@ export default function FoldersMenu() {
                 "menu-item": true,
                 "active-menu": pathname === path,
               })}
-              onClick={() => setOpen(!open)}
+              
             >
               <div>
                 <FaRegFolder className="size-6" />
               </div>
               <span className="">{t("All files")}</span>
-              <span className="ml-auto flex flex-col">
+              <span className="ml-auto flex flex-col" onClick={() => setOpen(!open)}>
                 <IoIosArrowForward
                   className={classNames({
                     "transition-all": true,
@@ -72,7 +72,7 @@ export default function FoldersMenu() {
             !!folders?.[0] &&
             buildHierarchy(folders).map((item) => (
               <FolderItem
-                key={isFetching ? item.id + Math.random() : item.id}
+                key={isFetching ? item.id + Math.random() : item.id + pathname}
                 item={item}
                 openParents={getParentFoldersId(folders, pathname)}
               />

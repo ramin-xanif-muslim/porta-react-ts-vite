@@ -18,6 +18,11 @@ const SettingPage = React.lazy(() => import("../../pages/setting/SettingPage"));
 const DocumentPage = React.lazy(
   () => import("../../pages/document/DocumentPage"),
 );
+const TagsListPage = React.lazy(
+  () => import("../../pages/tags").then((module) => ({
+    default: module.TagsListPage,
+  })),
+);
 
 export const dms_routes = {
   path: "documents",
@@ -34,6 +39,15 @@ export const dms_routes = {
       element: (
         <WithErrorBoundary>
           <NotFoundPage />
+        </WithErrorBoundary>
+      ),
+    },
+    {
+      path: "tags",
+      name: "tags",
+      element: (
+        <WithErrorBoundary>
+          <TagsListPage />
         </WithErrorBoundary>
       ),
     },
@@ -70,6 +84,15 @@ export const dms_routes = {
             </WithErrorBoundary>
           ),
           children: [
+            {
+              path: "",
+              name: "folder",
+              element: (
+                <WithErrorBoundary>
+                  <DocumentPage />
+                </WithErrorBoundary>
+              ),
+            },
             {
               path: ":id",
               name: "folder",

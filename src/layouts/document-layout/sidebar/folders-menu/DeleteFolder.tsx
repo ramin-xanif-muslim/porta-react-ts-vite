@@ -11,7 +11,7 @@ const DeleteFolder = ({
   const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     e.preventDefault();
-    deleteFolder.handleDelete(id);
+    deleteFolder.mutate(id);
   };
   return <div onClick={handleDelete}>{children}</div>;
 };

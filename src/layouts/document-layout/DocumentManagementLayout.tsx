@@ -2,24 +2,17 @@ import { Outlet } from "react-router-dom";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { CiCircleList } from "react-icons/ci";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
-
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "../../components/ui/resizable";
 import Sidebar from "./sidebar/Sidebar";
-import Breadcrumb from "./Breadcrumb";
-import MobileDocSidebar from "./sidebar/mobile-document-sidebar/MobileDocSidebar";
 import { useGlobalStore } from "../../store";
 
 const DocumentManagementLayout = () => {
   const isOpenSidebar = useGlobalStore((state) => state.isOpenSidebar);
   const openSidebar = useGlobalStore((state) => state.openSidebar);
-  const toggleSidebar = useGlobalStore((state) => state.toggleSidebar);
 
   const defaultSize = localStorage.getItem("sidebar-width")
     ? Number(localStorage.getItem("sidebar-width"))
@@ -59,46 +52,8 @@ const DocumentManagementLayout = () => {
           </ResizablePanel>
           <ResizableHandle withHandle={isOpenSidebar} />
           <ResizablePanel>
-            {/* content */}
-            <div className="no-scrollbar h-full flex-1 overflow-y-auto bg-[#F3F4F6FF] p-4">
-              {/* content header */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div>
-                    <div className="md:hidden">
-                      <MobileDocSidebar />
-                    </div>
-                    <div
-                      onClick={toggleSidebar}
-                      className="hidden cursor-pointer md:block"
-                    >
-                      {isOpenSidebar ? (
-                        <AiOutlineMenuFold className="size-5" />
-                      ) : (
-                        <AiOutlineMenuUnfold className="size-5" />
-                      )}
-                    </div>
-                  </div>
-
-                  <Breadcrumb />
-                </div>
-
-                <div className="flex items-center">
-                  <span className="cursor-pointer p-2">
-                    <CiCircleList className="size-[22px]" />
-                  </span>
-                  <span className="cursor-pointer rounded-full bg-gray-200 p-2">
-                    <IoIosInformationCircleOutline className="size-[22px]" />
-                  </span>
-                </div>
-              </div>
-
-              <Outlet />
-            </div>
+            <Outlet />
           </ResizablePanel>
-
-          {/* right */}
-          {/* <div className="w-[320px] shrink-0 hidden xl:block"></div> */}
         </ResizablePanelGroup>
       </div>
     </div>

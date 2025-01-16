@@ -18,15 +18,7 @@ const useBreadcrumbs = (
 
   return useMemo(() => {
     const currentPath = location.pathname;
-
-    // Handle root paths
-    // if (
-    //   currentPath === "/documents/documents" ||
-    //   currentPath === "/documents/documents/folders"
-    // ) {
-    //   return [createRootBreadcrumb(firstBreadcrumb[0])];
-    // }
-
+    
     // Handle folder paths
     if (currentPath.includes("documents/documents/folders")) {
       const folderId = currentPath.split("/")[4];

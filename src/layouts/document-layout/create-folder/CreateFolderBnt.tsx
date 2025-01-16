@@ -1,12 +1,11 @@
 import { useRef, useEffect } from "react";
 import { useState } from "react";
 import { Modal, Form, Input, Button, InputRef } from "antd";
-import { FiPlus } from "react-icons/fi";
-import { IoIosArrowDown } from "react-icons/io";
 import { FaRegFolder } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCreateFolder } from "../../../pages/folder/api/use-create-folder";
 import { t } from "i18next";
+import { CreateBtn } from "../../../components/ui/buttons";
 
 const CreateFolderBnt = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,22 +48,14 @@ const CreateFolderBnt = () => {
 
   return (
     <>
-      <button
-        className="bg-grayColor-50 flex items-center p-2 rounded-full px-4 py-2"
+      <div
         onClick={() => {
           setIsModalOpen(true);
         }}
       >
-        <span>
-          <FiPlus />
-        </span>
-        <span className="ml-2 hidden sm:flex line-clamp-1 truncate">
-        {t("Create Folder")}
-        </span>
-        <span className="ml-6">
-          <IoIosArrowDown />
-        </span>
-      </button>
+        
+        <CreateBtn>{t("Create Folder")}</CreateBtn>
+      </div>
 
       <Modal
         title={

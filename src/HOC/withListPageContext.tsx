@@ -18,6 +18,8 @@ interface ListPageContextType<T> {
   onTableChange: (sorter: SorterResult<T> | SorterResult<T>[]) => void;
   onPaginationChange: (page: number, size: number) => void;
   tablePaginationConfig: TablePaginationConfig;
+  searchText: string;
+  setSearchText: (text: string) => void;
 }
 
 // Create a default type parameter that can be overridden
@@ -48,6 +50,8 @@ export function withListPageContext<P extends object>(
         },
       ];
     });
+    
+  const [searchText, setSearchText] = useState(searchParams.get("q") || "");
 
     const onTableChange = (
       sorter: SorterResult<unknown> | SorterResult<unknown>[],
@@ -101,8 +105,10 @@ export function withListPageContext<P extends object>(
           }),
       };
     }, [currentPage, pageSize]);
+    
 
     const contextValue: ListPageContextType<unknown> = {
+      searchText, setSearchText,
       onPaginationChange,
       onTableChange,
       searchParams,

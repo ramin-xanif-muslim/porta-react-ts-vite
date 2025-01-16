@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import { FaBars } from "react-icons/fa6";
 
 import {
@@ -18,11 +16,6 @@ const MobileDocSidebar = () => {
         </div>
       </SheetTrigger>
       <SheetContent side="left">
-        {/* logo */}
-        <Link to="/" className="shrink-0">
-          <img className="h-[32px] w-[93px]" src="/logo.svg" alt="logo" />
-        </Link>
-
         <AppSidebar />
       </SheetContent>
     </Sheet>

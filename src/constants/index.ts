@@ -32,7 +32,7 @@ export const HEADER_NAV_ITEMS = [
   },
   {
     label: "Documents",
-    path: "/documents",
+    path: "/documents/documents/folders",
     icon: IoDocumentsOutline,
   },
 ]
@@ -62,7 +62,7 @@ export const HEADER_NAV_ITEMS_SUB = {
   "documents": [
     {
       label: "Documents",
-      path: "documents/documents",
+      path: "documents/documents/folders",
     },
     {
       label: "Tags",

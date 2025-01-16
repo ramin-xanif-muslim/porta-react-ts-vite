@@ -3,15 +3,20 @@ import { t } from "i18next";
 
 import { queryOptions } from "@tanstack/react-query";
 import { API } from "../../../api/api-instance";
-import { SortOption } from "../../../types/query-params";
+import { BaseQueryParams } from "../../../types/query-params";
+
+interface FilterParams {
+  folderId: string;
+  searchText: string;
+}
 
 export enum DocumentsApi {
-  documents = "/api/v0.01/vms/dms/folders/{folderId}/documents",
-  list = "/api/v0.01/vms/dms/folders/{folderId}/documents/list",
-  rename = "/api/v0.01/vms/dms/folders/{folderId}/documents/{documentId}/name",
-  newVersion = "/api/v0.01/vms/dms/folders/{folderId}/documents/{documentId}/versions",
-  file = "/api/v0.01/vms/dms/folders/{folderId}/documents/{documentId}/file",
-  versionsList = "/api/v0.01/vms/dms/folders/{folderId}/documents/{documentId}/versions/list",
+  documents = "/api/v0.01/vms/dms/documents",
+  list = "/api/v0.01/vms/dms/documents/list",
+  rename = "/api/v0.01/vms/dms/documents/{documentId}/name",
+  newVersion = "/api/v0.01/vms/dms/documents/{documentId}/versions",
+  file = "/api/v0.01/vms/dms/documents/{documentId}/file",
+  versionsList = "/api/v0.01/vms/dms/documents/{documentId}/versions/list",
 }
 
 export const documentsApi = {
@@ -29,23 +34,10 @@ export const documentsApi = {
     });
   },
 
-  getDocumentList: ({
-    folderId,
-    skip,
-    take,
-    sort,
-  }: {
-    folderId: string;
-    skip: number;
-    take: number;
-    sort: SortOption[];
-  }) => {
-    const url = DocumentsApi.list.replace("{folderId}", folderId);
-    return API.post(url, {
-      skip,
-      take,
-      sort,
-    });
+  getDocumentList: (
+    params: BaseQueryParams<FilterParams>,
+  ) => {
+    return API.post(DocumentsApi.list, params);
   },
 
   getDocumentsVersionsListQueryOptions: ({
@@ -69,16 +61,13 @@ export const documentsApi = {
   },
 
   renameDocument: ({
-    folderId,
     documentId,
     name,
   }: {
-    folderId: string;
     documentId: string;
     name: string;
   }) => {
     const url = DocumentsApi.rename
-      .replace("{folderId}", folderId)
       .replace("{documentId}", documentId);
 
     return API.patch(url, {
@@ -96,12 +85,12 @@ export const documentsApi = {
     file: File;
   }) => {
     const url = DocumentsApi.file
-      .replace("{folderId}", folderId)
       .replace("{documentId}", documentId);
 
     const formData = new FormData();
     formData.append("file", file);
     formData.append("name", file.name);
+    formData.append("folderId", folderId);
     notification.info({
       message: t("Uploading {{fileName}}...", { fileName: file.name }),
       showProgress: true,
@@ -155,10 +144,11 @@ export const documentsApi = {
   },
 
   uploadDocument: ({ folderId, file }: { folderId: string; file: File }) => {
-    const url = DocumentsApi.documents.replace("{folderId}", folderId);
+    const url = DocumentsApi.documents;
     const formData = new FormData();
     formData.append("file", file);
     formData.append("name", file.name);
+    formData.append("folderId", folderId);
     notification.info({
       message: t("Uploading {{fileName}}...", { fileName: file.name }),
       showProgress: true,

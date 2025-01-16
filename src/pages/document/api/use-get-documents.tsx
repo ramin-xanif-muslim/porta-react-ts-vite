@@ -11,6 +11,7 @@ export const useGetDocuments = ({
     pageSize?: number;
     currentPage?: number;
     sort?: SortOption[];
+    searchText?: string;
   };
 }) => {
   const skip = params?.currentPage
@@ -22,12 +23,16 @@ export const useGetDocuments = ({
     queryKey: [documentsApi.baseKey, folderId, params],
     queryFn: () =>
       documentsApi.getDocumentList({
-        folderId,
         skip,
         take,
         sort: params?.sort || [],
+        requireTotalCount: true,
+        filters: {
+          searchText: params?.searchText || "",
+          folderId,
+        },
       }),
-    enabled: Boolean(folderId),
+    // enabled: Boolean(folderId),
   });
 
   return {
