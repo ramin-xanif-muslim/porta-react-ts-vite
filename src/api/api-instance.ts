@@ -30,11 +30,7 @@ const service = () => {
 
     const responseResolve = (res: AxiosResponse) => {
         if (!res.data.isSuccess) {
-            notification.error({
-                message: "Error",
-                description: res.data.error.message,
-            });
-            return Promise.reject(res.data);
+            throw new Error(res.data.error.message);
         }
         return res.data;
     };

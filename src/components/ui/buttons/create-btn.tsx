@@ -9,6 +9,7 @@ interface CreateBtnProps {
   type?: "primary" | "default" | "dashed" | "link" | "text";
   icon?: React.ReactNode;
   children?: React.ReactNode;
+  disabled?: boolean;
 }
 
 export const CreateBtn = ({
@@ -17,9 +18,10 @@ export const CreateBtn = ({
   type = "link",
   icon = <FaCirclePlus  />,
   children,
+  disabled,
 }: CreateBtnProps) => {
   return (
-    <Button className="text-brand" size={size} type={type} icon={icon} onClick={onClick}>
+    <Button className="text-brand" size={size} type={type} icon={icon} onClick={onClick} disabled={disabled}>
       {children || t("Create")}
     </Button>
   );

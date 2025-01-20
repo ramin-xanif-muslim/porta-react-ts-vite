@@ -12,7 +12,6 @@ import { useGetDocuments } from "./api/use-get-documents";
 import FileUploader from "../../components/upload-document/FileUploader";
 import { convertFileSize } from "../../lib/utils";
 import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
-import { useUploadDocument } from "./api/use-upload-document";
 import { DATE_FORMAT } from "../../constants";
 import { getFileIcon } from "./utils/file-icons";
 import {
@@ -20,6 +19,7 @@ import {
   withListPageContext,
 } from "../../HOC/withListPageContext";
 import { PageContentHeader } from "../../components/page-content-header";
+import { LookupTag } from "../tags/types";
 
 const DocumentPageComponent = () => {
   const { id = "" } = useParams();
@@ -57,7 +57,6 @@ const DocumentPageComponent = () => {
     }
   };
 
-  const uploadDocument = useUploadDocument({ folderId: id });
 
   const columns = useMemo<TableProps<Document>["columns"]>(
     () => [
@@ -105,10 +104,28 @@ const DocumentPageComponent = () => {
         ),
       },
       {
-        title: t("Shared to"),
-        key: "sharedTo",
-        dataIndex: "sharedTo",
-        render: () => <div className="line-clamp-1">0 users</div>,
+        title: t("Tags"),
+        dataIndex: "tags",
+        key: "tags",
+        render: (value) => (
+          <div className="flex flex-wrap gap-1">
+            {value.map((tag: LookupTag) => (
+              <div className="tag_item" key={tag.id}>
+                {tag.name}
+              </div>
+            ))}
+          </div>
+        ),
+      },
+      {
+        title: t("Version count"),
+        dataIndex: "versionCount",
+        key: "versionCount",
+      },
+      {
+        title: t("Comment count"),
+        dataIndex: "commentCount",
+        key: "commentCount",
       },
       {
         title: "",
@@ -127,7 +144,7 @@ const DocumentPageComponent = () => {
   return (
     <div className="content-page" key={id}>
       <PageContentHeader total={total} />
-      <FileUploader handleUpload={uploadDocument.handleCreate}>
+      <FileUploader folderId={id}>
         <div className="table-page-wrapper">
           <Table
             loading={isLoading}

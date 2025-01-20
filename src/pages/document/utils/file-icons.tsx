@@ -5,9 +5,13 @@ import { BsFiletypePptx, BsFiletypeXlsx } from "react-icons/bs";
 import { CgFileDocument } from "react-icons/cg";
 import { GrDocumentTxt } from "react-icons/gr";
 import { FaRegFileExcel } from "react-icons/fa";
-import { Document } from "../types";
 
-export function getFileIcon(data: Document) {
+interface Props {
+  fileExtension: string;
+  isFolder?: boolean;
+}
+
+export function getFileIcon(data: Props) {
   const { fileExtension, isFolder } = data;
 
   if (isFolder) return <FaRegFolder className="size-5 text-[#15ABFFFF]" />;

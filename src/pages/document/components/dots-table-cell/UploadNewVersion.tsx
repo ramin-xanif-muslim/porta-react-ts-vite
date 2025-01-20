@@ -16,7 +16,7 @@ const UploadNewVersion = ({
 
   return (
     <FileUploader
-      handleUpload={(file) =>
+      handleUpload={(file: File) =>
         uploadDocument
           .mutateAsync({
             file,
@@ -27,6 +27,7 @@ const UploadNewVersion = ({
       }
       multiple={false}
       input
+      folderId={id}
     >
       {children}
     </FileUploader>

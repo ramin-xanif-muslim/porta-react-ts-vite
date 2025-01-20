@@ -34,9 +34,7 @@ export const documentsApi = {
     });
   },
 
-  getDocumentList: (
-    params: BaseQueryParams<FilterParams>,
-  ) => {
+  getDocumentList: (params: BaseQueryParams<FilterParams>) => {
     return API.post(DocumentsApi.list, params);
   },
 
@@ -67,8 +65,7 @@ export const documentsApi = {
     documentId: string;
     name: string;
   }) => {
-    const url = DocumentsApi.rename
-      .replace("{documentId}", documentId);
+    const url = DocumentsApi.rename.replace("{documentId}", documentId);
 
     return API.patch(url, {
       name,
@@ -84,8 +81,7 @@ export const documentsApi = {
     documentId: string;
     file: File;
   }) => {
-    const url = DocumentsApi.file
-      .replace("{documentId}", documentId);
+    const url = DocumentsApi.file.replace("{documentId}", documentId);
 
     const formData = new FormData();
     formData.append("file", file);
@@ -143,12 +139,24 @@ export const documentsApi = {
     });
   },
 
-  uploadDocument: ({ folderId, file }: { folderId: string; file: File }) => {
+  uploadDocument: ({
+    folderId,
+    file,
+    comment,
+    tags,
+  }: {
+    folderId: string;
+    file: File;
+    comment: string;
+    tags: string[];
+  }) => {
     const url = DocumentsApi.documents;
     const formData = new FormData();
     formData.append("file", file);
     formData.append("name", file.name);
     formData.append("folderId", folderId);
+    formData.append("comment", comment);
+    formData.append("tagIds", JSON.stringify(tags));
     notification.info({
       message: t("Uploading {{fileName}}...", { fileName: file.name }),
       showProgress: true,
@@ -158,12 +166,21 @@ export const documentsApi = {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    }).then((res) => {
-      notification.destroy(file.name);
-      notification.success({
-        message: t("{{fileName}} uploaded", { fileName: file.name }),
+    })
+      .then((res) => {
+        notification.destroy(file.name);
+        notification.success({
+          message: t("{{fileName}} uploaded", { fileName: file.name }),
+        });
+        return res;
+      })
+      .catch((error) => {
+        notification.destroy(file.name);
+        notification.error({
+          message: t("Error uploading {{fileName}}", { fileName: file.name }),
+          description: error.message,
+        });
+        throw new Error("Error uploading document");
       });
-      return res;
-    });
   },
 };

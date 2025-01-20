@@ -27,6 +27,7 @@ const UploadFile = ({
       }
       multiple={false}
       input
+      folderId={id}
     >
       {children}
     </FileUploader>

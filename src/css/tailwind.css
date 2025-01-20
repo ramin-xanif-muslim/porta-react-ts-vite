@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --brand-color: #379AE6FF;
+    --brand-color: #379ae6ff;
 
     --brand-color-50: color-mix(in srgb, var(--brand-color) 5%, white);
     --brand-color-100: color-mix(in srgb, var(--brand-color) 10%, white);
@@ -123,7 +123,7 @@
   }
 
   .header-page__actions {
-    @apply flex ml-auto gap-2;
+    @apply ml-auto flex gap-2;
   }
 
   .content-page {
@@ -131,10 +131,26 @@
   }
 
   .content-page__header-right {
-    @apply ;
+    @apply;
   }
-  
+
   .table-page-wrapper {
+  }
+
+  .tag_item {
+    @apply cursor-pointer rounded-sm border border-brand-300 px-1 text-sm;
+  }
+
+  .tag_item--dashed {
+    @apply cursor-pointer rounded-sm border border-dashed border-gray-400 px-1 text-sm;
+  }
+
+  .tag_item--selected {
+    @apply bg-brand text-white;
+  }
+
+  .tag_item--unselected {
+    @apply bg-brand-50;
   }
 }
 
