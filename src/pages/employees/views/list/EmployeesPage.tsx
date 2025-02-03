@@ -89,7 +89,7 @@ function EmployeesPageComponent() {
         </div>
       </div>
       <div className="content-page">
-        <PageContentHeader total={total} />
+        <PageContentHeader />
 
         <div className="table-page-wrapper">
           <Table

@@ -6,7 +6,3 @@ html, body, #root {
 main {
     background-color: var(--app-background);
 }
-
-/* * {
-    outline: 1px solid red;
-} */

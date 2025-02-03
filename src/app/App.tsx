@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Suspense } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Spin } from "antd";
@@ -9,6 +9,7 @@ import { queryClient } from "../api/query-client";
 import { AntdConfigProvider } from "../providers/antd-config-provider";
 import ErrorBoundary from "../components/error-boundary/ErrorBoundary";
 import ModalProvider from "../providers/modal-provider";
+import { AuthProvider } from "../auth/AuthProvider";
 
 function App() {
   return (
@@ -22,15 +23,16 @@ function App() {
       }
     >
       <ErrorBoundary>
-        <AntdConfigProvider>
-          <QueryClientProvider client={queryClient}>
-            <ModalProvider>
-              <RouterProvider router={createBrowserRouter(router)} />
-
-              <ReactQueryDevtools initialIsOpen={false} />
-            </ModalProvider>
-          </QueryClientProvider>
-        </AntdConfigProvider>
+        <AuthProvider>
+          <AntdConfigProvider>
+            <QueryClientProvider client={queryClient}>
+              <ModalProvider>
+                <RouterProvider router={createBrowserRouter(router)} />
+                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+              </ModalProvider>
+            </QueryClientProvider>
+          </AntdConfigProvider>
+        </AuthProvider>
       </ErrorBoundary>
     </Suspense>
   );

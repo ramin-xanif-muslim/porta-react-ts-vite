@@ -20,6 +20,9 @@ interface ListPageContextType<T> {
   tablePaginationConfig: TablePaginationConfig;
   searchText: string;
   setSearchText: (text: string) => void;
+  onFilterChange: (filter: Record<string, unknown>) => void;
+  filterParams: Record<string, unknown>;
+  setFilterParams: (filter: Record<string, unknown>) => void;
 }
 
 // Create a default type parameter that can be overridden
@@ -50,8 +53,14 @@ export function withListPageContext<P extends object>(
         },
       ];
     });
-    
-  const [searchText, setSearchText] = useState(searchParams.get("q") || "");
+    const [filterParams, setFilterParams] = useState<Record<string, unknown>>(
+      () => {
+        const filter = searchParams.get("filter");
+        return filter ? JSON.parse(filter) : {};
+      },
+    );
+
+    const [searchText, setSearchText] = useState(searchParams.get("q") || "");
 
     const onTableChange = (
       sorter: SorterResult<unknown> | SorterResult<unknown>[],
@@ -91,6 +100,16 @@ export function withListPageContext<P extends object>(
       });
     };
 
+    const onFilterChange = (filters: Record<string, unknown>) => { 
+      setFilterParams(filters);
+      setSearchParams((prev) => {
+        prev.delete("page");
+        setCurrentPage(1);
+        prev.set("filter", JSON.stringify(filters));
+        return prev;
+      });
+    };
+
     const tablePaginationConfig = useMemo(() => {
       return {
         current: currentPage,
@@ -105,10 +124,12 @@ export function withListPageContext<P extends object>(
           }),
       };
     }, [currentPage, pageSize]);
-    
 
     const contextValue: ListPageContextType<unknown> = {
-      searchText, setSearchText,
+      filterParams, setFilterParams,
+      onFilterChange,
+      searchText,
+      setSearchText,
       onPaginationChange,
       onTableChange,
       searchParams,

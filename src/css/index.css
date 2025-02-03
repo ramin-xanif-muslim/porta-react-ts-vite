@@ -1,6 +1,7 @@
 @import "./font.css";
 @import "./style.css";
 @import "./tailwind.css";
+@import "./antd.css";
 
 a:hover {
   color: inherit;

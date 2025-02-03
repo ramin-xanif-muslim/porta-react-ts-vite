@@ -20,6 +20,7 @@ import {
 } from "../../HOC/withListPageContext";
 import { PageContentHeader } from "../../components/page-content-header";
 import { LookupTag } from "../tags/types";
+import { FilterComponent } from "./components/filter/FilterComponent";
 
 const DocumentPageComponent = () => {
   const { id = "" } = useParams();
@@ -33,6 +34,7 @@ const DocumentPageComponent = () => {
     sort,
     onTableChange,
     searchText,
+    filterParams,
   } = useListPageContext<Document>();
 
   const { documents, total, isLoading, isFetching } = useGetDocuments({
@@ -42,6 +44,7 @@ const DocumentPageComponent = () => {
       currentPage,
       sort,
       searchText,
+      filterParams,
     },
   });
 
@@ -143,7 +146,7 @@ const DocumentPageComponent = () => {
 
   return (
     <div className="content-page" key={id}>
-      <PageContentHeader total={total} />
+      <PageContentHeader filterComponent={<FilterComponent/>} />
       <FileUploader folderId={id}>
         <div className="table-page-wrapper">
           <Table

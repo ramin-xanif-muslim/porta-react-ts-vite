@@ -5,6 +5,7 @@ import { t } from "i18next";
 import { queryClient } from "../api/query-client";
 import { useModalStore } from "../store";
 import { commentsApi, useCreateComment } from "../pages/comments/api";
+import { documentsApi } from "../pages/document/api/documentsApi";
 
 export default function CreateCommentModal() {
   const inputRef = useRef<InputRef>(null);
@@ -25,6 +26,9 @@ export default function CreateCommentModal() {
     closeModal("create-comment");
     queryClient.invalidateQueries({
       queryKey: [commentsApi.baseKey],
+    });
+    queryClient.invalidateQueries({
+      queryKey: [documentsApi.baseKey],
     });
   };
 

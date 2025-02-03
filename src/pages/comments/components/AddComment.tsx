@@ -3,6 +3,7 @@ import { t } from "i18next";
 import { useState } from "react";
 import { queryClient } from "../../../api/query-client";
 import { commentsApi, useCreateComment } from "../api";
+import { documentsApi } from "../../document/api/documentsApi";
 
 export const AddComment = ({ documentId }: { documentId: string }) => {
   const [comment, setComment] = useState("");
@@ -15,6 +16,9 @@ export const AddComment = ({ documentId }: { documentId: string }) => {
     setComment("");
     queryClient.invalidateQueries({
       queryKey: [commentsApi.baseKey],
+    });
+    queryClient.invalidateQueries({
+      queryKey: [documentsApi.baseKey],
     });
   };
 

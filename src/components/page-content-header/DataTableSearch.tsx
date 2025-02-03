@@ -38,7 +38,7 @@ export const DataTableSearch = () => {
   };
 
   return (
-    <div className="flex w-2/3 flex-1 items-center gap-2 border-b border-gray-400 px-2 py-1">
+    <div className="flex flex-1 items-center gap-2 border-b border-gray-400 px-2 py-1">
       <BiSearchAlt className="size-5 text-gray-400" />
       <Input
         className="w-full border-none bg-transparent !shadow-none !outline-none"

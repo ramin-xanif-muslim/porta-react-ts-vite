@@ -12,7 +12,6 @@ import {
 import { t } from "i18next";
 import { RiUploadLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
-import { FaCirclePlus } from "react-icons/fa6";
 
 import { queryClient } from "../api/query-client";
 import { useModalStore } from "../store";
@@ -33,7 +32,7 @@ import { useTagSelectOptions } from "../pages/tags/api/useTagSelectOptions";
 export default function FileUploaderForm() {
   const inputRef = useRef<InputRef>(null);
   const [form] = Form.useForm();
-  const { modalState, closeModal, openModal } = useModalStore();
+  const { modalState, closeModal } = useModalStore();
 
   const tagSelectOptions = useTagSelectOptions();
 
@@ -161,60 +160,65 @@ export default function FileUploaderForm() {
           </CreateBtn>
         </FileUploader>
       </div>
-      <Form form={form} onFinish={onFinish} layout="vertical">
-        <Table
-          size="small"
-          dataSource={fileList.map((file) => ({
-            name: file.name,
-            size: convertFileSize(file.size || 0),
-          }))}
-          columns={[
-            {
-              title: t("Ext"),
-              dataIndex: "extension",
-              render: (_, record) =>
-                getFileIcon({
-                  fileExtension: record.name.split(".").pop() as string,
-                }),
-            },
-            {
-              title: t("File"),
-              dataIndex: "name",
-            },
-            {
-              dataIndex: "delete",
-              render: (_, record) => (
-                <Button
-                  type="text"
-                  onClick={() =>
-                    setFileList(
-                      fileList.filter((file) => file.name !== record.name),
-                    )
-                  }
-                  shape="circle"
-                  className="!hover:text-red-600 !text-red-500"
-                  icon={<IoClose />}
-                />
-              ),
-            },
-          ]}
-          pagination={false}
-        />
+      <Form form={form} onFinish={onFinish} layout="vertical" className="mt-2">
+        <Form.Item>
+          <Table
+          className="modal-table"
+            size="small"
+            dataSource={fileList.map((file) => ({
+              name: file.name,
+              size: convertFileSize(file.size || 0),
+            }))}
+            columns={[
+              {
+                title: t("Ext"),
+                dataIndex: "extension",
+                render: (_, record) =>
+                  getFileIcon({
+                    fileExtension: record.name.split(".").pop() as string,
+                  }),
+              },
+              {
+                title: t("File"),
+                dataIndex: "name",
+                render: (_, record) => (
+                  <div className="flex flex-col">
+                    <span className="font-semibold">{record.name}</span>
+                    <span className="text-xs text-gray-500">{record.size}</span>
+                  </div>
+                ),
+              },
+              {
+                dataIndex: "delete",
+                render: (_, record) => (
+                  <Button
+                    type="text"
+                    onClick={() =>
+                      setFileList(
+                        fileList.filter((file) => file.name !== record.name),
+                      )
+                    }
+                    shape="circle"
+                    className="!hover:text-red-600 !text-red-500"
+                    icon={<IoClose />}
+                  />
+                ),
+              },
+            ]}
+            pagination={false}
+          />
+        </Form.Item>
 
         <Form.Item
           name="tags"
           label={
-            <div className="flex items-center">
-              <span>{t("Tags")}</span>
-              <Button
-                type="link"
-                onClick={() => openModal("create-tag")}
-                icon={<FaCirclePlus />}
-                shape="circle"
-                size="small"
-                className="ml-1"
-              />
-            </div>
+            <a
+              className="text-blue-500 hover:text-blue-600"
+              href="/documents/tags"
+              target="_blank"
+            >
+              {t("Tags")}{" "}
+            </a>
           }
         >
           <Select mode="multiple" {...tagSelectOptions} />

@@ -12,6 +12,7 @@ export const useGetDocuments = ({
     currentPage?: number;
     sort?: SortOption[];
     searchText?: string;
+    filterParams?: Record<string, unknown>;
   };
 }) => {
   const skip = params?.currentPage
@@ -30,6 +31,7 @@ export const useGetDocuments = ({
         filters: {
           searchText: params?.searchText || "",
           folderId,
+          ...params?.filterParams,
         },
       }),
     // enabled: Boolean(folderId),

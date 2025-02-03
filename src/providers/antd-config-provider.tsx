@@ -36,6 +36,23 @@ export function AntdConfigProvider({ children }: { children?: ReactNode }) {
       spin={{
         indicator: <LoadingOutlined spin />,
       }}
+      modal={{
+        styles: {
+          header: {
+            borderBottom: "1px solid var(--border-color)",
+            marginBottom: 24,
+            paddingBottom: 16,
+          },
+          footer: {
+            borderTop: "1px solid var(--border-color)",
+            marginTop: 24,
+            paddingTop: 16,
+          },
+          content: {
+            padding: "24px 24px",
+          },
+        },
+      }}
     >
       <App>{children}</App>
     </ConfigProvider>

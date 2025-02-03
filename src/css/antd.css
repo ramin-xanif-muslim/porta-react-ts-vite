@@ -1,0 +1,15 @@
+.ant-modal-title {
+  font-size: 20px !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+  font-weight: 500 !important;
+}
+
+.ant-modal-close {
+  top: 17px !important;
+}
+
+.modal-table .ant-table thead > tr > th {
+  color: gray !important;
+}
+
+
