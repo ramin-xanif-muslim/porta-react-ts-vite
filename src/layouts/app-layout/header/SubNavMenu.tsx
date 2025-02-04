@@ -8,7 +8,7 @@ const SubNavMenu = () => {
   const location = useLocation();
 
   const title = useMemo(() => {
-    if (!location.pathname.split("/")[1]) return "Dashboard";
+    if (!location.pathname.split("/")[1]) return "";
 
     const pathSection = location.pathname.split("/")[1];
     return pathSection.charAt(0).toUpperCase() + pathSection.slice(1);
@@ -24,6 +24,8 @@ const SubNavMenu = () => {
   const isAnyNavLinkActive = currentSectionNavItems.some((item) =>
     location.pathname.includes(item.path),
   );
+
+  if (title === "") return "";
 
   return (
     <div className="flex h-full w-full bg-brand px-4 text-white shadow-sm">

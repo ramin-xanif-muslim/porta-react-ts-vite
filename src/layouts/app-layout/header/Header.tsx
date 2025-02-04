@@ -11,7 +11,7 @@ import SearchInput from "./search-input/SearchInput";
 
 const Header = () => {
   return (
-    <div className="grid w-full grid-cols-[0px_minmax(200px,_1fr)_auto] pr-2 md:grid-cols-[100px_minmax(200px,_1fr)_auto]">
+    <div className="grid bg-[#EAEAEAFF] w-full grid-cols-[0px_minmax(200px,_1fr)_auto] pr-2 md:grid-cols-[100px_minmax(200px,_1fr)_auto]">
       {/* left */}
       {/* logo */}
       <Link

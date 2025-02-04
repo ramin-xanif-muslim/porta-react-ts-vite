@@ -63,6 +63,8 @@ const DashboardPage: React.FC = () => {
     },
   };
 
+  return ""
+
   return (
     <div className="p-6">
       {/* Stats Cards */}

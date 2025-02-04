@@ -39,10 +39,10 @@ export const HEADER_NAV_ITEMS = [
 
 export const HEADER_NAV_ITEMS_SUB = {
   "": [
-    {
-      label: "Dashboard",
-      path: "",
-    },
+    // {
+    //   label: "Dashboard",
+    //   path: "",
+    // },
   ],
   "crew": [
     {

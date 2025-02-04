@@ -6,7 +6,7 @@
   :root {
     --app-background: #f3f4f6ff;
     --border-color: #e0e0e0;
-    --brand-color: #379ae6ff;
+    --brand-color: #30459EFF;
 
     --brand-color-50: color-mix(in srgb, var(--brand-color) 5%, white);
     --brand-color-100: color-mix(in srgb, var(--brand-color) 10%, white);
