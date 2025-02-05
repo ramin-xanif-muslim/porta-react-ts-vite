@@ -14,5 +14,6 @@ export const useGetLookupTag = (
       });
     },
     select: (data) => data.data.list,
+    staleTime: 1000 * 60 * 1,
   });
 };

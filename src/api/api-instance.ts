@@ -15,13 +15,13 @@ export const BASE_URL =
   "https://app-vms-core-test-gzc2fcffh8hnhpdw.germanywestcentral-01.azurewebsites.net";
 
 const service = () => {
-  const token = localStorage.getItem("ROCP_token");
+  const token = localStorage.getItem("ROCP_token")?.replace(/['"]+/g, "");
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
     "Access-Control-Max-Age": 86400,
     "Access-Control-Allow-Origin": "*",
-    ...(token && { Authorization: `Bearer ${token}` })
+    ...(token && { Authorization: `Bearer ${token}` }),
   };
 
   const requestResolve = (

@@ -142,8 +142,8 @@ export const documentsApi = {
   uploadDocument: ({
     folderId,
     file,
-    comment,
-    tags,
+    comment = "",
+    tags = [],
   }: {
     folderId: string;
     file: File;
@@ -156,7 +156,9 @@ export const documentsApi = {
     formData.append("name", file.name);
     formData.append("folderId", folderId);
     formData.append("comment", comment);
-    formData.append("tagIds", JSON.stringify(tags));
+    tags.forEach((tag, index) => {
+      formData.append(`tagIds[${index}]`, tag);
+    });
     notification.info({
       message: t("Uploading {{fileName}}...", { fileName: file.name }),
       showProgress: true,

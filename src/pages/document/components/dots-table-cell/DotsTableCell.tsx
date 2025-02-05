@@ -51,24 +51,6 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
 
   const items: MenuProps["items"] = [
     {
-      key: "Rename",
-      label: t("Rename"),
-      icon: <MdOutlineDriveFileRenameOutline className="size-5" />,
-    },
-    {
-      key: "EditFile",
-      label: (
-        <UploadFile document={record}>
-          <div className="flex items-center gap-2">
-            <span>
-              <RiFileEditLine className="size-5" />
-            </span>
-            <span>{t("Edit file")}</span>
-          </div>
-        </UploadFile>
-      ),
-    },
-    {
       key: "UploadNewVersion",
       label: (
         <UploadNewVersion document={record}>
@@ -87,6 +69,9 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       icon: <VscVersions className="size-5" />,
     },
     {
+      type: "divider",
+    },
+    {
       key: "AddComment",
       label: t("Add Comment"),
       icon: <FaRegCommentDots className="size-5" />,
@@ -95,6 +80,27 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       key: "CommentList",
       label: t("Comment List"),
       icon: <AiOutlineComment className="size-5" />,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "Rename",
+      label: t("Rename"),
+      icon: <MdOutlineDriveFileRenameOutline className="size-5" />,
+    },
+    {
+      key: "EditFile",
+      label: (
+        <UploadFile document={record}>
+          <div className="flex items-center gap-2">
+            <span>
+              <RiFileEditLine className="size-5" />
+            </span>
+            <span>{t("Edit file")}</span>
+          </div>
+        </UploadFile>
+      ),
     },
   ];
 

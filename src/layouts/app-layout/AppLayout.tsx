@@ -1,12 +1,12 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "./header/Header";
 import SubNavMenu from "./header/SubNavMenu";
-import { useToken } from "../../auth/AuthProvider";
+import { useAuth } from "../../auth/useAuth";
 
 const AppLayout = () => {
   const location = useLocation();
 
-  const { token } = useToken();
+  const { token } = useAuth();
   if (!token) {
     return "";
   }

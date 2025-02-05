@@ -33,13 +33,13 @@ export const FilterComponent = () => {
     <Form
       onValuesChange={(_, values) => handleChange(values)}
       layout="horizontal"
-      className="flex flex-col sm:flex-row items-center gap-2 lg:gap-10"
+      className="flex flex-col sm:flex-row gap-2 lg:gap-10"
     >
       <Form.Item name="tags" label="Tags">
         <Select
           defaultValue={formValues.tags}
-          className="!min-w-40"
-          maxTagCount={1}
+          className="!min-w-40  !max-w-40"
+          maxTagCount={3}
           options={[...tagOptions]}
           {...tagSelectOptions}
           mode="multiple"
@@ -50,12 +50,13 @@ export const FilterComponent = () => {
         <Select
           defaultValue={formValues.versions || "All"}
           className="!min-w-40"
+          allowClear
           options={[
-            {
-              key: "1",
-              label: "All",
-              value: null,
-            },
+            // {
+            //   key: "1",
+            //   label: "All",
+            //   value: null,
+            // },
             {
               key: "2",
               label: "Has Version",

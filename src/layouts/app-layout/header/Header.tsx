@@ -1,13 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GoBell } from "react-icons/go";
-import { FaCircleUser } from "react-icons/fa6";
 import { FaQuestion } from "react-icons/fa6";
 
 import NavMenu from "./NavMenu";
 import classNames from "classnames";
 import { Button } from "antd";
 import SearchInput from "./search-input/SearchInput";
+import Profile from "./profile/Profile";
 
 const Header = () => {
   return (
@@ -61,12 +61,7 @@ const Header = () => {
           >
             <IoSettingsOutline className="size-5" />
           </NavLink>
-          <Button
-            className="bg-transparent transition-colors hover:bg-gray-700/50"
-            shape="circle"
-            type="text"
-            icon={<FaCircleUser className="size-6" />}
-          />
+          <Profile />
         </div>
       </div>
     </div>

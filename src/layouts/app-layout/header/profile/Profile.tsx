@@ -1,19 +1,49 @@
-import { IoIosArrowDown } from "react-icons/io";
+import { FaCircleUser } from "react-icons/fa6";
+import { PiSignOutFill } from "react-icons/pi";
+
+import { Button, Dropdown, MenuProps } from "antd";
+import { t } from "i18next";
+import { useAuth } from "../../../../auth/useAuth";
 
 const Profile = () => {
-    return (
-        <div className="cursor-pointer flex items-center gap-1">
-            <div className="relative">
-                <img
-                    className="w-[32px] h-[32px] object-cover rounded-full"
-                    src="/user.jpg"
-                    alt="user"
-                />
-                <span className="absolute bottom-0 right-0 border-2 size-2 bg-green-400 rounded-full"></span>
-            </div>
-            <IoIosArrowDown className="text-gray-400 size-3" /> 
-        </div>
-    );
+  const { logOut } = useAuth();
+
+  const handleMenuClick: MenuProps["onClick"] = (e) => {
+    if (e.key === "SignOut") {
+      localStorage.clear();
+      sessionStorage.clear();
+      logOut();
+      window.location.href = import.meta.env.VITE_AUTH_URL + "/connect/logout";
+    }
+  };
+
+  return (
+    <Dropdown
+      menu={{
+        items: [
+          {
+            key: "SignOut",
+            label: t("Sign Out"),
+            icon: <PiSignOutFill className="size-5" />,
+          },
+        ],
+        onClick: handleMenuClick,
+      }}
+      placement="bottomRight"
+      className="cursor-pointer"
+      overlayClassName="text-[#565D6DFF]"
+      trigger={["click"]}
+    >
+      <div className="flex cursor-pointer items-center gap-1">
+        <Button
+          className="bg-transparent transition-colors hover:bg-gray-700/50"
+          shape="circle"
+          type="text"
+          icon={<FaCircleUser className="size-6" />}
+        />
+      </div>
+    </Dropdown>
+  );
 };
 
 export default Profile;

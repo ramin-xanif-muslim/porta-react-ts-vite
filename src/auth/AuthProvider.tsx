@@ -1,9 +1,7 @@
 import {
   AuthProvider as Auth2Provider,
   TAuthConfig,
-  AuthContext,
 } from "react-oauth2-code-pkce";
-import { useContext } from "react";
 
 const authConfig: TAuthConfig = {
   clientId: import.meta.env.VITE_OAUTH_CLIENT_ID,
@@ -16,9 +14,3 @@ const authConfig: TAuthConfig = {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   return <Auth2Provider authConfig={authConfig}>{children}</Auth2Provider>;
 }
-
-export const useToken = () => {
-  const auth = useContext(AuthContext);
-  console.log(auth);
-  return auth;
-};
