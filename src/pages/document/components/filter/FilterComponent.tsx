@@ -48,7 +48,7 @@ export const FilterComponent = () => {
       </Form.Item>
       <Form.Item name="versions" label="Versions">
         <Select
-          defaultValue={formValues.versions || "All"}
+          defaultValue={formValues.versions}
           className="!min-w-40"
           allowClear
           options={[
