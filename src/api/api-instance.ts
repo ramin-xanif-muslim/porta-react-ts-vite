@@ -104,7 +104,7 @@ const createAxiosInstance = () => {
 
 // Create a proxy that will always use the latest instance
 export const API = new Proxy({} as ReturnType<typeof createAxiosInstance>, {
-  get: (target, prop) => {
+  get: (_, prop) => {
     // Get a fresh instance every time a method is called
     const instance = createAxiosInstance();
     return instance[prop as keyof typeof instance];

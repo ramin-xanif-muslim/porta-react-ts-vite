@@ -1,33 +1,16 @@
 import { Checkbox, Form, Select } from "antd";
 import { useTagSelectOptions } from "../../../tags/api/useTagSelectOptions";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useListPageContext } from "../../../../HOC/withListPageContext";
 
 export const FilterComponent = () => {
-  const { setFilterParams, onFilterChange } = useListPageContext();
-  const [searchParams] = useSearchParams();
-
-  const [formValues, setFormValues] = useState<Record<string, unknown>>(
-    () => {
-      const filter = searchParams.get("filter");
-      return filter ? JSON.parse(filter) : {};
-    },
-  );
+  const { onFilterChange, filterParams, setFilterParams } = useListPageContext();
 
   const { options: tagOptions, ...tagSelectOptions } = useTagSelectOptions();
 
   const handleChange = (values: Record<string, unknown>) => {
-    setFormValues(values);
+    setFilterParams(values);
     onFilterChange(values);
   };
-
-  useEffect(() => {
-    return () => {
-      setFormValues({});
-      setFilterParams({});
-    };
-  }, []);
 
   return (
     <Form
@@ -37,7 +20,7 @@ export const FilterComponent = () => {
     >
       <Form.Item name="tags" label="Tags">
         <Select
-          defaultValue={formValues.tags}
+          defaultValue={filterParams.tags}
           className="!min-w-40  !max-w-40"
           maxTagCount={3}
           options={[...tagOptions]}
@@ -48,7 +31,7 @@ export const FilterComponent = () => {
       </Form.Item>
       <Form.Item name="versions" label="Versions">
         <Select
-          defaultValue={formValues.versions}
+          defaultValue={filterParams.versions}
           className="!min-w-40"
           allowClear
           options={[
@@ -71,7 +54,7 @@ export const FilterComponent = () => {
         />
       </Form.Item>
       <Form.Item name="started" label="Started" valuePropName="checked">
-        <Checkbox defaultChecked={Boolean(formValues.started)} />
+        <Checkbox defaultChecked={Boolean(filterParams.started)} />
       </Form.Item>
     </Form>
   );

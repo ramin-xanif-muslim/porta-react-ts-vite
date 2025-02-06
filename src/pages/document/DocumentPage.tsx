@@ -14,10 +14,7 @@ import { convertFileSize } from "../../lib/utils";
 import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
 import { DATE_FORMAT } from "../../constants";
 import { getFileIcon } from "./utils/file-icons";
-import {
-  useListPageContext,
-  withListPageContext,
-} from "../../HOC/withListPageContext";
+import { useListPageContext } from "../../HOC/withListPageContext";
 import { PageContentHeader } from "../../components/page-content-header";
 import { LookupTag } from "../tags/types";
 import { FilterComponent } from "./components/filter/FilterComponent";
@@ -59,7 +56,6 @@ const DocumentPageComponent = () => {
       navigate(`/documents/documents/folders/${record.id}`);
     }
   };
-
 
   const columns = useMemo<TableProps<Document>["columns"]>(
     () => [
@@ -145,8 +141,8 @@ const DocumentPageComponent = () => {
   );
 
   return (
-    <div className="content-page" key={id}>
-      <PageContentHeader filterComponent={<FilterComponent/>} />
+    <div className="content-page">
+      <PageContentHeader filterComponent={<FilterComponent />} />
       <FileUploader folderId={id}>
         <div className="table-page-wrapper">
           <Table
@@ -167,6 +163,4 @@ const DocumentPageComponent = () => {
   );
 };
 
-const DocumentPage = withListPageContext(DocumentPageComponent);
-
-export default DocumentPage;
+export default DocumentPageComponent;

@@ -9,6 +9,7 @@ import {
 } from "../../components/ui/resizable";
 import Sidebar from "./sidebar/Sidebar";
 import { useGlobalStore } from "../../store";
+import { withListPageContext } from "../../HOC/withListPageContext";
 
 const DocumentManagementLayout = () => {
   const isOpenSidebar = useGlobalStore((state) => state.isOpenSidebar);
@@ -60,4 +61,6 @@ const DocumentManagementLayout = () => {
   );
 };
 
-export default DocumentManagementLayout;
+const DocumentManagementLayoutWithContext = withListPageContext(DocumentManagementLayout);
+
+export default DocumentManagementLayoutWithContext;
