@@ -1,7 +1,7 @@
 import { ConfigProvider, App } from "antd";
 import { ReactNode, useMemo } from "react";
 import useStore from "../store/global-store";
-import { LoadingOutlined } from "@ant-design/icons";
+// import { LoadingOutlined } from "@ant-design/icons";
 
 // Import all required locales
 import azAZ from "antd/locale/az_AZ";
@@ -33,9 +33,9 @@ export function AntdConfigProvider({ children }: { children?: ReactNode }) {
           borderRadius: 4,
         },
       }}
-      spin={{
-        indicator: <LoadingOutlined spin />,
-      }}
+      // spin={{
+      //   indicator: <LoadingOutlined spin />,
+      // }}
       modal={{
         styles: {
           header: {

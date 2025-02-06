@@ -17,7 +17,7 @@ function App() {
       fallback={
         <div className="loading">
           <Spin tip="Loading" size="large">
-            <img className="h-[32px] w-[93px]" src="/logo.svg" alt="logo" />
+            <img className="h-[193px] w-[260px]" src="/logo.jpeg" alt="logo" />
           </Spin>
         </div>
       }

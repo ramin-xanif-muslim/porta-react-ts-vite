@@ -14,7 +14,8 @@ export type ResponseType<T> = {
 export const BASE_URL =
   "https://app-vms-core-test-gzc2fcffh8hnhpdw.germanywestcentral-01.azurewebsites.net";
 
-const service = () => {
+// Move service creation logic to a separate function
+const createAxiosInstance = () => {
   const token = localStorage.getItem("ROCP_token")?.replace(/['"]+/g, "");
   const headers = {
     "Content-Type": "application/json",
@@ -23,6 +24,13 @@ const service = () => {
     "Access-Control-Allow-Origin": "*",
     ...(token && { Authorization: `Bearer ${token}` }),
   };
+
+  const instance = axios.create({
+    baseURL: BASE_URL,
+    timeout: 0,
+    withCredentials: true,
+    headers,
+  });
 
   const requestResolve = (
     config: InternalAxiosRequestConfig,
@@ -88,17 +96,17 @@ const service = () => {
     return Promise.reject(err);
   };
 
-  const instance = axios.create({
-    baseURL: BASE_URL,
-    timeout: 0,
-    withCredentials: true,
-    headers,
-  });
-
   instance.interceptors.request.use(requestResolve);
   instance.interceptors.response.use(responseResolve, responseReject);
 
   return instance;
 };
 
-export const API = service();
+// Create a proxy that will always use the latest instance
+export const API = new Proxy({} as ReturnType<typeof createAxiosInstance>, {
+  get: (target, prop) => {
+    // Get a fresh instance every time a method is called
+    const instance = createAxiosInstance();
+    return instance[prop as keyof typeof instance];
+  },
+});

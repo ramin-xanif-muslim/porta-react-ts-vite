@@ -30,7 +30,7 @@ const SubNavMenu = () => {
   return (
     <div className="flex h-full w-full bg-brand px-4 text-white shadow-sm">
       <div className="mr-10 hidden items-center md:flex">
-        <h1 className="line-clamp-1 text-2xl font-semibold">{title}</h1>
+        <h1 className="line-clamp-1 text-2xl">{title}</h1>
       </div>
       <div className="flex  gap-1 items-center py-2">
         {currentSectionNavItems.map((item, index) => (

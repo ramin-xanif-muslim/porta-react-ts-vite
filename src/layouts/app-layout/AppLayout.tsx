@@ -1,25 +1,37 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "./header/Header";
 import SubNavMenu from "./header/SubNavMenu";
-import { useAuth } from "../../auth/useAuth";
+import { useAuthContext } from "../../auth/useAuthContext";
+import { Spin } from "antd";
+import Footer from "../../components/Footer";
 
 const AppLayout = () => {
   const location = useLocation();
 
-  const { token } = useAuth();
+  const { token } = useAuthContext();
   if (!token) {
-    return "";
+    return (
+      <div className="loading">
+        <Spin tip="Loading" size="large">
+          <img className="h-[193px] w-[260px]" src="/logo.jpeg" alt="logo" />
+        </Spin>
+      </div>
+    );
   }
 
   if (!location.pathname.split("/")[1]) {
     return (
       <div className="relative mx-auto max-w-[1600px]">
-        <div className="h-[56px]">
+        <div className="h-[58px] border-brand border-b-4">
           <Header />
         </div>
 
-        <div className="no-scrollbar h-[calc(100vh-56)] flex-1 overflow-y-auto bg-[#F3F4F6FF]">
+        <div className="no-scrollbar h-[calc(100vh-58px-50px)] flex-1 overflow-y-auto bg-[#F3F4F6FF]">
           <Outlet />
+        </div>
+
+        <div className="fixed bottom-0 h-[50px] w-full bg-[#EAEAEAFF]">
+          <Footer />
         </div>
       </div>
     );
@@ -27,17 +39,21 @@ const AppLayout = () => {
 
   return (
     <div className="relative mx-auto max-w-[1600px]">
-      <div className="h-[102px]">
+      <div className="h-[108px]">
         <div className="h-[56px]">
           <Header />
         </div>
-        <div className="h-[46px]">
+        <div className="h-[54px]">
           <SubNavMenu />
         </div>
       </div>
 
-      <div className="no-scrollbar h-[calc(100vh-104px)] flex-1 overflow-y-auto bg-[#F3F4F6FF]">
+      <div className="no-scrollbar h-[calc(100vh-108px-50px)] flex-1 overflow-y-auto bg-[#F3F4F6FF]">
         <Outlet />
+      </div>
+
+      <div className="fixed bottom-0 h-[50px] w-full bg-[#EAEAEAFF]">
+        <Footer />
       </div>
     </div>
   );

@@ -3,17 +3,14 @@ import { PiSignOutFill } from "react-icons/pi";
 
 import { Button, Dropdown, MenuProps } from "antd";
 import { t } from "i18next";
-import { useAuth } from "../../../../auth/useAuth";
+import { useAuthContext } from "../../../../auth/useAuthContext";
 
 const Profile = () => {
-  const { logOut } = useAuth();
+  const { handleLogOut } = useAuthContext();
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
     if (e.key === "SignOut") {
-      localStorage.clear();
-      sessionStorage.clear();
-      logOut();
-      window.location.href = import.meta.env.VITE_AUTH_URL + "/connect/logout";
+      handleLogOut();
     }
   };
 

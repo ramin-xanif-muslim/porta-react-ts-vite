@@ -58,14 +58,14 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
             <span>
               <MdUploadFile className="size-5" />
             </span>
-            <span>{t("Upload New Version")}</span>
+            <span>{t("New Version")}</span>
           </div>
         </UploadNewVersion>
       ),
     },
     {
       key: "VersionsList",
-      label: t("Document Versions"),
+      label: t("List Versions"),
       icon: <VscVersions className="size-5" />,
     },
     {
@@ -78,16 +78,11 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
     },
     {
       key: "CommentList",
-      label: t("Comment List"),
+      label: t("List Comments"),
       icon: <AiOutlineComment className="size-5" />,
     },
     {
       type: "divider",
-    },
-    {
-      key: "Rename",
-      label: t("Rename"),
-      icon: <MdOutlineDriveFileRenameOutline className="size-5" />,
     },
     {
       key: "EditFile",
@@ -101,6 +96,17 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
           </div>
         </UploadFile>
       ),
+    },
+    {
+      key: "Rename",
+      label: t("Edit Name"),
+      icon: <MdOutlineDriveFileRenameOutline className="size-5" />,
+    },
+    {
+      key: "EditTags",
+      label: t("Edit Tags"),
+      icon: <MdOutlineDriveFileRenameOutline className="size-5" />,
+      disabled: true,
     },
   ];
 
