@@ -155,6 +155,7 @@ const DocumentPageComponent = () => {
               ...tablePaginationConfig,
               total: total,
             }}
+            sticky={{ offsetHeader: 44 }}
             scroll={{ x: window.innerHeight }}
           />
         </div>

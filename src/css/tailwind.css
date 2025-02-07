@@ -6,7 +6,7 @@
   :root {
     --app-background: #f3f4f6ff;
     --border-color: #e0e0e0;
-    --brand-color: #30459EFF;
+    --brand-color: #30459eff;
 
     --brand-color-50: color-mix(in srgb, var(--brand-color) 5%, white);
     --brand-color-100: color-mix(in srgb, var(--brand-color) 10%, white);
@@ -111,7 +111,7 @@
 
   /* page layout utilities */
   .page {
-    @apply flex w-full flex-col;
+    @apply relative flex w-full flex-col;
   }
 
   .header-page {
@@ -127,7 +127,7 @@
   }
 
   .content-page {
-    @apply flex flex-col gap-4 bg-white p-6;
+    @apply flex flex-col bg-white px-6;
   }
 
   .content-page__header-right {
@@ -135,6 +135,7 @@
   }
 
   .table-page-wrapper {
+    @apply relative mt-4;
   }
 
   .tag_item {
