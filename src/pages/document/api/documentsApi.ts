@@ -45,7 +45,6 @@ export const documentsApi = {
     folderId: string;
     documentId: string;
   }) => {
-    console.log("getDocumentsVersionsListQueryOptions")
     const url = DocumentsApi.versionsList
       .replace("{folderId}", folderId)
       .replace("{documentId}", documentId);

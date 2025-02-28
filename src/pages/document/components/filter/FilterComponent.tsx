@@ -30,38 +30,6 @@ export const FilterComponent = () => {
           allowClear
         />
       </Form.Item>
-      <Form.Item name="hasSecondVersion" label="Versions" className="!mb-0">
-        <Select
-          defaultValue={filterParams.versions}
-          className="!min-w-40"
-          allowClear
-          options={[
-            // {
-            //   key: "1",
-            //   label: "All",
-            //   value: null,
-            // },
-            {
-              key: "2",
-              label: "Has the second version",
-              value: true,
-            },
-            {
-              key: "3",
-              label: "Has single version",
-              value: false,
-            },
-          ]}
-        />
-      </Form.Item>
-      {/* <Form.Item
-        name="started"
-        label="Started"
-        valuePropName="checked"
-        className="!mb-0"
-      >
-        <Checkbox defaultChecked={Boolean(filterParams.started)} />
-      </Form.Item> */}
     </Form>
   );
 };

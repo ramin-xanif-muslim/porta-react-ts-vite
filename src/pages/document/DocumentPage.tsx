@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { t } from "i18next";
 import { useMemo } from "react";
 import { FaRegStar } from "react-icons/fa";
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useListPageContext } from "../../HOC/withListPageContext";
 import { PageContentHeader } from "../../components/page-content-header";
@@ -50,7 +50,6 @@ const DocumentPageComponent = () => {
     e: React.MouseEvent<HTMLDivElement>,
     record: Document,
   ) => {
-    console.log(record);
     e.stopPropagation();
     e.preventDefault();
     if (record.isFolder) {

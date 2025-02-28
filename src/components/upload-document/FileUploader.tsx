@@ -1,21 +1,21 @@
+import { notification } from "antd";
+import { t } from "i18next";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdOutlineCloudUpload } from "react-icons/md";
 
-import { t } from "i18next";
-import { useModalStore } from "../../store";
-import { SUPPORTED_FILE_EXTENSIONS } from "../../constants";
-import { SUPPORTED_FILE_TYPES } from "../../constants";
-import { MAX_FILE_SIZE } from "../../constants";
+import {
+  MAX_FILE_SIZE,
+} from "../../constants";
 import { MAX_FILE_COUNT } from "../../constants";
-import { notification } from "antd";
+import { useModalStore } from "../../store";
 
 const FileUploader = ({
   children,
   input,
   multiple = true,
   folderId,
-  handleUpload
+  handleUpload,
 }: {
   children?: React.ReactNode;
   input?: boolean;
@@ -27,13 +27,11 @@ const FileUploader = ({
   const { openModal } = useModalStore();
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    
     if (acceptedFiles.length > MAX_FILE_COUNT) {
       return notification.error({
-        message: t(
-          "You can only upload a maximum of {{count}} files.",
-          { count: MAX_FILE_COUNT },
-        ),
+        message: t("You can only upload a maximum of {{count}} files.", {
+          count: MAX_FILE_COUNT,
+        }),
       });
     }
     const updateFiles = acceptedFiles.filter((file) => {
@@ -46,34 +44,32 @@ const FileUploader = ({
         });
         return false;
       }
-      
-      if (!SUPPORTED_FILE_TYPES.includes(file.type)) {
-        notification.error({
-          message: t(
-            "{{fileName}} is not a supported file type. Supported file types are {{supportedFileTypes}}.",
-            {
-              fileName: file.name,
-              supportedFileTypes: SUPPORTED_FILE_EXTENSIONS,
-            },
-          ),
-        });
-        return false;
-      }
 
-      if(handleUpload) {
-       return  handleUpload(file)
+      // if (!SUPPORTED_FILE_TYPES.includes(file.type)) {
+      //   notification.error({
+      //     message: t(
+      //       "{{fileName}} is not a supported file type. Supported file types are {{supportedFileTypes}}.",
+      //       {
+      //         fileName: file.name,
+      //         supportedFileTypes: SUPPORTED_FILE_EXTENSIONS,
+      //       },
+      //     ),
+      //   });
+      //   return false;
+      // }
+
+      if (handleUpload) {
+        return handleUpload(file);
       }
       return true;
     });
-    
 
-    if(!handleUpload) {
+    if (!handleUpload) {
       openModal("file-uploader-form", {
         files: updateFiles,
         folderId,
       });
-     }
-
+    }
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({

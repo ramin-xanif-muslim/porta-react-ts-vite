@@ -1,33 +1,28 @@
-import { useEffect, useRef, useState } from "react";
 import {
   Button,
   Form,
   Input,
   InputRef,
   Modal,
-  notification,
   Select,
   Table,
+  notification,
 } from "antd";
 import { t } from "i18next";
-import { RiUploadLine } from "react-icons/ri";
+import { useEffect, useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { RiUploadLine } from "react-icons/ri";
 
 import { queryClient } from "../api/query-client";
-import { useModalStore } from "../store";
-import { useUploadDocument } from "../pages/document/api/use-upload-document";
-import {
-  MAX_FILE_COUNT,
-  MAX_FILE_SIZE,
-  SUPPORTED_FILE_EXTENSIONS,
-  SUPPORTED_FILE_TYPES,
-} from "../constants";
-import { documentsApi } from "../pages/document/api/documentsApi";
 import { CreateBtn } from "../components/ui/buttons";
-import { convertFileSize } from "../lib/utils";
 import FileUploader from "../components/upload-document/FileUploader";
+import { MAX_FILE_COUNT, MAX_FILE_SIZE } from "../constants";
+import { convertFileSize } from "../lib/utils";
+import { documentsApi } from "../pages/document/api/documentsApi";
+import { useUploadDocument } from "../pages/document/api/use-upload-document";
 import { getFileIcon } from "../pages/document/utils/file-icons";
 import { useTagSelectOptions } from "../pages/tags/api/useTagSelectOptions";
+import { useModalStore } from "../store";
 
 export default function FileUploaderForm() {
   const inputRef = useRef<InputRef>(null);
@@ -43,7 +38,7 @@ export default function FileUploaderForm() {
   const [newFile, setNewFile] = useState<File>();
 
   useEffect(() => {
-    if (newFile) setFileList([...fileList, newFile]);
+    if (newFile) setFileList((prevList) => [...prevList, newFile]);
   }, [newFile]);
 
   useEffect(() => {
@@ -54,16 +49,22 @@ export default function FileUploaderForm() {
 
       return () => clearTimeout(timer);
     }
-  }, [modalState?.["file-uploader-form"]?.isOpen]);
+  }, [modalState]);
 
   const onSuccessCallback = () => {
     closeModal("file-uploader-form");
+    queryClient.invalidateQueries({
+      queryKey: [documentsApi.baseKey],
+    })
   };
 
   const uploadDocument = useUploadDocument({
     folderId: modalState?.["file-uploader-form"]?.props?.folderId as string,
     onSuccessCallback,
   });
+
+  const folderId = modalState?.["file-uploader-form"]?.props
+    ?.folderId as string;
 
   const handleUpload = async (
     acceptedFiles: File[],
@@ -87,17 +88,17 @@ export default function FileUploaderForm() {
           ),
         });
       }
-      if (file.type && !SUPPORTED_FILE_TYPES.includes(file.type)) {
-        return notification.error({
-          message: t(
-            "{{fileName}} is not a supported file type. Supported file types are {{supportedFileTypes}}.",
-            {
-              fileName: file.name,
-              supportedFileTypes: SUPPORTED_FILE_EXTENSIONS,
-            },
-          ),
-        });
-      }
+      // if (file.type && !SUPPORTED_FILE_TYPES.includes(file.type)) {
+      //   return notification.error({
+      //     message: t(
+      //       "{{fileName}} is not a supported file type. Supported file types are {{supportedFileTypes}}.",
+      //       {
+      //         fileName: file.name,
+      //         supportedFileTypes: SUPPORTED_FILE_EXTENSIONS,
+      //       },
+      //     ),
+      //   });
+      // }
 
       return uploadDocument.handleCreate(
         file as unknown as File,
@@ -111,8 +112,7 @@ export default function FileUploaderForm() {
         queryClient.invalidateQueries({
           queryKey: [
             documentsApi.getDocumentsListQueryOptions({
-              folderId: modalState?.["file-uploader-form"]?.props
-                ?.folderId as string,
+              folderId,
             }),
           ],
         });
@@ -121,7 +121,7 @@ export default function FileUploaderForm() {
   };
 
   const onFinish = async (values: { comment: string; tags: string[] }) => {
-    handleUpload(fileList, values.comment, values.tags);
+    handleUpload(fileList, values.comment, values.tags)
   };
 
   return (
@@ -163,7 +163,7 @@ export default function FileUploaderForm() {
       <Form form={form} onFinish={onFinish} layout="vertical" className="mt-2">
         <Form.Item>
           <Table
-          className="modal-table"
+            className="modal-table"
             size="small"
             dataSource={fileList.map((file) => ({
               name: file.name,
@@ -190,6 +190,7 @@ export default function FileUploaderForm() {
               },
               {
                 dataIndex: "delete",
+                width: 50,
                 render: (_, record) => (
                   <Button
                     type="text"

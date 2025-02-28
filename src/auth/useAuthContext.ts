@@ -19,6 +19,5 @@ export const useAuthContext = () => {
 
     window.location.href = logoutUrl;
   };
-  console.log("auth", auth);
   return { ...auth, handleLogOut };
 };

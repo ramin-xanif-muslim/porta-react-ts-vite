@@ -9,7 +9,11 @@ export function useUploadFile({folderId}: {folderId: string}) {
 
     return useMutation({
         mutationFn: documentsApi.uploadFile,
-        onSuccess: () => {},
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: [documentsApi.baseKey],
+            });
+        },
         onError: () => {
             notification.destroy("uploadFile");
             notification.error({ message: t("Error uploading file") })

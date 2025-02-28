@@ -22,7 +22,6 @@ const DocumentVersionsList = ({
   open,
   onClose,
 }: DocumentVersionsListProps) => {
-  console.log("DocumentVersionsListProps", { documentId, folderId, open });
   const { data, error, isFetching } = useGetDocumentsVersionsList({
     documentId,
     folderId,
