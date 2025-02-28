@@ -43,12 +43,12 @@ export const FilterComponent = () => {
             // },
             {
               key: "2",
-              label: "Has Version",
+              label: "Has the second version",
               value: true,
             },
             {
               key: "3",
-              label: "Has Not Version",
+              label: "Has single version",
               value: false,
             },
           ]}

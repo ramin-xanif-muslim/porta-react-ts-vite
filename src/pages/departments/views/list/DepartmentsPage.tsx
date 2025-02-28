@@ -11,6 +11,7 @@ import {
 } from "../../../../HOC/withListPageContext";
 import { CreateBtn, DownloadBtn } from "../../../../components/ui/buttons";
 import { PageContentHeader } from "../../../../components/page-content-header";
+import { TABLE_HEADER_OFFSET } from "../../../../constants";
 
 const columns: TableProps<Department>["columns"] = [
   {
@@ -71,6 +72,7 @@ function DepartmentsPageComponent() {
               ...tablePaginationConfig,
               total: total,
             }}
+            sticky={{ offsetHeader: TABLE_HEADER_OFFSET }}
             scroll={{ x: window.innerHeight }}
           />
         </div>

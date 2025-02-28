@@ -80,3 +80,5 @@ export const HEADER_NAV_ITEMS_SUB = {
     },
   ],
 };
+
+export const TABLE_HEADER_OFFSET = 44;

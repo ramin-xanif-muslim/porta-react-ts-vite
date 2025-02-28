@@ -12,6 +12,7 @@ import { CreateBtn } from "../../../../components/ui/buttons";
 import { DownloadBtn } from "../../../../components/ui/buttons";
 import { PageContentHeader } from "../../../../components/page-content-header";
 import DotsTableCell from "../../components/DotsTableCell";
+import { TABLE_HEADER_OFFSET } from "../../../../constants";
 
 const columns: TableProps<Tag>["columns"] = [
   {
@@ -71,6 +72,7 @@ function TagsListPageComponent() {
               ...tablePaginationConfig,
               total: total,
             }}
+            sticky={{ offsetHeader: TABLE_HEADER_OFFSET }}
             scroll={{ x: window.innerHeight }}
           />
         </div>

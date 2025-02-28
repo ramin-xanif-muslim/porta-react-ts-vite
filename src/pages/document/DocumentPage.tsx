@@ -1,23 +1,24 @@
 import { Table } from "antd";
 import type { TableProps } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
-import { useMemo } from "react";
 import classNames from "classnames";
-import { t } from "i18next";
 import dayjs from "dayjs";
+import { t } from "i18next";
+import { useMemo } from "react";
 import { FaRegStar } from "react-icons/fa";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 
-import { Document } from "./types";
-import { useGetDocuments } from "./api/use-get-documents";
-import FileUploader from "../../components/upload-document/FileUploader";
-import { convertFileSize } from "../../lib/utils";
-import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
-import { DATE_FORMAT } from "../../constants";
-import { getFileIcon } from "./utils/file-icons";
 import { useListPageContext } from "../../HOC/withListPageContext";
 import { PageContentHeader } from "../../components/page-content-header";
+import FileUploader from "../../components/upload-document/FileUploader";
+import { DATE_FORMAT, TABLE_HEADER_OFFSET } from "../../constants";
+import { convertFileSize } from "../../lib/utils";
 import { LookupTag } from "../tags/types";
+
+import { useGetDocuments } from "./api/use-get-documents";
+import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
 import { FilterComponent } from "./components/filter/FilterComponent";
+import { Document } from "./types";
+import { getFileIcon } from "./utils/file-icons";
 
 const DocumentPageComponent = () => {
   const { id = "" } = useParams();
@@ -155,7 +156,7 @@ const DocumentPageComponent = () => {
               ...tablePaginationConfig,
               total: total,
             }}
-            sticky={{ offsetHeader: 44 }}
+            sticky={{ offsetHeader: TABLE_HEADER_OFFSET }}
             scroll={{ x: window.innerHeight }}
           />
         </div>

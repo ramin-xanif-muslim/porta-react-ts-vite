@@ -7,7 +7,7 @@ export const useGetDocumentsVersionsList = ({ folderId, documentId, open }: { fo
   return useQuery({
     ...documentsApi.getDocumentsVersionsListQueryOptions({ folderId, documentId }),
     placeholderData: keepPreviousData,
-    enabled: Boolean(folderId && documentId && open),
+    enabled: Boolean(documentId && open),
     retry: false,
   });
 };

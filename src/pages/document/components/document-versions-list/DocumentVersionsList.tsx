@@ -3,11 +3,11 @@ import type { TableProps } from "antd";
 import dayjs from "dayjs";
 import { t } from "i18next";
 
-import { useGetDocumentsVersionsList } from "../../api/use-get-documents-versions-list";
-import { DocumentVersionDTO } from "../../../../types";
-import { convertFileSize } from "../../../../lib/utils";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
 import { DATE_FORMAT } from "../../../../constants";
+import { convertFileSize } from "../../../../lib/utils";
+import { DocumentVersionDTO } from "../../../../types";
+import { useGetDocumentsVersionsList } from "../../api/use-get-documents-versions-list";
 
 interface DocumentVersionsListProps {
   documentId: string;
@@ -22,6 +22,7 @@ const DocumentVersionsList = ({
   open,
   onClose,
 }: DocumentVersionsListProps) => {
+  console.log("DocumentVersionsListProps", { documentId, folderId, open });
   const { data, error, isFetching } = useGetDocumentsVersionsList({
     documentId,
     folderId,

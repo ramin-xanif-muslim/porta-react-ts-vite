@@ -51,7 +51,7 @@ const DocumentManagementLayout = () => {
       </ResizablePanel>
       <ResizableHandle withHandle={isOpenSidebar} />
       <ResizablePanel>
-        <div className="h-full overflow-y-auto">
+        <div className="h-full overflow-y-auto bg-white">
           <Outlet />
         </div>
       </ResizablePanel>
