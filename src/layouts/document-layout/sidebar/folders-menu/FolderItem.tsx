@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 import RenameFolder from "./RenameFolder";
 import EllipsisMenu from "./EllipsisMenu";
+import { useListPageContext } from "../../../../HOC/withListPageContext";
 
 export interface FolderItemI {
   id: string;
@@ -29,6 +30,8 @@ export default function FolderItem({ item, openParents }: Props) {
     return isFoldersPath && lastPathSegment === item.id;
   };
 
+  const {setCurrentPage} = useListPageContext()
+
   return (
     <>
       <Link
@@ -37,6 +40,7 @@ export default function FolderItem({ item, openParents }: Props) {
           "menu-item group": true,
           "active-menu": isActiveFolder(),
         })}
+        onClick={() => setCurrentPage(1)}
       >
         <span className="w-4 shrink-0">
           {item.children.length > 0 && (

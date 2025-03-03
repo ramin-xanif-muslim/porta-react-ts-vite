@@ -38,8 +38,13 @@ export function withListPageContext<P extends object>(
 ) {
   return function WithListPageContextComponent(props: P) {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [currentPage, setCurrentPage] = useState(
+      () => Number(searchParams.get("page")) || 1,
+    );
+    const [pageSize, setPageSize] = useState(
+      () => Number(searchParams.get("size")) || 10,
+    );
+
     const [sort, setSort] = useState<SortOption[]>(() => {
       const sortBy = searchParams.get("sortBy");
       if (!sortBy) return [];
@@ -88,10 +93,14 @@ export function withListPageContext<P extends object>(
         }
       }
     };
-
     const onPaginationChange = (page: number, size: number) => {
       setCurrentPage(page);
       setPageSize(size);
+      setSearchParams((prev) => {
+        prev.set("page", page.toString());
+        prev.set("size", size.toString());
+        return prev;
+      });
     };
 
     const onFilterChange = (filters: Record<string, unknown>) => {
