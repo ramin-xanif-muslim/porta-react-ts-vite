@@ -1,14 +1,17 @@
-import React, { createContext, useContext, useState, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
-import { t } from "i18next";
-import { SortOption } from "../types/query-params";
 import { SorterResult, TablePaginationConfig } from "antd/es/table/interface";
+import { t } from "i18next";
+import React, { createContext, useContext, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
+import { SortOption } from "../types/query-params";
 
 interface ListPageContextType<T> {
   searchParams: URLSearchParams;
   setSearchParams: (
     nextInit: URLSearchParams | ((prev: URLSearchParams) => URLSearchParams),
   ) => void;
+  // isDelete: boolean;
+  // setIsDelete: (bool: boolean) => void;
   currentPage: number;
   setCurrentPage: (page: number) => void;
   pageSize: number;
@@ -91,7 +94,7 @@ export function withListPageContext<P extends object>(
       setPageSize(size);
     };
 
-    const onFilterChange = (filters: Record<string, unknown>) => { 
+    const onFilterChange = (filters: Record<string, unknown>) => {
       setFilterParams(filters);
       setSearchParams((prev) => {
         prev.delete("page");
@@ -117,7 +120,8 @@ export function withListPageContext<P extends object>(
     }, [currentPage, pageSize]);
 
     const contextValue: ListPageContextType<unknown> = {
-      filterParams, setFilterParams,
+      filterParams,
+      setFilterParams,
       onFilterChange,
       searchText,
       setSearchText,

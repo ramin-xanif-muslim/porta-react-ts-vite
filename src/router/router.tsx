@@ -5,6 +5,7 @@ import { appDocRoutes, cms_routes, dms_routes, settingsRoutes } from "./routes";
 import { WithErrorBoundary } from "../components/error-boundary/ErrorBoundary";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import UserDetailsPage from "../pages/users/views/details/UserDetailsPage";
+import { Navigate } from "react-router-dom";
 
 const NotFoundPage = React.lazy(
   () => import("../pages/not-found/NotFoundPage"),
@@ -26,8 +27,8 @@ const routers: Router[] = [
     children: [
       {
         path: "/",
-        name: "dashboard",
-        element: <DashboardPage />,
+        name: "documents",
+        element: <Navigate to="/documents/documents/folders" replace />
       },
       {
         path: "/dashboard",

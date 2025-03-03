@@ -6,7 +6,6 @@ import { FaQuestion } from "react-icons/fa6";
 import NavMenu from "./NavMenu";
 import classNames from "classnames";
 import { Button } from "antd";
-import SearchInput from "./search-input/SearchInput";
 import Profile from "./profile/Profile";
 
 const Header = () => {
@@ -33,7 +32,7 @@ const Header = () => {
       {/* right */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-1">
-          <SearchInput />
+          {/* <SearchInput /> */}
           <Button
             className="bg-transparent transition-colors hover:bg-gray-700/50"
             shape="circle"

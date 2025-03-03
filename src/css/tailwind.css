@@ -165,3 +165,13 @@
 .menu-item:hover {
   @apply text-black;
 }
+
+@layer components {
+  /* .document-name-column {
+    min-width: 200px;
+    max-width: 400px;
+  } */
+  .document-name-column  {
+    @apply  !min-w-max
+  }
+}

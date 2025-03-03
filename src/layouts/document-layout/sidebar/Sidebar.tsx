@@ -6,19 +6,6 @@ const Sidebar = () => {
   return (
     <div className="no-scrollbar h-screen min-w-[250px] overflow-y-auto py-8 text-gray-500 md:h-[calc(100vh-100px)]">
       <div className="">
-        {/* <div
-                    className={classNames({
-                        "menu-item": true,
-                    })}
-                >
-                    <div>
-                        <FaBuffer className="text-brand size-5" />
-                    </div>
-                    <span className="text-black">{t("MY PORTA")}</span>
-                    <span className="flex flex-col ml-auto">
-                        <TbArrowsMoveVertical />
-                    </span>
-                </div> */}
 
         <FoldersMenu />
 

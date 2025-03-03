@@ -61,16 +61,9 @@ const DocumentPageComponent = () => {
     () => [
       {
         title: "",
-        key: "dots",
-        dataIndex: "dots",
-        fixed: "left",
-        width: 50,
-        render: (_, record) => <DotsTableCell record={record} folderId={id} />,
-      },
-      {
-        title: "",
         dataIndex: "icon",
         key: "icon",
+        width: 50,
         render: (_, record) => (
           <div onDoubleClick={(e) => onDoubleClickName(e, record)}>
             {getFileIcon(record)}
@@ -81,13 +74,15 @@ const DocumentPageComponent = () => {
         title: t("Name"),
         dataIndex: "name",
         key: "name",
+        width: '40%',
         sorter: () => 0,
-        render: (value) => <div className="line-clamp-1">{value}</div>,
+        render: (value) => <div className="line-clamp-2" title={value}>{value}</div>,
       },
       {
         title: t("Size"),
         dataIndex: "fileSize",
         key: "fileSize",
+        width: 140,
         sorter: () => 0,
         render: (value, record) => (
           <div>{record.isFolder ? "-" : convertFileSize(value)}</div>
@@ -97,6 +92,7 @@ const DocumentPageComponent = () => {
         title: t("Last modified"),
         dataIndex: "updatedOn",
         key: "updatedOn",
+        width: 160,
         sorter: () => 0,
         render: (value) => (
           <div className="line-clamp-1">{dayjs(value).format(DATE_FORMAT)}</div>
@@ -117,24 +113,23 @@ const DocumentPageComponent = () => {
         ),
       },
       {
-        title: t("Version count"),
-        dataIndex: "versionCount",
-        key: "versionCount",
-      },
-      {
-        title: t("Comment count"),
-        dataIndex: "commentCount",
-        key: "commentCount",
-      },
-      {
         title: "",
         key: "isSelected",
         dataIndex: "isSelected",
+        width: 50,
         render: (val) => (
           <div className="cursor-pointer">
             <FaRegStar className={classNames({ "text-[#F2C94CFF]": val })} />
           </div>
         ),
+      },
+      {
+        title: "",
+        key: "dots",
+        dataIndex: "dots",
+        fixed: "right",
+        width: 50,
+        render: (_, record) => <DotsTableCell record={record} folderId={id} />,
       },
     ],
     [isFetching],

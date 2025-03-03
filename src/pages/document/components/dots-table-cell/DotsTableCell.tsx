@@ -4,15 +4,13 @@ import { useState } from "react";
 
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
-import { MdUploadFile } from "react-icons/md";
-import { RiFileEditLine } from "react-icons/ri";
 import { VscVersions } from "react-icons/vsc";
-import { FaRegCommentDots } from "react-icons/fa";
 import { AiOutlineComment } from "react-icons/ai";
+import { RiDeleteBinLine, RiFileEditLine } from "react-icons/ri";
+import { IoMdMove } from "react-icons/io";
 
 import RenameDocument from "./RenameDocument";
 import { Document } from "../../types";
-import UploadNewVersion from "./UploadNewVersion";
 import UploadFile from "./UploadFile";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
@@ -46,39 +44,23 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       openModal("create-comment", { documentId: record.id });
     } else if (e.key === "CommentList") {
       openModal("comment-list", { documentId: record.id });
+    // } else if (e.key === "Delete") {
+    // } else if (e.key === "Move") {
     }
   };
 
   const items: MenuProps["items"] = [
     {
-      key: "UploadNewVersion",
-      label: (
-        <UploadNewVersion document={record}>
-          <div className="flex items-center gap-2">
-            <span>
-              <MdUploadFile className="size-5" />
-            </span>
-            <span>{t("New Version")}</span>
-          </div>
-        </UploadNewVersion>
-      ),
-    },
-    {
       key: "VersionsList",
-      label: t("List Versions"),
+      label: t("Versions"),
       icon: <VscVersions className="size-5" />,
     },
     {
       type: "divider",
     },
     {
-      key: "AddComment",
-      label: t("Add Comment"),
-      icon: <FaRegCommentDots className="size-5" />,
-    },
-    {
       key: "CommentList",
-      label: t("List Comments"),
+      label: t("Comments"),
       icon: <AiOutlineComment className="size-5" />,
     },
     {
@@ -107,6 +89,19 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       label: t("Edit Tags"),
       icon: <MdOutlineDriveFileRenameOutline className="size-5" />,
       disabled: true,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "Delete",
+      label: t("Delete"),
+      icon: <RiDeleteBinLine className="size-5" />,
+    },
+    {
+      key: "Move",
+      label: t("Move"),
+      icon: <IoMdMove className="size-5" />,
     },
   ];
 

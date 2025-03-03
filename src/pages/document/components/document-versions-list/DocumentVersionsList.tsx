@@ -8,6 +8,8 @@ import { DATE_FORMAT } from "../../../../constants";
 import { convertFileSize } from "../../../../lib/utils";
 import { DocumentVersionDTO } from "../../../../types";
 import { useGetDocumentsVersionsList } from "../../api/use-get-documents-versions-list";
+import UploadNewVersion from "../dots-table-cell/UploadNewVersion";
+import { CreateBtn } from "../../../../components/ui/buttons";
 
 interface DocumentVersionsListProps {
   documentId: string;
@@ -72,7 +74,14 @@ const DocumentVersionsList = ({
   return (
     <ErrorBoundary>
       <Drawer
-        title={t("Document Versions")}
+        title={
+          <div className="flex w-full justify-between items-center">
+            <h2>{t("Document Versions")}</h2>
+            <UploadNewVersion documentId={documentId}>
+              <CreateBtn>{t("Add Version")}</CreateBtn>
+            </UploadNewVersion>
+          </div>
+        }
         placement="right"
         onClose={onClose}
         open={open}

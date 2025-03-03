@@ -1,15 +1,14 @@
 import { useParams } from "react-router-dom";
 
-import { Document } from "../../types";
 import { useUploadNewVersion } from "../../api/use-upload-new-version";
 import FileUploader from "../../../../components/upload-document/FileUploader";
 
 const UploadNewVersion = ({
-  document,
+  documentId,
   children,
 }: {
   children: React.ReactNode;
-  document: Document;
+  documentId: string;
 }) => {
   const { id = "" } = useParams();
   const uploadDocument = useUploadNewVersion({ folderId: id });
@@ -20,7 +19,7 @@ const UploadNewVersion = ({
         uploadDocument
           .mutateAsync({
             file,
-            documentId: document.id,
+            documentId,
             folderId: id,
           })
           .then(() => {})

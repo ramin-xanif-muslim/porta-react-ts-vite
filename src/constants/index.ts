@@ -1,6 +1,5 @@
 import { IoDocumentsOutline } from "react-icons/io5";
 import { PiUsersThree } from "react-icons/pi";
-import { RxDashboard } from "react-icons/rx";
 
 export const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
@@ -19,19 +18,14 @@ export const DATE_FORMAT = "DD/MM/YYYY HH:mm";
 
 export const HEADER_NAV_ITEMS = [
   {
-    label: "Dashboard",
-    path: "/",
-    icon: RxDashboard,
+    label: "Documents",
+    path: "/documents/documents/folders",
+    icon: IoDocumentsOutline,
   },
   {
     label: "Crew",
     path: "/crew",
     icon: PiUsersThree,
-  },
-  {
-    label: "Documents",
-    path: "/documents/documents/folders",
-    icon: IoDocumentsOutline,
   },
 ];
 
