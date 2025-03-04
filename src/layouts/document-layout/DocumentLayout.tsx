@@ -1,13 +1,18 @@
 import { Outlet, useParams } from "react-router-dom";
 
-import CreateFolderBnt from "./create-folder/CreateFolderBnt";
-import UploadDocumentBtn from "../../components/upload-document/UploadDocumentBtn";
+import { useListPageContext } from "../../HOC/withListPageContext";
+import { ActionComponent } from "../../components/action-component/ActionComponent";
 import FileUploader from "../../components/upload-document/FileUploader";
+import UploadDocumentBtn from "../../components/upload-document/UploadDocumentBtn";
+
 import Breadcrumb from "./Breadcrumb";
+import CreateFolderBnt from "./create-folder/CreateFolderBnt";
 import { ToggleSidebar } from "./sidebar/toggle-sideber";
 
 const DocumentLayout = () => {
   const { id = "" } = useParams<{ id?: string }>();
+
+  const { action, selectedRowKeys, handleCloseAction } = useListPageContext();
 
   return (
     <div className="page">
@@ -17,19 +22,19 @@ const DocumentLayout = () => {
           <Breadcrumb />
         </div>
         <div className="header-page__actions">
+          <ActionComponent
+            action={action}
+            selectedCount={selectedRowKeys.length}
+            handleClose={handleCloseAction}
+          />
           {id && (
-            <FileUploader
-              key={id}
-              input
-              folderId={id}
-            >
+            <FileUploader key={id} input folderId={id}>
               <UploadDocumentBtn />
             </FileUploader>
           )}
           <CreateFolderBnt />
         </div>
       </div>
-
 
       <Outlet />
     </div>

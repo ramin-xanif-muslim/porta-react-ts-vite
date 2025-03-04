@@ -33,6 +33,7 @@ const DocumentPageComponent = () => {
     onTableChange,
     searchText,
     filterParams,
+    rowSelection,
   } = useListPageContext<Document>();
 
   const { documents, total, isLoading, isFetching } = useGetDocuments({
@@ -74,9 +75,13 @@ const DocumentPageComponent = () => {
         title: t("Name"),
         dataIndex: "name",
         key: "name",
-        width: '40%',
+        width: "40%",
         sorter: () => 0,
-        render: (value) => <div className="line-clamp-2" title={value}>{value}</div>,
+        render: (value) => (
+          <div className="line-clamp-2" title={value}>
+            {value}
+          </div>
+        ),
       },
       {
         title: t("Size"),
@@ -141,6 +146,7 @@ const DocumentPageComponent = () => {
       <FileUploader folderId={id}>
         <div className="table-page-wrapper">
           <Table
+            rowSelection={rowSelection}
             loading={isLoading}
             rowKey="id"
             columns={columns}

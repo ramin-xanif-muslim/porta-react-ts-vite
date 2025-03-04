@@ -1,11 +1,11 @@
+import classNames from "classnames";
+import { useState } from "react";
 import { FaRegFolder } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
-import { useState } from "react";
-import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
-import RenameFolder from "./RenameFolder";
+
 import EllipsisMenu from "./EllipsisMenu";
-import { useListPageContext } from "../../../../HOC/withListPageContext";
+import RenameFolder from "./RenameFolder";
 
 export interface FolderItemI {
   id: string;
@@ -18,9 +18,14 @@ interface Props {
   item: FolderItemI;
   openParents: string[];
   callback?: (bool: boolean) => void;
+  handleSelectFolder: () => void;
 }
 
-export default function FolderItem({ item, openParents }: Props) {
+export default function FolderItem({
+  item,
+  openParents,
+  handleSelectFolder,
+}: Props) {
   const [open, setOpen] = useState(openParents.includes(item.id));
   const location = useLocation();
 
@@ -30,8 +35,6 @@ export default function FolderItem({ item, openParents }: Props) {
     return isFoldersPath && lastPathSegment === item.id;
   };
 
-  const {setCurrentPage} = useListPageContext()
-
   return (
     <>
       <Link
@@ -40,7 +43,7 @@ export default function FolderItem({ item, openParents }: Props) {
           "menu-item group": true,
           "active-menu": isActiveFolder(),
         })}
-        onClick={() => setCurrentPage(1)}
+        onClick={handleSelectFolder}
       >
         <span className="w-4 shrink-0">
           {item.children.length > 0 && (
@@ -84,6 +87,7 @@ export default function FolderItem({ item, openParents }: Props) {
                   key={child.id}
                   item={child}
                   openParents={openParents}
+                  handleSelectFolder={handleSelectFolder}
                 />
               ))}
           </>

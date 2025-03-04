@@ -1,21 +1,22 @@
 import { Dropdown, MenuProps } from "antd";
 import { t } from "i18next";
 import { useState } from "react";
-
-import { BsThreeDots } from "react-icons/bs";
-import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
-import { VscVersions } from "react-icons/vsc";
 import { AiOutlineComment } from "react-icons/ai";
+import { BsThreeDots } from "react-icons/bs";
+import { FaShareFromSquare } from "react-icons/fa6";
+import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { RiDeleteBinLine, RiFileEditLine } from "react-icons/ri";
-import { IoMdMove } from "react-icons/io";
+import { VscVersions } from "react-icons/vsc";
 
-import RenameDocument from "./RenameDocument";
-import { Document } from "../../types";
-import UploadFile from "./UploadFile";
+import { useListPageContext } from "../../../../HOC/withListPageContext";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
-import DocumentVersionsList from "../document-versions-list/DocumentVersionsList";
 import { useModalStore } from "../../../../store/modal-store";
+import { Document } from "../../types";
+import DocumentVersionsList from "../document-versions-list/DocumentVersionsList";
+
+import RenameDocument from "./RenameDocument";
+import UploadFile from "./UploadFile";
 
 interface DotsTableCellProps {
   record: Document;
@@ -32,6 +33,8 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
   );
   const { openModal } = useModalStore();
 
+  const { setAction } = useListPageContext();
+
   const handleMenuClick: MenuProps["onClick"] = (e) => {
     if (e.key === "Rename") {
       setIsRenameModalOpen(true);
@@ -44,8 +47,10 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       openModal("create-comment", { documentId: record.id });
     } else if (e.key === "CommentList") {
       openModal("comment-list", { documentId: record.id });
-    // } else if (e.key === "Delete") {
-    // } else if (e.key === "Move") {
+    } else if (e.key === "Delete") {
+      setAction("Delete");
+    } else if (e.key === "Move") {
+      setAction("Move");
     }
   };
 
@@ -101,7 +106,7 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
     {
       key: "Move",
       label: t("Move"),
-      icon: <IoMdMove className="size-5" />,
+      icon: <FaShareFromSquare className="size-5" />,
     },
   ];
 

@@ -37,7 +37,13 @@ export default function FoldersMenu() {
 
   const { data: folders, isLoading, isFetching } = useGetFolders();
 
-  const {setCurrentPage} = useListPageContext()
+  const {setCurrentPage, handleCloseAction} = useListPageContext()
+
+  const handleSelectFolder = () => {
+    setCurrentPage(1)
+    handleCloseAction()
+  }
+
 
   return (
     <ErrorBoundary
@@ -46,7 +52,7 @@ export default function FoldersMenu() {
       }
     >
       <div className="flex flex-col">
-        <Link to={path} onClick={() => setCurrentPage(1)}>
+        <Link to={path} onClick={handleSelectFolder}>
           <Spin spinning={isLoading}>
             <div
               className={classNames({
@@ -78,6 +84,7 @@ export default function FoldersMenu() {
                 key={isFetching ? item.id + Math.random() : item.id + pathname}
                 item={item}
                 openParents={getParentFoldersId(folders, pathname)}
+                handleSelectFolder={handleSelectFolder}
               />
             ))}
         </div>

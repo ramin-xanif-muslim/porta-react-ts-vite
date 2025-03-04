@@ -1,8 +1,10 @@
+import { TableProps } from "antd";
 import { SorterResult, TablePaginationConfig } from "antd/es/table/interface";
 import { t } from "i18next";
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
+import { ActionType } from "../components/action-component/ActionComponent";
 import { SortOption } from "../types/query-params";
 
 interface ListPageContextType<T> {
@@ -10,8 +12,6 @@ interface ListPageContextType<T> {
   setSearchParams: (
     nextInit: URLSearchParams | ((prev: URLSearchParams) => URLSearchParams),
   ) => void;
-  // isDelete: boolean;
-  // setIsDelete: (bool: boolean) => void;
   currentPage: number;
   setCurrentPage: (page: number) => void;
   pageSize: number;
@@ -26,6 +26,12 @@ interface ListPageContextType<T> {
   onFilterChange: (filter: Record<string, unknown>) => void;
   filterParams: Record<string, unknown>;
   setFilterParams: (filter: Record<string, unknown>) => void;
+  action: ActionType | undefined | null;
+  setAction: (action: ActionType | undefined | null) => void;
+  selectedRowKeys: React.Key[];
+  setSelectedRowKeys: (keys: React.Key[]) => void;
+  rowSelection: TableProps<T>["rowSelection"];
+  handleCloseAction: () => void;
 }
 
 // Create a default type parameter that can be overridden
@@ -37,13 +43,10 @@ export function withListPageContext<P extends object>(
   WrappedComponent: React.ComponentType<P>,
 ) {
   return function WithListPageContextComponent(props: P) {
+    const [action, setAction] = useState<ActionType | undefined | null>();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [currentPage, setCurrentPage] = useState(
-      () => Number(searchParams.get("page")) || 1,
-    );
-    const [pageSize, setPageSize] = useState(
-      () => Number(searchParams.get("size")) || 10,
-    );
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
 
     const [sort, setSort] = useState<SortOption[]>(() => {
       const sortBy = searchParams.get("sortBy");
@@ -65,6 +68,24 @@ export function withListPageContext<P extends object>(
     );
 
     const [searchText, setSearchText] = useState(searchParams.get("q") || "");
+
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+    const rowSelection = action
+      ? {
+          selectedRowKeys,
+          onSelect: (record: unknown, selected: boolean) => {
+            const typedRecord = record as { id: string };
+            if (selected) {
+              setSelectedRowKeys((prev) => [...prev, typedRecord.id]);
+            } else {
+              setSelectedRowKeys((prev) =>
+                prev.filter((i) => i !== typedRecord.id),
+              );
+            }
+          },
+        }
+      : undefined;
 
     const onTableChange = (
       sorter: SorterResult<unknown> | SorterResult<unknown>[],
@@ -96,11 +117,6 @@ export function withListPageContext<P extends object>(
     const onPaginationChange = (page: number, size: number) => {
       setCurrentPage(page);
       setPageSize(size);
-      setSearchParams((prev) => {
-        prev.set("page", page.toString());
-        prev.set("size", size.toString());
-        return prev;
-      });
     };
 
     const onFilterChange = (filters: Record<string, unknown>) => {
@@ -128,7 +144,18 @@ export function withListPageContext<P extends object>(
       };
     }, [currentPage, pageSize]);
 
+    const handleCloseAction = () => {
+      setSelectedRowKeys([]);
+      setAction(null);
+    };
+
     const contextValue: ListPageContextType<unknown> = {
+      handleCloseAction,
+      selectedRowKeys,
+      setSelectedRowKeys,
+      rowSelection,
+      action,
+      setAction,
       filterParams,
       setFilterParams,
       onFilterChange,
