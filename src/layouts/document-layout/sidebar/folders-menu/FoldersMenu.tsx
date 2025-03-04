@@ -71,7 +71,7 @@ export default function FoldersMenu() {
               <div>
                 <FaRegFolder className="size-6" />
               </div>
-              <span className="">{t("All files")}</span>
+              <span className="">{t("Home")}</span>
               <span
                 className="ml-auto flex flex-col"
                 onClick={() => setOpen(!open)}

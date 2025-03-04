@@ -1,10 +1,12 @@
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import type { TableProps } from "antd";
 import classNames from "classnames";
 import dayjs from "dayjs";
 import { t } from "i18next";
 import { useMemo } from "react";
 import { FaRegStar } from "react-icons/fa";
+import { FaRegFolderOpen } from "react-icons/fa";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 import { useListPageContext } from "../../HOC/withListPageContext";
@@ -12,6 +14,7 @@ import { PageContentHeader } from "../../components/page-content-header";
 import FileUploader from "../../components/upload-document/FileUploader";
 import { DATE_FORMAT, TABLE_HEADER_OFFSET } from "../../constants";
 import { convertFileSize } from "../../lib/utils";
+import { useGlobalStore } from "../../store";
 import { LookupTag } from "../tags/types";
 
 import { useGetDocuments } from "./api/use-get-documents";
@@ -19,10 +22,10 @@ import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
 import { FilterComponent } from "./components/filter/FilterComponent";
 import { Document } from "./types";
 import { getFileIcon } from "./utils/file-icons";
-import { useGlobalStore } from "../../store";
 
 const DocumentPageComponent = () => {
-  const selectedFolderId = useGlobalStore((state) => state.selectedFolderId)
+  const selectedFolderId = useGlobalStore((state) => state.selectedFolderId);
+  const selectFolderId = useGlobalStore((state) => state.selectFolderId);
 
   const navigate = useNavigate();
 
@@ -35,6 +38,8 @@ const DocumentPageComponent = () => {
     searchText,
     filterParams,
     rowSelection,
+    setCurrentPage,
+    handleCloseAction,
   } = useListPageContext<Document>();
 
   const { documents, total, isLoading, isFetching } = useGetDocuments({
@@ -48,17 +53,6 @@ const DocumentPageComponent = () => {
     },
   });
 
-  const onDoubleClickName = (
-    e: React.MouseEvent<HTMLDivElement>,
-    record: Document,
-  ) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (record.isFolder) {
-      navigate(`/documents/documents/folders/${record.id}`);
-    }
-  };
-
   const columns = useMemo<TableProps<Document>["columns"]>(
     () => [
       {
@@ -66,11 +60,7 @@ const DocumentPageComponent = () => {
         dataIndex: "icon",
         key: "icon",
         width: 50,
-        render: (_, record) => (
-          <div onDoubleClick={(e) => onDoubleClickName(e, record)}>
-            {getFileIcon(record)}
-          </div>
-        ),
+        render: (_, record) => getFileIcon(record),
       },
       {
         title: t("Name"),
@@ -131,11 +121,41 @@ const DocumentPageComponent = () => {
       },
       {
         title: "",
+        key: "view",
+        fixed: "right",
+        width: 50,
+        render: (_, record) =>
+          record.isFolder ? (
+            <Button
+              type="text"
+              size="small"
+              icon={<FaRegFolderOpen />}
+              shape="circle"
+              onClick={() => {
+                navigate(`/documents/documents/folders/${record.id}`);
+                selectFolderId(record.id);
+                setCurrentPage(1);
+                handleCloseAction();
+              }}
+            />
+          ) : (
+            <Button
+              type="text"
+              size="small"
+              icon={<MdOutlineRemoveRedEye />}
+              shape="circle"
+            />
+          ),
+      },
+      {
+        title: "",
         key: "dots",
         dataIndex: "dots",
         fixed: "right",
         width: 50,
-        render: (_, record) => <DotsTableCell record={record} folderId={selectedFolderId} />,
+        render: (_, record) => (
+          <DotsTableCell record={record} folderId={selectedFolderId} />
+        ),
       },
     ],
     [isFetching],

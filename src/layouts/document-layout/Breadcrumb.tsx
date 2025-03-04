@@ -7,7 +7,7 @@ import { useGetFolders } from "../../pages/folder/api/use-get-folders";
 import { t } from "i18next";
 import { useBreadcrumbs } from "../../hooks/breadcrumbs";
 
-const firstBreadcrumb = ["All files"];
+const firstBreadcrumb = ["Home"];
 interface BreadcrumbItemI {
   name: string;
   path: string;

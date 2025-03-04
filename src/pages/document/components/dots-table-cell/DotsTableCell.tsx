@@ -1,12 +1,14 @@
-import { Dropdown, MenuProps } from "antd";
+import { Button, Dropdown, MenuProps } from "antd";
 import { t } from "i18next";
 import { useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { FaShareFromSquare } from "react-icons/fa6";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
-import { RiDeleteBinLine, RiFileEditLine } from "react-icons/ri";
+import { RiDeleteBinLine } from "react-icons/ri";
 import { VscVersions } from "react-icons/vsc";
+import { MdDetails } from "react-icons/md";
+
 
 import { useListPageContext } from "../../../../HOC/withListPageContext";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
@@ -15,8 +17,6 @@ import { useModalStore } from "../../../../store/modal-store";
 import { Document } from "../../types";
 import DocumentVersionsList from "../document-versions-list/DocumentVersionsList";
 
-import RenameDocument from "./RenameDocument";
-import UploadFile from "./UploadFile";
 
 interface DotsTableCellProps {
   record: Document;
@@ -24,8 +24,6 @@ interface DotsTableCellProps {
 }
 
 const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
-  const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
-  useState(false);
 
   const [isVersionsModalOpen, setIsVersionsModalOpen] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(
@@ -37,7 +35,10 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
     if (e.key === "Rename") {
-      setIsRenameModalOpen(true);
+            openModal("rename-document", {
+              documentId: record.id,
+              name: record.name,
+            })
     } else if (e.key === "VersionsList") {
       if (!record.isFolder) {
         setSelectedDocumentId(record.id);
@@ -47,6 +48,8 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       openModal("create-comment", { documentId: record.id });
     } else if (e.key === "CommentList") {
       openModal("comment-list", { documentId: record.id });
+    } else if (e.key === "Details") {
+      openModal("folder-details", { record: record });
     } else if (e.key === "Delete") {
       setAction("Delete");
     } else if (e.key === "Move") {
@@ -72,28 +75,9 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       type: "divider",
     },
     {
-      key: "EditFile",
-      label: (
-        <UploadFile document={record}>
-          <div className="flex items-center gap-2">
-            <span>
-              <RiFileEditLine className="size-5" />
-            </span>
-            <span>{t("Edit file")}</span>
-          </div>
-        </UploadFile>
-      ),
-    },
-    {
-      key: "Rename",
-      label: t("Edit Name"),
-      icon: <MdOutlineDriveFileRenameOutline className="size-5" />,
-    },
-    {
-      key: "EditTags",
-      label: t("Edit Tags"),
-      icon: <MdOutlineDriveFileRenameOutline className="size-5" />,
-      disabled: true,
+      key: "Details",
+      label: t("Details"),
+      icon: <MdDetails className="size-5" />,
     },
     {
       type: "divider",
@@ -133,7 +117,12 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
           overlayClassName="text-[#565D6DFF]"
           trigger={["click"]}
         >
-          <BsThreeDots className="text-grayColor-600" />
+        <Button
+          type="text"
+          size="small"
+          icon={<BsThreeDots className="text-grayColor-600" />}
+          shape="circle"
+        />
         </Dropdown>
       ) : (
         <Dropdown
@@ -146,16 +135,14 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
           overlayClassName="text-[#565D6DFF]"
           trigger={["click"]}
         >
-          <BsThreeDots className="text-grayColor-600" />
+        <Button
+          type="text"
+          size="small"
+          icon={<BsThreeDots className="text-grayColor-600" />}
+          shape="circle"
+        />
         </Dropdown>
       )}
-
-      <RenameDocument
-        isOpen={isRenameModalOpen}
-        onClose={() => setIsRenameModalOpen(false)}
-        name={record.name}
-        id={record.id}
-      />
 
       <DocumentVersionsList
         documentId={selectedDocumentId || ""}

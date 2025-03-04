@@ -1,14 +1,13 @@
-import { Dropdown, MenuProps } from "antd";
+import { Button, Dropdown, MenuProps } from "antd";
 import { t } from "i18next";
-
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegFolderOpen } from "react-icons/fa";
-import { IoMdLink, IoMdMove } from "react-icons/io";
 import { FaShareFromSquare } from "react-icons/fa6";
-import { RiDeleteBinLine, RiFileEditLine } from "react-icons/ri";
 import { FiDownload } from "react-icons/fi";
-import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
+import { IoMdLink, IoMdMove } from "react-icons/io";
 import { LiaCopySolid } from "react-icons/lia";
+import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
+import { RiDeleteBinLine, RiFileEditLine } from "react-icons/ri";
 
 type ActionItem =
   | "edit"
@@ -77,7 +76,14 @@ export const DropdownDotsTableCell = ({
   onClick,
   placement = "bottomRight",
   overlayClassName = "text-[#565D6DFF]",
-  children = <BsThreeDots className="text-grayColor-600" />,
+  children = (
+    <Button
+      type="text"
+      size="small"
+      icon={<BsThreeDots className="text-grayColor-600" />}
+      shape="circle"
+    />
+  ),
 }: DropdownDotsProps) => {
   return (
     <Dropdown
