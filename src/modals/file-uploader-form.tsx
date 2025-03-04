@@ -29,6 +29,9 @@ export default function FileUploaderForm() {
   const [form] = Form.useForm();
   const { modalState, closeModal } = useModalStore();
 
+  const folderId = modalState?.["file-uploader-form"]?.props
+    ?.folderId as string;
+
   const tagSelectOptions = useTagSelectOptions();
 
   const fileListDefault =
@@ -55,16 +58,13 @@ export default function FileUploaderForm() {
     closeModal("file-uploader-form");
     queryClient.invalidateQueries({
       queryKey: [documentsApi.baseKey],
-    })
+    });
   };
 
   const uploadDocument = useUploadDocument({
-    folderId: modalState?.["file-uploader-form"]?.props?.folderId as string,
+    folderId,
     onSuccessCallback,
   });
-
-  const folderId = modalState?.["file-uploader-form"]?.props
-    ?.folderId as string;
 
   const handleUpload = async (
     acceptedFiles: File[],
@@ -121,7 +121,7 @@ export default function FileUploaderForm() {
   };
 
   const onFinish = async (values: { comment: string; tags: string[] }) => {
-    handleUpload(fileList, values.comment, values.tags)
+    handleUpload(fileList, values.comment, values.tags);
   };
 
   return (

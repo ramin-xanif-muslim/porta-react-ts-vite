@@ -18,7 +18,7 @@ interface Props {
   item: FolderItemI;
   openParents: string[];
   callback?: (bool: boolean) => void;
-  handleSelectFolder: () => void;
+  handleSelectFolder: (id: string) => void;
 }
 
 export default function FolderItem({
@@ -43,7 +43,7 @@ export default function FolderItem({
           "menu-item group": true,
           "active-menu": isActiveFolder(),
         })}
-        onClick={handleSelectFolder}
+        onClick={() => handleSelectFolder(item.id)}
       >
         <span className="w-4 shrink-0">
           {item.children.length > 0 && (

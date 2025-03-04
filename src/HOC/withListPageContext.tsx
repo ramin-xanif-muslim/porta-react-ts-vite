@@ -120,10 +120,10 @@ export function withListPageContext<P extends object>(
     };
 
     const onFilterChange = (filters: Record<string, unknown>) => {
+      setCurrentPage(1);
       setFilterParams(filters);
       setSearchParams((prev) => {
         prev.delete("page");
-        setCurrentPage(1);
         prev.set("filter", JSON.stringify(filters));
         return prev;
       });

@@ -1,4 +1,4 @@
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import { useListPageContext } from "../../HOC/withListPageContext";
 import { ActionComponent } from "../../components/action-component/ActionComponent";
@@ -8,9 +8,10 @@ import UploadDocumentBtn from "../../components/upload-document/UploadDocumentBt
 import Breadcrumb from "./Breadcrumb";
 import CreateFolderBnt from "./create-folder/CreateFolderBnt";
 import { ToggleSidebar } from "./sidebar/toggle-sideber";
+import { useGlobalStore } from "../../store";
 
 const DocumentLayout = () => {
-  const { id = "" } = useParams<{ id?: string }>();
+  const selectedFolderId = useGlobalStore((state) => state.selectedFolderId)
 
   const { action, selectedRowKeys, handleCloseAction } = useListPageContext();
 
@@ -27,8 +28,8 @@ const DocumentLayout = () => {
             selectedCount={selectedRowKeys.length}
             handleClose={handleCloseAction}
           />
-          {id && (
-            <FileUploader key={id} input folderId={id}>
+          {selectedFolderId && (
+            <FileUploader key={selectedFolderId} input folderId={selectedFolderId}>
               <UploadDocumentBtn />
             </FileUploader>
           )}

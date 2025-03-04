@@ -1,19 +1,20 @@
-import { useState } from "react";
-import classNames from "classnames";
-import { Link, useLocation } from "react-router-dom";
 import { Spin } from "antd";
+import classNames from "classnames";
 import { t } from "i18next";
-
-import { IoIosArrowForward } from "react-icons/io";
+import { useEffect, useState } from "react";
 import { FaRegFolder } from "react-icons/fa";
+import { IoIosArrowForward } from "react-icons/io";
+import { Link, useLocation, useParams } from "react-router-dom";
 
-import { buildHierarchy } from "../../../../lib/utils";
-import FolderItem from "./FolderItem";
-import { useGetFolders } from "../../../../pages/folder/api/use-get-folders";
+import { useListPageContext } from "../../../../HOC/withListPageContext";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
+import { buildHierarchy } from "../../../../lib/utils";
+import { useGetFolders } from "../../../../pages/folder/api/use-get-folders";
 import { Folder } from "../../../../pages/folder/types";
-import { useListPageContext } from "../../../../HOC/withListPageContext";
+import { useGlobalStore } from "../../../../store";
+
+import FolderItem from "./FolderItem";
 
 const path = "/documents/documents/folders";
 
@@ -32,18 +33,25 @@ function getParentFoldersId(folders: Folder[], pathname: string): string[] {
 }
 
 export default function FoldersMenu() {
+  const { id = "" } = useParams();
   const { pathname } = useLocation();
   const [open, setOpen] = useState(true);
 
   const { data: folders, isLoading, isFetching } = useGetFolders();
 
-  const {setCurrentPage, handleCloseAction} = useListPageContext()
+  const selectFolderId = useGlobalStore((state) => state.selectFolderId);
 
-  const handleSelectFolder = () => {
-    setCurrentPage(1)
-    handleCloseAction()
-  }
+  useEffect(() => {
+    selectFolderId(id);
+  }, []);
 
+  const { setCurrentPage, handleCloseAction } = useListPageContext();
+
+  const handleSelectFolder = (id: string) => {
+    selectFolderId(id);
+    setCurrentPage(1);
+    handleCloseAction();
+  };
 
   return (
     <ErrorBoundary
@@ -52,20 +60,22 @@ export default function FoldersMenu() {
       }
     >
       <div className="flex flex-col">
-        <Link to={path} onClick={handleSelectFolder}>
+        <Link to={path} onClick={() => handleSelectFolder("")}>
           <Spin spinning={isLoading}>
             <div
               className={classNames({
                 "menu-item": true,
                 "active-menu": pathname === path,
               })}
-              
             >
               <div>
                 <FaRegFolder className="size-6" />
               </div>
               <span className="">{t("All files")}</span>
-              <span className="ml-auto flex flex-col" onClick={() => setOpen(!open)}>
+              <span
+                className="ml-auto flex flex-col"
+                onClick={() => setOpen(!open)}
+              >
                 <IoIosArrowForward
                   className={classNames({
                     "transition-all": true,

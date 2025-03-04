@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { t } from "i18next";
 import { useMemo } from "react";
 import { FaRegStar } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useListPageContext } from "../../HOC/withListPageContext";
 import { PageContentHeader } from "../../components/page-content-header";
@@ -19,9 +19,10 @@ import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
 import { FilterComponent } from "./components/filter/FilterComponent";
 import { Document } from "./types";
 import { getFileIcon } from "./utils/file-icons";
+import { useGlobalStore } from "../../store";
 
 const DocumentPageComponent = () => {
-  const { id = "" } = useParams();
+  const selectedFolderId = useGlobalStore((state) => state.selectedFolderId)
 
   const navigate = useNavigate();
 
@@ -37,7 +38,7 @@ const DocumentPageComponent = () => {
   } = useListPageContext<Document>();
 
   const { documents, total, isLoading, isFetching } = useGetDocuments({
-    folderId: id,
+    folderId: selectedFolderId,
     params: {
       pageSize,
       currentPage,
@@ -134,7 +135,7 @@ const DocumentPageComponent = () => {
         dataIndex: "dots",
         fixed: "right",
         width: 50,
-        render: (_, record) => <DotsTableCell record={record} folderId={id} />,
+        render: (_, record) => <DotsTableCell record={record} folderId={selectedFolderId} />,
       },
     ],
     [isFetching],
@@ -143,7 +144,7 @@ const DocumentPageComponent = () => {
   return (
     <div className="content-page">
       <PageContentHeader filterComponent={<FilterComponent />} />
-      <FileUploader folderId={id}>
+      <FileUploader key={selectedFolderId} folderId={selectedFolderId}>
         <div className="table-page-wrapper">
           <Table
             rowSelection={rowSelection}

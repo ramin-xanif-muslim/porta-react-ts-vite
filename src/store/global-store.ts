@@ -1,6 +1,8 @@
 import { create } from "zustand";
 
 export interface StoreState {
+    selectedFolderId: string;
+    selectFolderId: (val: string) => void;
     isOpenSidebar: boolean;
     toggleSidebar: () => void;
     closeSidebar: () => void;
@@ -12,6 +14,8 @@ export interface StoreState {
 }
 
 const useGlobalStore = create<StoreState>((set) => ({
+    selectedFolderId: "",
+    selectFolderId: (val) => set(() => ({selectedFolderId: val})),
     isOpenSidebar: true,
     toggleSidebar: () =>
         set((state) => ({ isOpenSidebar: !state.isOpenSidebar })),
