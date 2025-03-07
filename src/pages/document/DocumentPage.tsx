@@ -19,6 +19,7 @@ import { LookupTag } from "../tags/types";
 
 import { useGetDocuments } from "./api/use-get-documents";
 import DotsTableCell from "./components/dots-table-cell/DotsTableCell";
+import { AdditionalFilterComponent } from "./components/filter/AdditionalFilterComponent";
 import { FilterComponent } from "./components/filter/FilterComponent";
 import { Document } from "./types";
 import { getFileIcon } from "./utils/file-icons";
@@ -37,6 +38,7 @@ const DocumentPageComponent = () => {
     onTableChange,
     searchText,
     filterParams,
+    additionalFilterParams,
     rowSelection,
     setCurrentPage,
     handleCloseAction,
@@ -49,7 +51,10 @@ const DocumentPageComponent = () => {
       currentPage,
       sort,
       searchText,
-      filterParams,
+      filterParams: {
+        ...filterParams,
+        ...additionalFilterParams,
+      },
     },
   });
 
@@ -164,6 +169,7 @@ const DocumentPageComponent = () => {
   return (
     <div className="content-page">
       <PageContentHeader filterComponent={<FilterComponent />} />
+      <AdditionalFilterComponent />
       <FileUploader key={selectedFolderId} folderId={selectedFolderId}>
         <div className="table-page-wrapper">
           <Table

@@ -12,6 +12,7 @@ interface FilterParams {
 
 export enum DocumentsApi {
   documents = "/api/v0.01/vms/dms/documents",
+  move = "/api/v0.01/vms/dms/documents/folder",
   list = "/api/v0.01/vms/dms/documents/list",
   rename = "/api/v0.01/vms/dms/documents/{documentId}/name",
   newVersion = "/api/v0.01/vms/dms/documents/{documentId}/versions",
@@ -56,6 +57,33 @@ export const documentsApi = {
           signal: meta?.signal,
         }),
     });
+  },
+
+  move: ({
+    documentIds,
+    folderId,
+  }: {
+    documentIds: string[];
+    folderId: string;
+  }) => {
+    const url = DocumentsApi.move;
+
+    return API.patch(url, {
+      documentIds,
+      folderId,
+    });
+  },
+
+  deleteDocuments: ({
+    documentIds,
+  }: {
+    documentIds: string[];
+  }) => {
+    const url = DocumentsApi.documents;
+
+   return API.delete(url, {
+      data: { documentIds },
+    })
   },
 
   renameDocument: ({
@@ -142,12 +170,12 @@ export const documentsApi = {
   uploadDocument: ({
     folderId,
     file,
-    comment = "",
+    description = "",
     tags = [],
   }: {
     folderId: string;
     file: File;
-    comment: string;
+    description: string;
     tags: string[];
   }) => {
     const url = DocumentsApi.documents;
@@ -155,7 +183,7 @@ export const documentsApi = {
     formData.append("file", file);
     formData.append("name", file.name);
     formData.append("folderId", folderId);
-    formData.append("comment", comment);
+    formData.append("description", description);
     tags.forEach((tag, index) => {
       formData.append(`tagIds[${index}]`, tag);
     });

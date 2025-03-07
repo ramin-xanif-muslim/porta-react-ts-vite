@@ -1,6 +1,7 @@
 import { Form, Select } from "antd";
-import { useTagSelectOptions } from "../../../tags/api/useTagSelectOptions";
+
 import { useListPageContext } from "../../../../HOC/withListPageContext";
+import { useTagSelectOptions } from "../../../tags/api/useTagSelectOptions";
 
 export const FilterComponent = () => {
   const { onFilterChange, filterParams, setFilterParams } =

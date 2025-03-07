@@ -68,7 +68,7 @@ export default function FileUploaderForm() {
 
   const handleUpload = async (
     acceptedFiles: File[],
-    comment: string,
+    description: string,
     tags: string[],
   ) => {
     if (acceptedFiles.length > MAX_FILE_COUNT) {
@@ -102,7 +102,7 @@ export default function FileUploaderForm() {
 
       return uploadDocument.handleCreate(
         file as unknown as File,
-        comment,
+        description,
         tags,
       );
     });
@@ -120,8 +120,8 @@ export default function FileUploaderForm() {
     });
   };
 
-  const onFinish = async (values: { comment: string; tags: string[] }) => {
-    handleUpload(fileList, values.comment, values.tags);
+  const onFinish = async (values: { description: string; tags: string[] }) => {
+    handleUpload(fileList, values.description, values.tags);
   };
 
   return (
@@ -225,7 +225,7 @@ export default function FileUploaderForm() {
           <Select mode="multiple" {...tagSelectOptions} />
         </Form.Item>
 
-        <Form.Item name="comment" label={t("Comment")}>
+        <Form.Item name="description" label={t("Description")}>
           <Input.TextArea ref={inputRef} rows={3} />
         </Form.Item>
       </Form>

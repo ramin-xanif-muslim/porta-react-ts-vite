@@ -6,6 +6,8 @@ import { menuList } from "./sidebar/data-menu";
 import { useGetFolders } from "../../pages/folder/api/use-get-folders";
 import { t } from "i18next";
 import { useBreadcrumbs } from "../../hooks/breadcrumbs";
+import { useGlobalStore } from "../../store";
+import { useListPageContext } from "../../HOC/withListPageContext";
 
 const firstBreadcrumb = ["Home"];
 interface BreadcrumbItemI {
@@ -20,9 +22,22 @@ interface Props {
 
 const BreadcrumbItem = ({ item, items }: Props) => {
   const isLast = items.length - 1 === items.indexOf(item);
+  
+    const { setCurrentPage, handleCloseAction } = useListPageContext();
+
+    const selectFolderId = useGlobalStore((state) => state.selectFolderId);
+  
+    const handleSelectFolder = () => {
+      const id = item.path.slice("/documents/documents/folders/".length)
+      selectFolderId(id);
+      setCurrentPage(1);
+      handleCloseAction();
+    };
+
   return (
     <Link
       to={item.path}
+      onClick={handleSelectFolder}
       className={classNames({
         "flex flex-nowrap items-center font-semibold": true,
         "opacity-50": !isLast,

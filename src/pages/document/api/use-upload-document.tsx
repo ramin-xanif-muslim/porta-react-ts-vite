@@ -11,12 +11,12 @@ export function useUploadDocument({ folderId, onSuccessCallback }: { folderId: s
     },
   });
 
-  const handleCreate = async (file: File, comment: string, tags: string[]) => {
+  const handleCreate = async (file: File, description: string, tags: string[]) => {
     if (!folderId) {
       console.error("folderId not found");
       return;
     }
-    uploadDocumentMutation.mutate({ file, folderId, comment, tags });
+    uploadDocumentMutation.mutate({ file, folderId, description, tags });
   };
 
   return {

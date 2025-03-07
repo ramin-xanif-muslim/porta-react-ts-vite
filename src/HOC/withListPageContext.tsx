@@ -26,12 +26,16 @@ interface ListPageContextType<T> {
   onFilterChange: (filter: Record<string, unknown>) => void;
   filterParams: Record<string, unknown>;
   setFilterParams: (filter: Record<string, unknown>) => void;
+  additionalFilterParams: Record<string, unknown>;
+  setAdditionalFilterParams: (additionalFilterParams: Record<string, unknown>) => void;
   action: ActionType | undefined | null;
   setAction: (action: ActionType | undefined | null) => void;
-  selectedRowKeys: React.Key[];
-  setSelectedRowKeys: (keys: React.Key[]) => void;
+  selectedRowKeys: string[];
+  setSelectedRowKeys: (keys: string[]) => void;
   rowSelection: TableProps<T>["rowSelection"];
   handleCloseAction: () => void;
+  visibleAdditionalFilters: boolean;
+  setVisibleAdditionalFilters: (bool: boolean) => void;
 }
 
 // Create a default type parameter that can be overridden
@@ -66,10 +70,13 @@ export function withListPageContext<P extends object>(
         return filter ? JSON.parse(filter) : {};
       },
     );
+    const [additionalFilterParams, setAdditionalFilterParams] = useState({});
+    const [visibleAdditionalFilters, setVisibleAdditionalFilters] =
+      useState(false);
 
     const [searchText, setSearchText] = useState(searchParams.get("q") || "");
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
 
     const rowSelection = action
       ? {
@@ -150,6 +157,8 @@ export function withListPageContext<P extends object>(
     };
 
     const contextValue: ListPageContextType<unknown> = {
+      visibleAdditionalFilters,
+      setVisibleAdditionalFilters,
       handleCloseAction,
       selectedRowKeys,
       setSelectedRowKeys,
@@ -158,6 +167,8 @@ export function withListPageContext<P extends object>(
       setAction,
       filterParams,
       setFilterParams,
+      additionalFilterParams,
+      setAdditionalFilterParams,
       onFilterChange,
       searchText,
       setSearchText,

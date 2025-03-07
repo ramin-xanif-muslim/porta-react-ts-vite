@@ -1,6 +1,9 @@
 import { Dropdown } from "antd";
 import { Button } from "antd";
 import { IoMdSettings } from "react-icons/io";
+
+import { FilterBtn } from "../filter/FilterBtn";
+
 import { DataTableSearch } from "./DataTableSearch";
 
 interface Props {
@@ -16,22 +19,22 @@ export const PageContentHeader = ({ filterComponent }: Props) => {
 
       <div className="flex flex-1 lg:ml-6">
         {filterComponent}
-        <Dropdown
-          arrow={true}
-          menu={{
-            items: [
-              {
-                key: "1",
-                label: "",
-              },
-            ],
-          }}
-          className="ml-auto"
-        >
-          <Button>
-            <IoMdSettings className="size-4" />
-          </Button>
-        </Dropdown>
+        <div className="ml-auto flex gap-2">
+          <FilterBtn />
+          <Dropdown
+            arrow={true}
+            menu={{
+              items: [
+                {
+                  key: "1",
+                  label: "",
+                },
+              ],
+            }}
+          >
+            <Button icon={<IoMdSettings className="size-4" />} />
+          </Dropdown>
+        </div>
       </div>
     </div>
   );
