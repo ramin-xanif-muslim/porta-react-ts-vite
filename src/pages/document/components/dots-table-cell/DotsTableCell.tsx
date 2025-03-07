@@ -5,10 +5,9 @@ import { AiOutlineComment } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { FaShareFromSquare } from "react-icons/fa6";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
+import { MdDetails } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { VscVersions } from "react-icons/vsc";
-import { MdDetails } from "react-icons/md";
-
 
 import { useListPageContext } from "../../../../HOC/withListPageContext";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
@@ -17,14 +16,12 @@ import { useModalStore } from "../../../../store/modal-store";
 import { Document } from "../../types";
 import DocumentVersionsList from "../document-versions-list/DocumentVersionsList";
 
-
 interface DotsTableCellProps {
   record: Document;
   folderId: string;
 }
 
 const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
-
   const [isVersionsModalOpen, setIsVersionsModalOpen] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(
     null,
@@ -35,10 +32,10 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
     if (e.key === "Rename") {
-            openModal("rename-document", {
-              documentId: record.id,
-              name: record.name,
-            })
+      openModal("rename-document", {
+        documentId: record.id,
+        name: record.name,
+      });
     } else if (e.key === "VersionsList") {
       if (!record.isFolder) {
         setSelectedDocumentId(record.id);
@@ -117,12 +114,12 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
           overlayClassName="text-[#565D6DFF]"
           trigger={["click"]}
         >
-        <Button
-          type="text"
-          size="small"
-          icon={<BsThreeDots className="text-grayColor-600" />}
-          shape="circle"
-        />
+          <Button
+            type="text"
+            size="small"
+            icon={<BsThreeDots className="text-grayColor-600" />}
+            shape="circle"
+          />
         </Dropdown>
       ) : (
         <Dropdown
@@ -135,12 +132,12 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
           overlayClassName="text-[#565D6DFF]"
           trigger={["click"]}
         >
-        <Button
-          type="text"
-          size="small"
-          icon={<BsThreeDots className="text-grayColor-600" />}
-          shape="circle"
-        />
+          <Button
+            type="text"
+            size="small"
+            icon={<BsThreeDots className="text-grayColor-600" />}
+            shape="circle"
+          />
         </Dropdown>
       )}
 
