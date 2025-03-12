@@ -9,7 +9,11 @@ export function useUploadNewVersion({folderId}: {folderId: string}) {
 
     return useMutation({
         mutationFn: documentsApi.uploadNewVersion,
-        onSuccess: () => {},
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [documentsApi.baseKey],
+            })
+        },
         onError: () => notification.error({ message: t("Error creating document") }),
         async onSettled() {
             await queryClient.invalidateQueries(

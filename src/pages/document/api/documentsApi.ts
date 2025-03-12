@@ -15,6 +15,8 @@ export enum DocumentsApi {
   move = "/api/v0.01/vms/dms/documents/folder",
   list = "/api/v0.01/vms/dms/documents/list",
   rename = "/api/v0.01/vms/dms/documents/{documentId}/name",
+  renameDescription = "/api/v0.01/vms/dms/documents/{documentId}/description",
+  renameTags = "/api/v0.01/vms/dms/documents/{documentId}/tags",
   newVersion = "/api/v0.01/vms/dms/documents/{documentId}/versions",
   file = "/api/v0.01/vms/dms/documents/{documentId}/file",
   versionsList = "/api/v0.01/vms/dms/documents/{documentId}/versions/list",
@@ -97,6 +99,34 @@ export const documentsApi = {
 
     return API.patch(url, {
       name,
+    });
+  },
+
+  renameTags: ({
+    documentId,
+    tags,
+  }: {
+    documentId: string;
+    tags: string;
+  }) => {
+    const url = DocumentsApi.renameTags.replace("{documentId}", documentId);
+
+    return API.patch(url, {
+      tags,
+    });
+  },
+
+  renameDocumentDescription: ({
+    documentId,
+    description,
+  }: {
+    documentId: string;
+    description: string;
+  }) => {
+    const url = DocumentsApi.renameDescription.replace("{documentId}", documentId);
+
+    return API.patch(url, {
+      description,
     });
   },
 

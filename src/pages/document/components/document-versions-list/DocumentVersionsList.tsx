@@ -1,50 +1,30 @@
-import { Drawer, Table } from "antd";
+import { Table } from "antd";
 import type { TableProps } from "antd";
 import dayjs from "dayjs";
 import { t } from "i18next";
 
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
+import { CreateBtn } from "../../../../components/ui/buttons";
 import { DATE_FORMAT } from "../../../../constants";
 import { convertFileSize } from "../../../../lib/utils";
 import { DocumentVersionDTO } from "../../../../types";
 import { useGetDocumentsVersionsList } from "../../api/use-get-documents-versions-list";
 import UploadNewVersion from "../dots-table-cell/UploadNewVersion";
-import { CreateBtn } from "../../../../components/ui/buttons";
 
 interface DocumentVersionsListProps {
   documentId: string;
   folderId: string;
-  open: boolean;
-  onClose: () => void;
 }
 
 const DocumentVersionsList = ({
   documentId,
   folderId,
-  open,
-  onClose,
 }: DocumentVersionsListProps) => {
-  const { data, error, isFetching } = useGetDocumentsVersionsList({
+  const { data, isFetching } = useGetDocumentsVersionsList({
     documentId,
     folderId,
-    open,
+    open: true,
   });
-
-  if (error) {
-    return (
-      <ErrorBoundary>
-        <Drawer
-          title={t("Document Versions")}
-          placement="right"
-          onClose={onClose}
-          open={open}
-          width={600}
-        >
-          <div>{t("Error loading document versions")}</div>
-        </Drawer>
-      </ErrorBoundary>
-    );
-  }
 
   const columns: TableProps<DocumentVersionDTO>["columns"] = [
     {
@@ -73,28 +53,19 @@ const DocumentVersionsList = ({
 
   return (
     <ErrorBoundary>
-      <Drawer
-        title={
-          <div className="flex w-full justify-between items-center">
-            <h2>{t("Document Versions")}</h2>
-            <UploadNewVersion documentId={documentId}>
-              <CreateBtn>{t("Add Version")}</CreateBtn>
-            </UploadNewVersion>
-          </div>
-        }
-        placement="right"
-        onClose={onClose}
-        open={open}
-        width={600}
-      >
-        <Table<DocumentVersionDTO>
-          columns={columns}
-          dataSource={data?.data.list || []}
-          loading={isFetching}
-          pagination={false}
-          size="small"
-        />
-      </Drawer>
+      <h2 className="flex w-full items-center justify-between">
+        <h2>{t("Document Versions")}</h2>
+        <UploadNewVersion documentId={documentId}>
+          <CreateBtn>{t("Add Version")}</CreateBtn>
+        </UploadNewVersion>
+      </h2>
+      <Table<DocumentVersionDTO>
+        columns={columns}
+        dataSource={data?.data.list || []}
+        loading={isFetching}
+        pagination={false}
+        size="small"
+      />
     </ErrorBoundary>
   );
 };

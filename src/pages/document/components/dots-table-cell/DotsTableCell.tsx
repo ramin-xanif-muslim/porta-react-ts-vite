@@ -1,20 +1,18 @@
 import { Button, Dropdown, MenuProps } from "antd";
 import { t } from "i18next";
-import { useState } from "react";
-import { AiOutlineComment } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { FaShareFromSquare } from "react-icons/fa6";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { MdDetails } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { VscVersions } from "react-icons/vsc";
+// import { AiOutlineComment } from "react-icons/ai";
+// import { VscVersions } from "react-icons/vsc";
 
 import { useListPageContext } from "../../../../HOC/withListPageContext";
 import ErrorBoundary from "../../../../components/error-boundary/ErrorBoundary";
 import ErrorFallback from "../../../../components/error-boundary/ErrorFallback";
 import { useModalStore } from "../../../../store/modal-store";
 import { Document } from "../../types";
-import DocumentVersionsList from "../document-versions-list/DocumentVersionsList";
 
 interface DotsTableCellProps {
   record: Document;
@@ -22,13 +20,9 @@ interface DotsTableCellProps {
 }
 
 const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
-  const [isVersionsModalOpen, setIsVersionsModalOpen] = useState(false);
-  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(
-    null,
-  );
   const { openModal } = useModalStore();
 
-  const { setAction } = useListPageContext();
+  const { setAction, setSelectedRowKeys } = useListPageContext();
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
     if (e.key === "Rename") {
@@ -38,8 +32,10 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       });
     } else if (e.key === "VersionsList") {
       if (!record.isFolder) {
-        setSelectedDocumentId(record.id);
-        setIsVersionsModalOpen(true);
+        openModal("rename-document", {
+          record,
+          folderId: folderId,
+        });
       }
     } else if (e.key === "AddComment") {
       openModal("create-comment", { documentId: record.id });
@@ -49,28 +45,14 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
       openModal("folder-details", { record: record });
     } else if (e.key === "Delete") {
       setAction("Delete");
+      setSelectedRowKeys([record.id]);
     } else if (e.key === "Move") {
       setAction("Move");
+      setSelectedRowKeys([record.id]);
     }
   };
 
   const items: MenuProps["items"] = [
-    {
-      key: "VersionsList",
-      label: t("Versions"),
-      icon: <VscVersions className="size-5" />,
-    },
-    {
-      type: "divider",
-    },
-    {
-      key: "CommentList",
-      label: t("Comments"),
-      icon: <AiOutlineComment className="size-5" />,
-    },
-    {
-      type: "divider",
-    },
     {
       key: "Details",
       label: t("Details"),
@@ -140,16 +122,6 @@ const DotsTableCell = ({ record, folderId }: DotsTableCellProps) => {
           />
         </Dropdown>
       )}
-
-      <DocumentVersionsList
-        documentId={selectedDocumentId || ""}
-        folderId={folderId}
-        open={isVersionsModalOpen}
-        onClose={() => {
-          setIsVersionsModalOpen(false);
-          setSelectedDocumentId(null);
-        }}
-      />
     </ErrorBoundary>
   );
 };
