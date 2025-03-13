@@ -14,6 +14,7 @@ export enum DocumentsApi {
   documents = "/api/v0.01/vms/dms/documents",
   move = "/api/v0.01/vms/dms/documents/folder",
   list = "/api/v0.01/vms/dms/documents/list",
+  info = "/api/v0.01/vms/dms/documents/{documentId}/info",
   rename = "/api/v0.01/vms/dms/documents/{documentId}/name",
   renameDescription = "/api/v0.01/vms/dms/documents/{documentId}/description",
   renameTags = "/api/v0.01/vms/dms/documents/{documentId}/tags",
@@ -86,6 +87,16 @@ export const documentsApi = {
    return API.delete(url, {
       data: { documentIds },
     })
+  },
+
+  info: ({
+    documentId,
+  }: {
+    documentId: string;
+  }) => {
+    const url = DocumentsApi.info.replace("{documentId}", documentId);
+
+    return API.get(url);
   },
 
   renameDocument: ({

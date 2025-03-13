@@ -39,7 +39,7 @@ export const EditInput = ({
   return (
     <>
       <Form
-        // initialValues={{ [name]: defaultValue }}
+        initialValues={{ [name]: defaultValue }}
         form={form}
         layout="vertical"
         onFinish={onFinish}
@@ -47,15 +47,16 @@ export const EditInput = ({
         <div className="flex">
           <Form.Item className="!mb-0" label={t(label)}>
             {edit ? (
-              <Form.Item name={name} className="!mb-0 w-[300px]">
+              <Form.Item name={name} className="!mb-0 min-w-[350px]">
                 {FormInput}
               </Form.Item>
             ) : (
               <div
                 className={cn(
-                  "flex h-8 w-[300px] items-center rounded p-2",
+                  "h-8 min-w-[350px] border border-dashed rounded p-2 overflow-scroll no-scrollbar",
                   heightDiv,
                 )}
+                title={defaultValue}
               >
                 {defaultValue}
               </div>

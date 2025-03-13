@@ -27,9 +27,9 @@ export const DocumentDescriptionEditInput = ({
   const { mutate, isPending } = useMutation({
     mutationFn: (params: RenameDocumentParams) =>
       documentsApi.renameDocumentDescription(params),
-    onSuccess: (_, { folderId, callback }) => {
+    onSuccess: (_, { documentId, callback }) => {
       queryClient.invalidateQueries({
-        queryKey: [documentsApi.baseKey, folderId],
+        queryKey: [documentsApi.baseKey, documentId],
       });
 
       notification.success({
@@ -54,8 +54,8 @@ export const DocumentDescriptionEditInput = ({
         defaultValue={defaultValue}
         name="description"
         label="Description"
-        FormInput={<Input.TextArea placeholder={t("Description")} autoFocus />}
-        heightDiv="h-12"
+        FormInput={<Input.TextArea placeholder={t("Description")} autoFocus rows={4} />}
+        heightDiv="h-32"
         isPending={isPending}
         handleSave={handleSave}
       />

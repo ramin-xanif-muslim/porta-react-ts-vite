@@ -29,9 +29,9 @@ export const DocumentNameEditInput = ({
   const { mutate, isPending } = useMutation({
     mutationFn: (params: RenameDocumentParams) =>
       documentsApi.renameDocument(params),
-    onSuccess: (_, { folderId, callback }) => {
+    onSuccess: (_, { documentId, callback }) => {
       queryClient.invalidateQueries({
-        queryKey: [documentsApi.baseKey, folderId],
+        queryKey: [documentsApi.baseKey, documentId],
       });
 
       notification.success({
